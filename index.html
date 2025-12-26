@@ -2307,35 +2307,70 @@
                 const commands = {
                     help: () => `
                         <p class="success">Available commands:</p>
-                        <p>  register - Initiate registration protocol</p>
-                        <p>  info     - Display system information</p>
-                        <p>  matrix   - Enable matrix mode</p>
-                        <p>  clear    - Clear terminal</p>
-                        <p>  exit     - Terminate session</p>
+                        <p>  mission    - Display mission statement</p>
+                        <p>  challenges - View challenge tracks</p>
+                        <p>  schedule   - Show event timeline</p>
+                        <p>  register   - Initiate access protocol</p>
+                        <p>  partners   - View allied protocols</p>
+                        <p>  status     - System status report</p>
+                        <p>  clear      - Clear terminal</p>
+                    `,
+                    mission: () => {
+                        setTimeout(() => window.location.href = 'about.html', 500);
+                        return '<p class="success">> Loading mission briefing...</p>';
+                    },
+                    challenges: () => `
+                        <p class="success">> CHALLENGE TRACKS // 2026</p>
+                        <p style="color:#ff4444">  01 SHADOW::VECTOR - Offensive Protocol</p>
+                        <p style="color:#4488ff">  02 SENTINEL::MESH - Defensive Protocol</p>
+                        <p style="color:#0ff">  03 ZERO::PROOF    - Trust Protocol</p>
+                        <p style="color:#aa44ff">  04 ROGUE::AGENT   - Undefined Protocol</p>
+                        <p>  Type 'register' to join a track.</p>
+                    `,
+                    schedule: () => `
+                        <p class="success">> MARCH 14, 2026 // THE SINGULARITY PROTOCOL</p>
+                        <p>  09:00 BREACH INITIATED - Doors open</p>
+                        <p>  10:00 TRANSMISSION RECEIVED - Kickoff</p>
+                        <p>  10:30 PROTOCOL ENGAGED - Hacking begins</p>
+                        <p>  18:00 EXTRACTION - Submissions close</p>
+                        <p>  18:30 DEMO::SEQUENCE - Presentations</p>
+                        <p>  19:30 VERDICT - Awards</p>
+                        <p>  20:00 AFTER::PROTOCOL - Party</p>
                     `,
                     register: () => {
                         setTimeout(() => window.location.href = 'register.html', 500);
-                        return '<p class="success">> Redirecting to registration...</p>';
+                        return '<p class="success">> Initiating access protocol...</p>';
                     },
-                    info: () => `
-                        <p class="success">> NEBULA:FOG:PROTOCOL 2026</p>
-                        <p>  Builders: 120</p>
-                        <p>  Duration: 8 hours</p>
-                        <p>  Entry: $42</p>
-                        <p>  Prize Pool: $5,000</p>
-                        <p>  Status: ACCEPTING_REGISTRATIONS</p>
-                    `,
-                    matrix: () => {
-                        this.enableMatrixMode();
-                        return '<p class="success">> Matrix mode enabled</p>';
+                    partners: () => {
+                        setTimeout(() => window.location.href = 'partners.html', 500);
+                        return '<p class="success">> Loading allied protocols...</p>';
+                    },
+                    status: () => {
+                        const trustIndex = document.getElementById('trust-index')?.textContent || '73.4';
+                        const daysLeft = document.getElementById('days-countdown')?.textContent || '—';
+                        return `
+                            <p class="success">> SYSTEM STATUS REPORT</p>
+                            <p>  Agent Trust Index: ${trustIndex}%</p>
+                            <p>  Days to Protocol: ${daysLeft}</p>
+                            <p>  Event Status: ACCEPTING_REGISTRATIONS</p>
+                            <p>  Connection: SECURE</p>
+                        `;
                     },
                     clear: () => {
                         output.innerHTML = '<p class="success">> Terminal cleared</p>';
                         return '';
                     },
-                    exit: () => {
-                        return '<p class="error">> ERROR: Cannot terminate primary session</p>';
-                    }
+                    // Easter eggs
+                    ping: () => '<p class="success">> PONG. LATENCY: 0.003ms. CONNECTION SECURE.</p>',
+                    whoami: () => '<p class="success">> IDENTITY: UNVERIFIED. CLEARANCE: PENDING.</p>',
+                    date: () => '<p class="success">> 3.14.26 // THE SINGULARITY PROTOCOL</p>',
+                    matrix: () => {
+                        this.enableMatrixMode();
+                        return '<p class="success">> Matrix mode enabled</p>';
+                    },
+                    exit: () => '<p class="error">> ERROR: Cannot terminate primary session</p>',
+                    sudo: () => '<p class="error">> NICE TRY. ACCESS DENIED.</p>',
+                    hack: () => '<p class="success">> You\'re already here. Build something.</p>'
                 };
 
                 // Type sound on input
