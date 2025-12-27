@@ -58,7 +58,55 @@
             color: var(--color-text);
             line-height: 1.6;
             overflow-x: hidden;
+            cursor: none;
             -webkit-font-smoothing: antialiased;
+        }
+
+        /* ========================================
+           CUSTOM CURSOR
+           ======================================== */
+        .cursor {
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-ring {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--color-primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.15s var(--ease-out-expo);
+        }
+
+        .cursor-ring.hover {
+            width: 60px;
+            height: 60px;
+            border-color: var(--color-secondary);
+        }
+
+        .cursor-ring.clicking {
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        /* ========================================
+           PARTICLES CANVAS
+           ======================================== */
+        .particles-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
         }
 
         ::selection { background: var(--color-primary); color: var(--color-bg); }
@@ -495,6 +543,9 @@
            RESPONSIVE
            ======================================== */
         @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor, .cursor-dot, .cursor-ring { display: none !important; }
+            .particles-canvas { display: none !important; }
             .hud-nav { display: none; }
             .mobile-nav { display: block; }
             .main { padding-bottom: 120px; }
@@ -505,8 +556,14 @@
 </head>
 
 <body>
-    <div class="grid-bg"></div>
+    <!-- Cursor -->
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-ring"></div>
+
+    <!-- Visual Effects -->
     <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <canvas class="particles-canvas" id="particles"></canvas>
 
     <!-- Navigation -->
     <nav class="hud-nav" role="navigation" aria-label="System Interface">
