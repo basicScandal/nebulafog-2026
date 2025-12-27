@@ -1086,6 +1086,15 @@
                 gap: 1rem;
                 text-align: center;
                 padding-bottom: 1rem;
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            /* Reduce particle rendering on mobile for better performance */
+            .particles-canvas {
+                opacity: 0.3;
             }
         }
 
@@ -2331,7 +2340,8 @@
                         duration: 0.8,
                         scrollTrigger: {
                             trigger: '.footer',
-                            start: 'top 90%'
+                            start: 'top 90%',
+                            once: true
                         }
                     }
                 );
