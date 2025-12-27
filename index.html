@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>NEBULA:FOG:PROTOCOL 2026 - BREACH PROTOCOL</title>
     <meta name="description"
         content="AI x Security 120 builders. 8 hours. No spectators.">
@@ -1019,6 +1019,7 @@
             backdrop-filter: blur(15px);
             border-top: 1px solid var(--color-text-dim);
             padding: 0.5rem 0;
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
             z-index: 1000;
         }
 
@@ -1033,13 +1034,14 @@
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
-            padding: 0.5rem;
+            padding: 0.75rem 0.5rem; /* Increased vertical padding for 44x44px minimum touch target */
             color: var(--color-text-muted);
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
             text-decoration: none;
             transition: color 0.3s ease;
+            min-height: 44px; /* WCAG AAA compliance */
         }
 
         .mobile-nav-links a.active,
@@ -1074,21 +1076,14 @@
                 display: none;
             }
 
-            /* Mobile nav at TOP */
+            /* Mobile nav at BOTTOM (consistent with other pages) */
             .mobile-nav {
                 display: block;
-                top: 0;
-                bottom: auto;
-                border-top: none;
-                border-bottom: 1px solid var(--color-text-dim);
-                backdrop-filter: none;
-                -webkit-backdrop-filter: none;
-                background: var(--color-bg);
             }
 
-            /* Add top padding to main content to account for fixed nav */
+            /* Add bottom padding to main content to account for fixed nav and safe area */
             main {
-                padding-top: 60px;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom));
             }
 
             .protocol-card {

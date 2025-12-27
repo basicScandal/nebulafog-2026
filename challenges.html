@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>CHALLENGE:MATRIX - NEBULA:FOG:PROTOCOL 2026</title>
     <meta name="description" content="The Singularity Challenge Matrix - Four protocol layers await infiltration.">
 
@@ -442,6 +442,7 @@
             backdrop-filter: blur(15px);
             border-top: 1px solid var(--color-text-dim);
             padding: 0.5rem 0;
+            padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
         }
 
         .mobile-nav-links {
@@ -455,11 +456,12 @@
             flex-direction: column;
             align-items: center;
             gap: 0.25rem;
-            padding: 0.5rem;
+            padding: 0.75rem 0.5rem; /* Increased vertical padding for 44x44px minimum touch target */
             color: var(--color-text-muted);
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            min-height: 44px; /* WCAG AAA compliance */
             transition: color 0.3s ease;
         }
 
@@ -474,7 +476,7 @@
         @media (max-width: 768px) {
             .hud-nav { display: none; }
             .mobile-nav { display: block; }
-            .main { padding-bottom: 120px; }
+            .main { padding-bottom: calc(120px + env(safe-area-inset-bottom)); }
             .protocol-card {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;

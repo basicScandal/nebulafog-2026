@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>TIMELINE - NEBULA:FOG:PROTOCOL 2026</title>
     <meta name="description" content="The Neural Timeline - Event schedule for NEBULA:FOG:PROTOCOL 2026 hackathon.">
 
@@ -392,6 +392,7 @@
             background: rgba(3, 3, 3, 0.95);
             border-top: 1px solid rgba(0, 255, 159, 0.2);
             padding: 10px 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
             z-index: 1000;
             backdrop-filter: blur(15px);
         }
@@ -407,11 +408,13 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
+            padding: 12px 8px; /* Added padding for 44x44px minimum touch target */
             color: var(--color-text-muted);
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: color 0.3s ease;
+            min-height: 44px; /* WCAG AAA compliance */
         }
 
         .mobile-nav-links a i {
@@ -436,7 +439,7 @@
             }
 
             .main {
-                padding-bottom: 100px;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom));
             }
 
             .timeline {
@@ -629,7 +632,7 @@
         <ul class="mobile-nav-links">
             <li><a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a></li>
             <li><a href="about.html"><i class="fas fa-info-circle"></i><span>MISSION</span></a></li>
-            <li><a href="challenges.html"><i class="fas fa-shield-alt"></i><span>CHALLENGES</span></a></li>
+            <li><a href="challenges.html"><i class="fas fa-trophy"></i><span>CHALLENGES</span></a></li>
             <li><a href="schedule.html" class="active"><i class="fas fa-clock"></i><span>SCHEDULE</span></a></li>
             <li><a href="register.html"><i class="fas fa-user-plus"></i><span>ACCESS</span></a></li>
         </ul>

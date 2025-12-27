@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>REGISTER - NEBULA:FOG:PROTOCOL 2026</title>
     <meta name="description" content="Register for NEBULA:FOG:PROTOCOL 2026 - The AI x Security hackathon.">
 
@@ -267,7 +267,7 @@
             border-radius: 2px;
             color: var(--color-text);
             font-family: var(--font-mono);
-            font-size: 0.9rem;
+            font-size: 1rem; /* 16px minimum for iOS to prevent auto-zoom */
             transition: all 0.3s ease;
         }
 
@@ -501,6 +501,7 @@
             background: rgba(3, 3, 3, 0.95);
             border-top: 1px solid rgba(0, 255, 159, 0.2);
             padding: 10px 0;
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
             z-index: 1000;
             backdrop-filter: blur(15px);
         }
@@ -516,11 +517,13 @@
             flex-direction: column;
             align-items: center;
             gap: 4px;
+            padding: 12px 8px; /* Added padding for 44x44px minimum touch target */
             color: var(--color-text-muted);
             font-size: 0.65rem;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             transition: color 0.3s ease;
+            min-height: 44px; /* WCAG AAA compliance */
         }
 
         .mobile-nav-links a i {
@@ -545,7 +548,7 @@
             }
 
             .main {
-                padding-bottom: 100px;
+                padding-bottom: calc(100px + env(safe-area-inset-bottom));
             }
 
             .form-row {
@@ -829,6 +832,35 @@
             form.querySelectorAll('input, select, textarea').forEach(field => {
                 field.addEventListener('input', () => clearError(field));
             });
+
+            // iOS keyboard handling
+            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+                // Scroll input into view when focused
+                const inputs = form.querySelectorAll('input, select, textarea');
+                inputs.forEach(input => {
+                    input.addEventListener('focus', () => {
+                        setTimeout(() => {
+                            input.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'center',
+                                inline: 'nearest'
+                            });
+                        }, 300); // Delay to let keyboard appear
+                    }, { passive: true });
+                });
+
+                // Handle visual viewport changes (keyboard appearance)
+                if (window.visualViewport) {
+                    window.visualViewport.addEventListener('resize', () => {
+                        const focusedElement = document.activeElement;
+                        if (focusedElement && (focusedElement.tagName === 'INPUT' ||
+                            focusedElement.tagName === 'TEXTAREA' ||
+                            focusedElement.tagName === 'SELECT')) {
+                            focusedElement.scrollIntoView({ block: 'center' });
+                        }
+                    });
+                }
+            }
         });
     </script>
 </body>
