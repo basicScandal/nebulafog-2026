@@ -456,8 +456,33 @@
         }
 
         .hero-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
             opacity: 0;
             transform: translateY(30px);
+        }
+
+        .hero-secondary-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .hero-secondary-link:hover {
+            color: var(--color-primary);
+        }
+
+        .hero-secondary-link i {
+            font-size: 1.1rem;
         }
 
         .btn-primary {
@@ -1221,6 +1246,10 @@
                     <a href="register.html" class="btn-primary">
                         <span>[ INITIATE REGISTRATION ]</span>
                         <span class="arrow">>></span>
+                    </a>
+                    <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="hero-secondary-link">
+                        <i class="fab fa-youtube"></i>
+                        <span>Watch 2025 Highlights</span>
                     </a>
                 </div>
             </div>
