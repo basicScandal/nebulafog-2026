@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROTOCOL GUIDELINES - NEBULA:FOG:PROTOCOL 2026</title>
+    <meta name="description" content="Code of Conduct for NEBULA:FOG:PROTOCOL 2026 - The AI Security Hackathon">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NEBULA:FOG:PROTOCOL 2026 - Code of Conduct">
+    <meta property="og:description" content="Our commitment to a safe, inclusive, and productive environment for all participants.">
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#00ff9f">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- GSAP -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ========================================
+           CSS CUSTOM PROPERTIES
+           ======================================== */
+        :root {
+            --color-bg: #030303;
+            --color-bg-elevated: #0a0a0a;
+            --color-primary: #00ff9f;
+            --color-secondary: #ff0080;
+            --color-accent: #0ff;
+            --color-text: #ffffff;
+            --color-text-muted: #666666;
+            --color-text-dim: #333333;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+            --font-display: 'Space Grotesk', system-ui, sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { font-size: 16px; scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-mono);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection { background: var(--color-primary); color: var(--color-bg); }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ========================================
+           GRID BACKGROUND & EFFECTS
+           ======================================== */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(0, 255, 159, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 159, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(0deg,
+                transparent, transparent 2px,
+                rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px);
+            opacity: 0.15;
+        }
+
+        /* ========================================
+           NAVIGATION
+           ======================================== */
+        .hud-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 10px 20px;
+            background: rgba(3, 3, 3, 0.85);
+            border: 1px solid rgba(0, 255, 159, 0.2);
+            border-radius: 4px;
+            backdrop-filter: blur(15px);
+        }
+
+        .hud-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-right: 15px;
+            border-right: 1px solid rgba(0, 255, 159, 0.2);
+            font-size: 0.75rem;
+            color: var(--color-primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--color-primary);
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hud-links {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .hud-link {
+            color: var(--color-text-muted);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .hud-link:hover, .hud-link.active {
+            color: var(--color-primary);
+            text-shadow: 0 0 10px var(--color-primary);
+        }
+
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        .main {
+            padding: 120px 5vw 80px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .page-tag {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border: 1px solid var(--color-text-dim);
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-family: var(--font-mono);
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--color-primary);
+            text-shadow: 0 0 40px rgba(0, 255, 159, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--color-text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ========================================
+           CONTENT SECTIONS
+           ======================================== */
+        .content-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            border: 1px solid var(--color-text-dim);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: border-color 0.4s var(--ease-out-expo);
+        }
+
+        .content-section:hover {
+            border-color: rgba(0, 255, 159, 0.3);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-index {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            opacity: 0.5;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .section-content {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-content ul {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .section-content li {
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+
+        .section-content li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--color-primary);
+        }
+
+        .highlight {
+            color: var(--color-primary);
+        }
+
+        .warning {
+            color: var(--color-secondary);
+        }
+
+        /* ========================================
+           QUICK REFERENCE
+           ======================================== */
+        .quick-ref {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .ref-card {
+            padding: 1.5rem;
+            border: 1px solid var(--color-text-dim);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .ref-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .ref-title {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .ref-text {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        /* ========================================
+           CONTACT SECTION
+           ======================================== */
+        .contact-section {
+            text-align: center;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, rgba(0, 255, 159, 0.03) 0%, rgba(255, 0, 128, 0.03) 100%);
+            border: 1px solid var(--color-text-dim);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .contact-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-text {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-email {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            background: var(--color-primary);
+            color: var(--color-bg);
+            box-shadow: 0 0 20px rgba(0, 255, 159, 0.4);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            padding: 3rem 5vw;
+            border-top: 1px solid var(--color-text-dim);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .footer-text {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: var(--color-text-muted);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .footer-copyright {
+            font-size: 0.7rem;
+            color: var(--color-text-dim);
+        }
+
+        /* ========================================
+           MOBILE NAV
+           ======================================== */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(3, 3, 3, 0.95);
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--color-text-dim);
+            padding: 0.5rem 0;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+        }
+
+        .mobile-nav-links a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.5rem;
+            color: var(--color-text-muted);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-nav-links a.active,
+        .mobile-nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .hud-nav { display: none; }
+            .mobile-nav { display: block; }
+            .main { padding-bottom: 120px; }
+            .page-header { margin-bottom: 3rem; }
+            .content-section { padding: 1.5rem; }
+            .quick-ref { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+    <div class="scanlines"></div>
+
+    <!-- Navigation -->
+    <nav class="hud-nav" role="navigation" aria-label="System Interface">
+        <div class="hud-status">
+            <div class="status-dot"></div>
+            <span>SYS_CONNECTED</span>
+            <span style="margin-left: 10px; opacity: 0.7;">PROTOCOL_VIEW</span>
+        </div>
+        <ul class="hud-links">
+            <li><a href="index.html" class="hud-link">HOME</a></li>
+            <li><a href="about.html" class="hud-link">MISSION</a></li>
+            <li><a href="challenges.html" class="hud-link">CHALLENGES</a></li>
+            <li><a href="schedule.html" class="hud-link">SCHEDULE</a></li>
+            <li><a href="register.html" class="hud-link">ACCESS</a></li>
+            <li><a href="partners.html" class="hud-link">PARTNERS</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <header class="page-header">
+                <span class="page-tag">COMMUNITY PROTOCOL // 2026</span>
+                <h1 class="page-title">CODE OF CONDUCT</h1>
+                <p class="page-subtitle">
+                    NEBULA:FOG:PROTOCOL is dedicated to providing a safe, inclusive, and harassment-free
+                    experience for everyone. This code applies to all participants, sponsors, and staff.
+                </p>
+            </header>
+
+            <!-- Quick Reference -->
+            <div class="quick-ref">
+                <div class="ref-card">
+                    <div class="ref-icon">&#9632;</div>
+                    <h3 class="ref-title">Be Respectful</h3>
+                    <p class="ref-text">Treat everyone with dignity</p>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-icon">&#9650;</div>
+                    <h3 class="ref-title">Be Inclusive</h3>
+                    <p class="ref-text">Welcome all backgrounds</p>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-icon">&#9679;</div>
+                    <h3 class="ref-title">Be Collaborative</h3>
+                    <p class="ref-text">Support fellow hackers</p>
+                </div>
+                <div class="ref-card">
+                    <div class="ref-icon">&#9670;</div>
+                    <h3 class="ref-title">Be Professional</h3>
+                    <p class="ref-text">Maintain integrity</p>
+                </div>
+            </div>
+
+            <!-- The Quick Version -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">01</span>
+                    <h2 class="section-title">THE QUICK VERSION</h2>
+                </div>
+                <div class="section-content">
+                    <p>
+                        NEBULA:FOG:PROTOCOL is dedicated to providing a harassment-free experience for everyone,
+                        regardless of gender, gender identity and expression, age, sexual orientation, disability,
+                        physical appearance, body size, race, ethnicity, nationality, religion, or technical ability.
+                    </p>
+                    <p>
+                        <span class="warning">We do not tolerate harassment of participants in any form.</span>
+                        Sexual language and imagery is not appropriate at any venue, including talks, workshops,
+                        parties, social media, and other online communications.
+                    </p>
+                    <p>
+                        Participants violating these rules may be sanctioned or expelled from the event
+                        <span class="highlight">without a refund</span> at the discretion of the organizers.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Expected Behavior -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">02</span>
+                    <h2 class="section-title">EXPECTED BEHAVIOR</h2>
+                </div>
+                <div class="section-content">
+                    <p>All participants are expected to:</p>
+                    <ul>
+                        <li>Exercise consideration and respect in your speech and actions</li>
+                        <li>Attempt collaboration before conflict</li>
+                        <li>Refrain from demeaning, discriminatory, or harassing behavior and speech</li>
+                        <li>Be mindful of your surroundings and fellow participants</li>
+                        <li>Alert organizers if you notice a dangerous situation or someone in distress</li>
+                        <li>Participate in an authentic and active way</li>
+                        <li>Respect the venue, equipment, and property of others</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Unacceptable Behavior -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">03</span>
+                    <h2 class="section-title">UNACCEPTABLE BEHAVIOR</h2>
+                </div>
+                <div class="section-content">
+                    <p><span class="warning">The following behaviors are considered harassment and are unacceptable:</span></p>
+                    <ul>
+                        <li>Violence, threats of violence, or violent language directed against another person</li>
+                        <li>Sexist, racist, homophobic, transphobic, ableist, or otherwise discriminatory jokes and language</li>
+                        <li>Posting or displaying sexually explicit or violent material</li>
+                        <li>Personal insults, particularly those related to gender, sexual orientation, race, religion, or disability</li>
+                        <li>Inappropriate photography or recording</li>
+                        <li>Unwelcome sexual attention, including sexualized comments, jokes, or imagery</li>
+                        <li>Deliberate intimidation, stalking, or following</li>
+                        <li>Sustained disruption of talks or other events</li>
+                        <li>Advocating for or encouraging any of the above behavior</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Hacking Ethics -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">04</span>
+                    <h2 class="section-title">HACKING ETHICS</h2>
+                </div>
+                <div class="section-content">
+                    <p>As a security-focused hackathon, we have additional guidelines:</p>
+                    <ul>
+                        <li>Only test against systems and services explicitly provided for the event</li>
+                        <li>Do not attempt to access other participants' devices or accounts without permission</li>
+                        <li>Report vulnerabilities responsibly to organizers, not publicly</li>
+                        <li>Do not use tools or techniques that could harm the venue's network or systems</li>
+                        <li>Respect intellectual property and properly attribute work</li>
+                        <li>Do not engage in any illegal activities under the guise of "hacking"</li>
+                    </ul>
+                    <p>
+                        <span class="highlight">Remember: We're here to build security, not break trust.</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Reporting -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">05</span>
+                    <h2 class="section-title">REPORTING</h2>
+                </div>
+                <div class="section-content">
+                    <p>
+                        If you experience or witness unacceptable behavior, or have any other concerns,
+                        please report it as soon as possible to an event organizer.
+                    </p>
+                    <p>You can identify organizers by their <span class="highlight">[STAFF]</span> badges.</p>
+                    <p>When reporting, please include:</p>
+                    <ul>
+                        <li>Your contact information</li>
+                        <li>Names (or descriptions) of individuals involved</li>
+                        <li>Description of the behavior and circumstances</li>
+                        <li>Any additional witnesses</li>
+                    </ul>
+                    <p>
+                        All reports will be handled with discretion. We will not share identifying information
+                        without your consent, except as required by law or to protect others' safety.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Enforcement -->
+            <section class="content-section">
+                <div class="section-header">
+                    <span class="section-index">06</span>
+                    <h2 class="section-title">ENFORCEMENT</h2>
+                </div>
+                <div class="section-content">
+                    <p>
+                        Participants asked to stop any harassing behavior are expected to comply immediately.
+                    </p>
+                    <p>Organizers may take any action they deem appropriate, including:</p>
+                    <ul>
+                        <li>Warning the offender</li>
+                        <li>Expulsion from the event with no refund</li>
+                        <li>Banning from future NEBULA:FOG events</li>
+                        <li>Reporting to law enforcement if necessary</li>
+                    </ul>
+                    <p>
+                        <span class="highlight">This code of conduct applies at all event venues and event-related
+                        social activities.</span>
+                    </p>
+                </div>
+            </section>
+
+            <!-- Contact -->
+            <section class="contact-section">
+                <h2 class="contact-title">Need to Report Something?</h2>
+                <p class="contact-text">
+                    Our team is here to help. All reports are confidential and will be taken seriously.
+                </p>
+                <a href="mailto:conduct@nebulafog.io" class="contact-email">conduct@nebulafog.io</a>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
+            <p class="footer-text">Where AI consciousness meets cybersecurity.</p>
+            <div class="footer-links">
+                <a href="about.html">MISSION</a>
+                <a href="challenges.html">CHALLENGES</a>
+                <a href="schedule.html">SCHEDULE</a>
+                <a href="register.html">ACCESS</a>
+                <a href="partners.html">PARTNERS</a>
+                <a href="code-of-conduct.html">PROTOCOL</a>
+            </div>
+            <p class="footer-copyright">© 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="about.html">MISSION</a></li>
+            <li><a href="challenges.html">CHALLENGES</a></li>
+            <li><a href="schedule.html">SCHEDULE</a></li>
+            <li><a href="register.html">ACCESS</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animate page header
+            gsap.to('.page-header', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            // Animate quick ref cards
+            gsap.to('.ref-card', {
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.1,
+                delay: 0.3,
+                ease: 'power3.out'
+            });
+
+            // Animate content sections with scroll trigger
+            gsap.utils.toArray('.content-section').forEach((section, i) => {
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.5 + (i * 0.1),
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%',
+                        toggleActions: 'play none none none'
+                    }
+                });
+            });
+
+            // Animate contact section
+            gsap.to('.contact-section', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: '.contact-section',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
