@@ -278,8 +278,16 @@
             font-family: var(--font-display);
             font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             color: var(--color-text);
+        }
+
+        .protocol-subtitle {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.02em;
         }
 
         .protocol-tag {
@@ -388,6 +396,32 @@
         .btn-primary span {
             position: relative;
             z-index: 1;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 255, 159, 0.1);
+            border: 1px solid rgba(0, 255, 159, 0.3);
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 255, 159, 0.2);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+        }
+
+        .btn-secondary i {
+            font-size: 0.9rem;
         }
 
         /* ========================================
@@ -537,6 +571,10 @@
                     2026: The year we trusted agents to manage themselves. Four tracks.
                     Eight hours. Build something that matters. This isn't a CTF—it's a build session.
                 </p>
+                <a href="https://ideas.nebulafog.ai" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                    <i class="fas fa-database"></i>
+                    <span>Access Challenge Database</span>
+                </a>
             </header>
 
             <section class="protocols">
@@ -544,6 +582,7 @@
                     <span class="protocol-index" style="color: #ff4444;">01</span>
                     <div class="protocol-content">
                         <h2 class="protocol-title">SHADOW::VECTOR</h2>
+                        <p class="protocol-subtitle">Attack AI Systems</p>
                         <span class="protocol-tag" style="color: #ff4444;">[CLASSIFICATION: RED] OFFENSIVE PROTOCOL</span>
                         <p class="protocol-tagline">"Break the chain of trust."</p>
                         <p class="protocol-text">
@@ -564,6 +603,7 @@
                     <span class="protocol-index" style="color: #4488ff;">02</span>
                     <div class="protocol-content">
                         <h2 class="protocol-title">SENTINEL::MESH</h2>
+                        <p class="protocol-subtitle">Defend AI Systems</p>
                         <span class="protocol-tag" style="color: #4488ff;">[CLASSIFICATION: BLUE] DEFENSIVE PROTOCOL</span>
                         <p class="protocol-tagline">"Guard the protocol."</p>
                         <p class="protocol-text">
@@ -584,6 +624,7 @@
                     <span class="protocol-index" style="color: #0ff;">03</span>
                     <div class="protocol-content">
                         <h2 class="protocol-title">ZERO::PROOF</h2>
+                        <p class="protocol-subtitle">Verify Without Exposing</p>
                         <span class="protocol-tag" style="color: #0ff;">[CLASSIFICATION: CIPHER] TRUST PROTOCOL</span>
                         <p class="protocol-tagline">"Trust without compromise."</p>
                         <p class="protocol-text">
@@ -604,6 +645,7 @@
                     <span class="protocol-index" style="color: #aa44ff;">04</span>
                     <div class="protocol-content">
                         <h2 class="protocol-title">ROGUE::AGENT</h2>
+                        <p class="protocol-subtitle">Build Something New</p>
                         <span class="protocol-tag" style="color: #aa44ff;">[CLASSIFICATION: UNBOUND] UNDEFINED PROTOCOL</span>
                         <p class="protocol-tagline">"Write your own protocol."</p>
                         <p class="protocol-text">
