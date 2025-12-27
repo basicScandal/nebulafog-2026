@@ -699,6 +699,356 @@
         }
 
         /* ========================================
+           MISSION DEBRIEF SECTION (2025 Retrospective)
+           ======================================== */
+        .mission-debrief {
+            padding: 10vh 5vw;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .debrief-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .debrief-tag {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .debrief-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .debrief-subtitle {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--color-text-muted);
+        }
+
+        .debrief-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .debrief-stat {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(0, 255, 159, 0.03) 0%, transparent 50%);
+            border: 1px solid rgba(0, 255, 159, 0.1);
+        }
+
+        .debrief-stat-value {
+            font-family: var(--font-mono);
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            display: block;
+            text-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+        }
+
+        .debrief-stat-label {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .debrief-video {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 3rem;
+            position: relative;
+            border: 1px solid rgba(0, 255, 159, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .debrief-video::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0, 255, 159, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .debrief-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .video-placeholder:hover {
+            background: linear-gradient(135deg, #0f0f0f 0%, #1f1f1f 100%);
+        }
+
+        .video-placeholder i {
+            font-size: 4rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .video-placeholder:hover i {
+            transform: scale(1.1);
+        }
+
+        .video-placeholder span {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .debrief-projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(0, 255, 159, 0.02) 0%, transparent 50%);
+            border: 1px solid rgba(0, 255, 159, 0.1);
+            padding: 2rem;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .project-card:hover {
+            border-color: rgba(0, 255, 159, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .project-track {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: rgba(0, 255, 159, 0.1);
+        }
+
+        .project-track[data-track="SHADOW"] { color: #ff4444; background: rgba(255, 68, 68, 0.1); }
+        .project-track[data-track="SENTINEL"] { color: #4488ff; background: rgba(68, 136, 255, 0.1); }
+        .project-track[data-track="ZERO"] { color: var(--color-accent); background: rgba(0, 255, 255, 0.1); }
+        .project-track[data-track="ROGUE"] { color: #aa44ff; background: rgba(170, 68, 255, 0.1); }
+
+        .project-name {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .project-team {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-dim);
+        }
+
+        .project-quote {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--color-secondary);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* ========================================
+           TESTIMONIALS SECTION
+           ======================================== */
+        .testimonials {
+            padding: 10vh 5vw;
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonials-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .testimonials-tag {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-secondary);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .testimonials-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .testimonial-carousel {
+            display: flex;
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            overflow-x: auto;
+            padding: 1rem 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .testimonial-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            flex: 0 0 auto;
+            width: min(400px, 85vw);
+            background: rgba(0, 255, 159, 0.02);
+            border-left: 3px solid var(--color-primary);
+            padding: 2rem;
+            scroll-snap-align: center;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .testimonial-card:hover {
+            background: rgba(0, 255, 159, 0.05);
+        }
+
+        .testimonial-quote {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: var(--color-text);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-quote::before {
+            content: '"';
+            color: var(--color-primary);
+            font-size: 2rem;
+            line-height: 0;
+            margin-right: 0.25rem;
+        }
+
+        .testimonial-quote::after {
+            content: '"';
+            color: var(--color-primary);
+            font-size: 2rem;
+            line-height: 0;
+            margin-left: 0.25rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-bg);
+        }
+
+        .testimonial-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-name {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--color-text);
+        }
+
+        .testimonial-role {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-text-dim);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .testimonial-dot.active {
+            background: var(--color-primary);
+            box-shadow: 0 0 10px var(--color-primary);
+        }
+
+        /* ========================================
            COMMAND LINE (HIDDEN UNTIL SCROLL)
            ======================================== */
         .command-section {
@@ -1128,6 +1478,78 @@
                 -webkit-backface-visibility: hidden;
             }
 
+            /* Mission Debrief Mobile */
+            .mission-debrief {
+                padding: 8vh 4vw;
+                min-height: auto;
+            }
+
+            .debrief-header {
+                margin-bottom: 2rem;
+            }
+
+            .debrief-stats {
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .debrief-stat {
+                padding: 1rem 1.5rem;
+                flex: 1 1 calc(50% - 0.5rem);
+                min-width: 120px;
+            }
+
+            .debrief-stat-value {
+                font-size: clamp(1.5rem, 4vw, 2rem);
+            }
+
+            .debrief-video {
+                margin-bottom: 2rem;
+            }
+
+            .video-placeholder i {
+                font-size: 2.5rem;
+            }
+
+            .debrief-projects {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .project-card {
+                padding: 1.5rem;
+            }
+
+            /* Testimonials Mobile */
+            .testimonials {
+                padding: 8vh 4vw;
+                min-height: auto;
+            }
+
+            .testimonials-header {
+                margin-bottom: 2rem;
+            }
+
+            .testimonial-carousel {
+                gap: 1rem;
+                padding: 0.5rem 0;
+            }
+
+            .testimonial-card {
+                width: 85vw;
+                padding: 1.5rem;
+            }
+
+            .testimonial-quote {
+                font-size: 1rem;
+            }
+
+            .testimonial-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+
             /* Disable particles on mobile for better performance */
             .particles-canvas {
                 display: none !important;
@@ -1271,6 +1693,67 @@
             </div>
         </section>
 
+        <!-- 2025 Mission Debrief Section -->
+        <section class="mission-debrief" id="mission-debrief">
+            <div class="debrief-header">
+                <span class="debrief-tag">// MISSION DEBRIEF: 2025</span>
+                <h2 class="debrief-title">LAST YEAR, 120 BUILDERS CHANGED AI SECURITY</h2>
+                <p class="debrief-subtitle">Here's what happened when we let them loose.</p>
+            </div>
+
+            <div class="debrief-stats">
+                <div class="debrief-stat">
+                    <span class="debrief-stat-value" data-value="120">0</span>
+                    <span class="debrief-stat-label">Hackers</span>
+                </div>
+                <div class="debrief-stat">
+                    <span class="debrief-stat-value" data-value="4">0</span>
+                    <span class="debrief-stat-label">Tracks</span>
+                </div>
+                <div class="debrief-stat">
+                    <span class="debrief-stat-value" data-value="24">0</span>
+                    <span class="debrief-stat-label">Projects</span>
+                </div>
+                <div class="debrief-stat">
+                    <span class="debrief-stat-value" data-value="8">0</span>
+                    <span class="debrief-stat-label">Hours</span>
+                </div>
+            </div>
+
+            <div class="debrief-video">
+                <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="video-placeholder">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Watch 2025 Highlights →</span>
+                </a>
+            </div>
+
+            <div class="debrief-projects">
+                <article class="project-card">
+                    <span class="project-track" data-track="SHADOW">SHADOW::VECTOR</span>
+                    <h3 class="project-name">AgentHijack</h3>
+                    <p class="project-desc">Demonstrated how chained LLM agents can be manipulated through prompt injection cascades.</p>
+                    <p class="project-team">Team: Sarah Chen, Marcus Rivera, Jin Park</p>
+                    <p class="project-quote">"We broke 3 production AI systems in under 2 hours."</p>
+                </article>
+
+                <article class="project-card">
+                    <span class="project-track" data-track="SENTINEL">SENTINEL::MESH</span>
+                    <h3 class="project-name">GuardRail</h3>
+                    <p class="project-desc">Real-time detection system for adversarial prompts using behavioral analysis.</p>
+                    <p class="project-team">Team: Alex Thompson, Priya Sharma</p>
+                    <p class="project-quote">"Caught attacks that existing tools completely missed."</p>
+                </article>
+
+                <article class="project-card">
+                    <span class="project-track" data-track="ZERO">ZERO::PROOF</span>
+                    <h3 class="project-name">TrustChain</h3>
+                    <p class="project-desc">Zero-knowledge proofs for verifying AI model outputs without exposing weights.</p>
+                    <p class="project-team">Team: David Kim, Emma Watson, Luis Garcia</p>
+                    <p class="project-quote">"Finally, verifiable AI without the privacy tradeoff."</p>
+                </article>
+            </div>
+        </section>
+
         <!-- Challenge Tracks Section -->
         <section class="protocols" id="protocols">
             <article class="protocol-card" data-index="01" data-classification="RED">
@@ -1336,6 +1819,67 @@
                     </p>
                 </div>
             </article>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials" id="testimonials">
+            <div class="testimonials-header">
+                <span class="testimonials-tag">// VOICES FROM THE FIELD</span>
+                <h2 class="testimonials-title">What 2025 Operatives Are Saying</h2>
+            </div>
+
+            <div class="testimonial-carousel">
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">I came as a frontend dev. Left as a security researcher. This hackathon completely changed my career trajectory.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MC</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Maya Chen</span>
+                            <span class="testimonial-role">Stanford '25 • Shadow Team Winner</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">The mentors here actually know offensive security. Not just theory—real exploits, real defenses. Best learning experience I've had.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JR</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">James Rodriguez</span>
+                            <span class="testimonial-role">MIT '26 • First-Time Hacker</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">We built something in 8 hours that we're now turning into a startup. The AI security space is wide open.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">PS</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Priya Sharma</span>
+                            <span class="testimonial-role">Berkeley '25 • Sentinel Team</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <p class="testimonial-quote">40% of participants were first-timers like me. No gatekeeping, just builders helping builders break and build AI systems.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AT</div>
+                        <div class="testimonial-info">
+                            <span class="testimonial-name">Alex Thompson</span>
+                            <span class="testimonial-role">CMU '26 • Zero Track</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-dots">
+                <span class="testimonial-dot active"></span>
+                <span class="testimonial-dot"></span>
+                <span class="testimonial-dot"></span>
+                <span class="testimonial-dot"></span>
+            </div>
         </section>
 
         <!-- Hidden Command Line Section -->
@@ -1742,6 +2286,7 @@
                 this.initHeroAnimations();
                 this.initScrollAnimations();
                 this.initCommandLine();
+                this.initTestimonialCarousel();
                 this.initInactivityDetection();
                 this.initIntrusionDetection();
                 this.initEasterEggs();
@@ -2352,6 +2897,73 @@
                     );
                 });
 
+                // Mission Debrief section
+                gsap.fromTo('#mission-debrief',
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: '#mission-debrief',
+                            start: 'top 80%',
+                            onEnter: () => this.animateDebriefStats()
+                        }
+                    }
+                );
+
+                // Project cards in debrief
+                document.querySelectorAll('.project-card').forEach((card, i) => {
+                    gsap.fromTo(card,
+                        { opacity: 0, y: 30 },
+                        {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.6,
+                            delay: i * 0.15,
+                            ease: 'power2.out',
+                            scrollTrigger: {
+                                trigger: card,
+                                start: 'top 85%'
+                            }
+                        }
+                    );
+                });
+
+                // Testimonials section
+                gsap.fromTo('#testimonials',
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: '#testimonials',
+                            start: 'top 80%'
+                        }
+                    }
+                );
+
+                // Testimonial cards
+                document.querySelectorAll('.testimonial-card').forEach((card, i) => {
+                    gsap.fromTo(card,
+                        { opacity: 0, x: 30 },
+                        {
+                            opacity: 1,
+                            x: 0,
+                            duration: 0.6,
+                            delay: i * 0.1,
+                            ease: 'power2.out',
+                            scrollTrigger: {
+                                trigger: '#testimonials',
+                                start: 'top 70%'
+                            }
+                        }
+                    );
+                });
+
                 // Command section
                 gsap.fromTo('#command-section',
                     { opacity: 0 },
@@ -2378,6 +2990,67 @@
                         }
                     }
                 );
+            }
+
+            // ========================================
+            // DEBRIEF STATS ANIMATION
+            // ========================================
+            animateDebriefStats() {
+                document.querySelectorAll('.debrief-stat-value').forEach(stat => {
+                    const target = parseInt(stat.dataset.value);
+                    const duration = 2000;
+                    const start = Date.now();
+
+                    const animate = () => {
+                        const elapsed = Date.now() - start;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Easing function for smooth deceleration
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.floor(eased * target);
+                        stat.textContent = current;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            stat.textContent = target;
+                        }
+                    };
+
+                    animate();
+                });
+            }
+
+            // ========================================
+            // TESTIMONIAL CAROUSEL
+            // ========================================
+            initTestimonialCarousel() {
+                const carousel = document.querySelector('.testimonial-carousel');
+                const dots = document.querySelectorAll('.testimonial-dot');
+                const cards = document.querySelectorAll('.testimonial-card');
+
+                if (!carousel || !dots.length || !cards.length) return;
+
+                // Update dots on scroll
+                carousel.addEventListener('scroll', () => {
+                    const scrollLeft = carousel.scrollLeft;
+                    const cardWidth = cards[0].offsetWidth + 32; // width + gap
+                    const activeIndex = Math.round(scrollLeft / cardWidth);
+
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === activeIndex);
+                    });
+                });
+
+                // Click on dot to scroll
+                dots.forEach((dot, i) => {
+                    dot.addEventListener('click', () => {
+                        const cardWidth = cards[0].offsetWidth + 32;
+                        carousel.scrollTo({
+                            left: i * cardWidth,
+                            behavior: 'smooth'
+                        });
+                    });
+                });
             }
 
             // ========================================
