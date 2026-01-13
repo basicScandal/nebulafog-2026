@@ -350,9 +350,10 @@
         .splash-link {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.75rem;
             padding: 1rem 2rem;
-            background: transparent;
+            background: rgba(0, 255, 159, 0);
             border: 1px solid var(--color-text-dim);
             color: var(--color-text-muted);
             font-family: var(--font-mono);
@@ -362,34 +363,20 @@
             text-decoration: none;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
-            transition: all 0.4s var(--ease-out-expo);
+            transition: all 0.3s ease;
             z-index: 100;
         }
 
-        .splash-link::before {
-            content: '';
-            position: absolute;
-            inset: 0;
+        .splash-link:hover,
+        .splash-link:focus {
             background: var(--color-primary);
-            transform: translateX(-101%);
-            transition: transform 0.4s var(--ease-out-expo);
-        }
-
-        .splash-link:hover {
             color: var(--color-bg);
             border-color: var(--color-primary);
-            box-shadow: 0 0 30px rgba(0, 255, 159, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 159, 0.5);
         }
 
-        .splash-link:hover::before {
-            transform: translateX(0);
-        }
-
-        .splash-link span,
-        .splash-link i {
-            position: relative;
-            z-index: 1;
+        .splash-link:active {
+            transform: scale(0.98);
         }
 
         .splash-link i {
