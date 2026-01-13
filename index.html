@@ -434,11 +434,16 @@
             }
 
             .scanlines {
-                opacity: 0.05;
+                opacity: 0.08;
             }
 
             .noise {
-                display: none;
+                opacity: 0.015;
+            }
+
+            .grid-bg {
+                background-size: 30px 30px;
+                opacity: 0.8;
             }
 
             .splash-title {
@@ -452,7 +457,7 @@
             }
 
             .particles-canvas {
-                display: none !important;
+                opacity: 0.7;
             }
 
             .splash-links {
@@ -463,6 +468,29 @@
             .splash-link {
                 width: 100%;
                 justify-content: center;
+            }
+
+            /* Mobile ambient glow effect */
+            .splash-content::before {
+                content: '';
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 150vw;
+                height: 150vh;
+                transform: translate(-50%, -50%);
+                background: radial-gradient(ellipse at center,
+                    rgba(0, 255, 159, 0.08) 0%,
+                    rgba(255, 0, 128, 0.05) 30%,
+                    transparent 60%);
+                pointer-events: none;
+                z-index: -1;
+                animation: ambientPulse 8s ease-in-out infinite;
+            }
+
+            @keyframes ambientPulse {
+                0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+                50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
             }
         }
 
@@ -805,12 +833,11 @@
             }
 
             initParticles() {
-                if (window.matchMedia('(max-width: 768px)').matches) return;
-
                 const canvas = document.getElementById('particles');
                 const ctx = canvas.getContext('2d');
                 let particles = [];
                 let animationId;
+                const isMobile = window.matchMedia('(max-width: 768px)').matches;
 
                 function resize() {
                     canvas.width = window.innerWidth;
@@ -821,16 +848,18 @@
                     return {
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
-                        size: Math.random() * 2 + 0.5,
-                        speedX: (Math.random() - 0.5) * 0.5,
-                        speedY: (Math.random() - 0.5) * 0.5,
+                        size: isMobile ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 0.5,
+                        speedX: (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5),
+                        speedY: (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5),
                         opacity: Math.random() * 0.5 + 0.1
                     };
                 }
 
                 function initParticles() {
                     particles = [];
-                    const count = Math.floor((canvas.width * canvas.height) / 15000);
+                    // Fewer particles on mobile for performance
+                    const divisor = isMobile ? 25000 : 15000;
+                    const count = Math.floor((canvas.width * canvas.height) / divisor);
                     for (let i = 0; i < count; i++) {
                         particles.push(createParticle());
                     }
