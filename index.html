@@ -116,7 +116,6 @@
             height: 8px;
             background: var(--color-primary);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
         }
 
         .cursor-ring {
@@ -124,8 +123,7 @@
             height: 40px;
             border: 1px solid var(--color-primary);
             border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: all 0.15s var(--ease-out-expo);
+            transition: width 0.15s var(--ease-out-expo), height 0.15s var(--ease-out-expo), border-color 0.15s var(--ease-out-expo);
         }
 
         .cursor-ring.hover {
@@ -740,14 +738,16 @@
                 const ring = document.querySelector('.cursor-ring');
 
                 document.addEventListener('mousemove', (e) => {
+                    // Center the dot (8px / 2 = 4px offset)
                     gsap.to(dot, {
-                        x: e.clientX,
-                        y: e.clientY,
+                        left: e.clientX - 4,
+                        top: e.clientY - 4,
                         duration: 0.1
                     });
+                    // Center the ring (40px / 2 = 20px offset)
                     gsap.to(ring, {
-                        x: e.clientX,
-                        y: e.clientY,
+                        left: e.clientX - 20,
+                        top: e.clientY - 20,
                         duration: 0.3
                     });
                 });
