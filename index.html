@@ -387,6 +387,365 @@
         }
 
         /* ========================================
+           COUNTDOWN TIMER
+           ======================================== */
+        .countdown-section {
+            margin-bottom: 3rem;
+            opacity: 0;
+        }
+
+        .countdown-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 60px;
+        }
+
+        .countdown-value {
+            font-family: var(--font-mono);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-shadow: 0 0 20px var(--color-primary);
+            line-height: 1;
+        }
+
+        .countdown-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.15em;
+            margin-top: 0.25rem;
+        }
+
+        .countdown-separator {
+            font-family: var(--font-mono);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            color: var(--color-text-dim);
+            animation: separatorPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes separatorPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .attendee-cap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            border-radius: 4px;
+        }
+
+        .cap-icon {
+            color: var(--color-secondary);
+            font-size: 1rem;
+        }
+
+        .cap-text {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .cap-number {
+            color: var(--color-secondary);
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--color-secondary);
+        }
+
+        /* ========================================
+           AGENTIC TERMINAL
+           ======================================== */
+        .agent-terminal-section {
+            padding: 2rem 5vw 4rem;
+            position: relative;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+        }
+
+        .agent-terminal {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid var(--color-text-dim);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow:
+                0 0 40px rgba(0, 255, 159, 0.1),
+                inset 0 0 60px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-bottom: 1px solid var(--color-text-dim);
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dots .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dots .dot.red { background: #ff5f56; }
+        .terminal-dots .dot.yellow { background: #ffbd2e; }
+        .terminal-dots .dot.green { background: #27ca40; }
+
+        .terminal-title {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .terminal-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 10px var(--color-primary);
+            }
+            50% {
+                opacity: 0.5;
+                box-shadow: 0 0 5px var(--color-primary);
+            }
+        }
+
+        .status-text {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            min-height: 300px;
+            max-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-output {
+            flex: 1;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-text-dim) transparent;
+        }
+
+        .terminal-output::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .terminal-output::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .terminal-output::-webkit-scrollbar-thumb {
+            background: var(--color-text-dim);
+            border-radius: 3px;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        .terminal-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .terminal-line.agent-thinking {
+            color: var(--color-text-muted);
+        }
+
+        .terminal-line.agent-action {
+            color: var(--color-accent);
+        }
+
+        .terminal-line.agent-output {
+            color: var(--color-text);
+        }
+
+        .terminal-line.agent-highlight {
+            color: var(--color-primary);
+        }
+
+        .terminal-line.agent-secondary {
+            color: var(--color-secondary);
+        }
+
+        .terminal-line .prefix {
+            color: var(--color-text-dim);
+            margin-right: 0.5rem;
+        }
+
+        .terminal-line .tool-call {
+            color: var(--color-accent);
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+        }
+
+        .terminal-line .value {
+            color: var(--color-secondary);
+        }
+
+        .terminal-line .success {
+            color: var(--color-primary);
+        }
+
+        .typing-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1em;
+            background: var(--color-primary);
+            margin-left: 2px;
+            animation: cursorBlink 0.8s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes cursorBlink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .terminal-input-area {
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-text-dim);
+            margin-top: 1rem;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .terminal-input-area.active {
+            opacity: 1;
+        }
+
+        .terminal-prompt {
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            caret-color: var(--color-primary);
+        }
+
+        .terminal-input::placeholder {
+            color: var(--color-text-dim);
+        }
+
+        .terminal-cursor {
+            display: none;
+        }
+
+        .terminal-hint {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: rgba(0, 255, 159, 0.05);
+            border-top: 1px solid var(--color-text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-dim);
+            transition: opacity 0.3s ease;
+        }
+
+        .terminal-hint i {
+            color: var(--color-primary);
+        }
+
+        .terminal-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Agent task block styling */
+        .agent-task-block {
+            background: rgba(0, 255, 159, 0.05);
+            border-left: 2px solid var(--color-primary);
+            padding: 0.5rem 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .agent-task-block .task-header {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .agent-task-block .task-content {
+            color: var(--color-text);
+        }
+
+        /* User input echo */
+        .user-input-line {
+            color: var(--color-text);
+        }
+
+        .user-input-line .prompt-symbol {
+            color: var(--color-secondary);
+            margin-right: 0.5rem;
+        }
+
+        /* ========================================
            FOOTER
            ======================================== */
         .footer {
@@ -497,6 +856,77 @@
                 0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
                 50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
             }
+
+            /* Mobile countdown */
+            .countdown-grid {
+                gap: 0.25rem;
+            }
+
+            .countdown-item {
+                min-width: 45px;
+            }
+
+            .countdown-value {
+                font-size: 1.25rem;
+            }
+
+            .countdown-separator {
+                font-size: 1.25rem;
+            }
+
+            .attendee-cap {
+                flex-direction: column;
+                gap: 0.25rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .cap-text {
+                font-size: 0.7rem;
+            }
+
+            /* Mobile terminal */
+            .agent-terminal-section {
+                padding: 1rem 1rem 3rem;
+            }
+
+            .agent-terminal {
+                border-radius: 6px;
+            }
+
+            .terminal-header {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .terminal-dots .dot {
+                width: 8px;
+                height: 8px;
+            }
+
+            .terminal-title {
+                font-size: 0.65rem;
+            }
+
+            .terminal-status {
+                display: none;
+            }
+
+            .terminal-body {
+                padding: 1rem;
+                min-height: 250px;
+                max-height: 350px;
+            }
+
+            .terminal-output {
+                font-size: 0.75rem;
+            }
+
+            .terminal-input {
+                font-size: 0.75rem;
+            }
+
+            .terminal-hint {
+                font-size: 0.6rem;
+            }
         }
 
         /* ========================================
@@ -563,6 +993,35 @@
 
             <div class="splash-date" id="splash-date">3.14...26</div>
 
+            <!-- Countdown Timer -->
+            <div class="countdown-section" id="countdown-section">
+                <div class="countdown-grid">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="countdown-days">00</span>
+                        <span class="countdown-label">DAYS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="countdown-hours">00</span>
+                        <span class="countdown-label">HOURS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="countdown-minutes">00</span>
+                        <span class="countdown-label">MINS</span>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="countdown-seconds">00</span>
+                        <span class="countdown-label">SECS</span>
+                    </div>
+                </div>
+                <div class="attendee-cap">
+                    <span class="cap-icon"><i class="fas fa-users"></i></span>
+                    <span class="cap-text">LIMITED TO <span class="cap-number">100</span> OPERATIVES</span>
+                </div>
+            </div>
+
             <div class="splash-links" id="splash-links">
                 <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="splash-link">
                     <i class="fas fa-images"></i>
@@ -575,6 +1034,38 @@
             </div>
         </div>
     </main>
+
+    <!-- Agentic Terminal Section -->
+    <section class="agent-terminal-section" id="agent-terminal-section">
+        <div class="agent-terminal" id="agent-terminal">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <div class="terminal-title">NEBULA::AGENT v2.026</div>
+                <div class="terminal-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">AUTONOMOUS</span>
+                </div>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-output" id="terminal-output">
+                    <!-- Output lines will be added dynamically -->
+                </div>
+                <div class="terminal-input-area" id="terminal-input-area">
+                    <span class="terminal-prompt">></span>
+                    <input type="text" class="terminal-input" id="terminal-input" placeholder="Ask about NEBULA:FOG 2026..." autocomplete="off" spellcheck="false">
+                    <span class="terminal-cursor"></span>
+                </div>
+            </div>
+            <div class="terminal-hint">
+                <i class="fas fa-keyboard"></i>
+                <span>Click or press any key to interact</span>
+            </div>
+        </div>
+    </section>
 
     <footer class="footer" role="contentinfo">
         <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
@@ -795,12 +1286,39 @@
                     delay: 0.8
                 });
 
+                // Animate countdown section
+                const countdown = document.getElementById('countdown-section');
+                if (countdown) {
+                    gsap.to(countdown, {
+                        opacity: 1,
+                        duration: 0.8,
+                        delay: 1.0
+                    });
+                }
+
                 // Animate links
                 gsap.to(links, {
                     opacity: 1,
                     duration: 0.8,
-                    delay: 1.2
+                    delay: 1.4
                 });
+
+                // Animate terminal
+                const terminal = document.getElementById('agent-terminal');
+                if (terminal) {
+                    gsap.to(terminal, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 1.8,
+                        onComplete: () => {
+                            // Start the agent terminal after animation
+                            if (window.agentTerminal) {
+                                window.agentTerminal.start();
+                            }
+                        }
+                    });
+                }
             }
 
             initCursor() {
@@ -912,6 +1430,392 @@
         }
 
         // ========================================
+        // COUNTDOWN TIMER
+        // ========================================
+        class CountdownTimer {
+            constructor() {
+                this.targetDate = new Date('2026-03-14T00:00:00').getTime();
+                this.daysEl = document.getElementById('countdown-days');
+                this.hoursEl = document.getElementById('countdown-hours');
+                this.minutesEl = document.getElementById('countdown-minutes');
+                this.secondsEl = document.getElementById('countdown-seconds');
+            }
+
+            start() {
+                this.update();
+                setInterval(() => this.update(), 1000);
+            }
+
+            update() {
+                const now = new Date().getTime();
+                const distance = this.targetDate - now;
+
+                if (distance < 0) {
+                    this.daysEl.textContent = '00';
+                    this.hoursEl.textContent = '00';
+                    this.minutesEl.textContent = '00';
+                    this.secondsEl.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                this.daysEl.textContent = days.toString().padStart(2, '0');
+                this.hoursEl.textContent = hours.toString().padStart(2, '0');
+                this.minutesEl.textContent = minutes.toString().padStart(2, '0');
+                this.secondsEl.textContent = seconds.toString().padStart(2, '0');
+            }
+        }
+
+        // ========================================
+        // AGENTIC TERMINAL
+        // ========================================
+        class AgentTerminal {
+            constructor() {
+                this.output = document.getElementById('terminal-output');
+                this.input = document.getElementById('terminal-input');
+                this.inputArea = document.getElementById('terminal-input-area');
+                this.hint = document.querySelector('.terminal-hint');
+                this.statusText = document.querySelector('.status-text');
+
+                this.isInteractive = false;
+                this.isTyping = false;
+                this.autoLoopRunning = false;
+                this.currentTypingPromise = null;
+                this.abortTyping = false;
+
+                // Auto-loop content sequences
+                this.infoSequences = [
+                    {
+                        title: 'Analyzing event parameters...',
+                        content: [
+                            { type: 'thinking', text: 'Scanning NEBULA:FOG database...' },
+                            { type: 'action', text: 'Read', detail: 'event_config.yaml' },
+                            { type: 'output', text: 'NEBULA:FOG 2026 is an AI x Security hackathon' },
+                            { type: 'output', text: 'focused on building at the intersection of' },
+                            { type: 'highlight', text: 'artificial intelligence and cybersecurity.' },
+                            { type: 'action', text: 'Complete', detail: 'Event overview loaded' }
+                        ]
+                    },
+                    {
+                        title: 'Retrieving event timeline...',
+                        content: [
+                            { type: 'thinking', text: 'Querying schedule database...' },
+                            { type: 'action', text: 'Read', detail: 'schedule.json' },
+                            { type: 'highlight', text: 'DATE: March 14, 2026 (Pi Day)' },
+                            { type: 'output', text: 'A single-day intensive hackathon' },
+                            { type: 'output', text: 'where builders create AI-powered security tools.' },
+                            { type: 'action', text: 'Complete', detail: 'Timeline retrieved' }
+                        ]
+                    },
+                    {
+                        title: 'Loading capacity constraints...',
+                        content: [
+                            { type: 'thinking', text: 'Checking registration limits...' },
+                            { type: 'action', text: 'Read', detail: 'capacity.config' },
+                            { type: 'secondary', text: 'ALERT: Limited capacity event' },
+                            { type: 'highlight', text: 'Maximum 100 operatives will be admitted.' },
+                            { type: 'output', text: 'Early registration strongly recommended.' },
+                            { type: 'action', text: 'Complete', detail: 'Capacity check done' }
+                        ]
+                    },
+                    {
+                        title: 'Analyzing 2025 metrics...',
+                        content: [
+                            { type: 'thinking', text: 'Loading historical data...' },
+                            { type: 'action', text: 'Analyze', detail: '2025_results.db' },
+                            { type: 'output', text: 'Last year: 120 hackers, 24 projects built' },
+                            { type: 'output', text: 'Across 4 challenge tracks in 8 hours.' },
+                            { type: 'highlight', text: 'View demos: youtube.com/@NEBULAFOG' },
+                            { type: 'action', text: 'Complete', detail: 'Analysis finished' }
+                        ]
+                    },
+                    {
+                        title: 'Scanning challenge protocols...',
+                        content: [
+                            { type: 'thinking', text: 'Decrypting track manifests...' },
+                            { type: 'action', text: 'Decrypt', detail: 'tracks/*.manifest' },
+                            { type: 'output', text: 'Challenge tracks focus on real-world' },
+                            { type: 'output', text: 'AI security problems including:' },
+                            { type: 'highlight', text: 'adversarial ML, agent security, LLM safety' },
+                            { type: 'action', text: 'Complete', detail: 'Tracks decrypted' }
+                        ]
+                    },
+                    {
+                        title: 'Querying participant profile...',
+                        content: [
+                            { type: 'thinking', text: 'Who should attend?' },
+                            { type: 'action', text: 'Search', detail: 'ideal_participant.spec' },
+                            { type: 'output', text: 'Security researchers, ML engineers,' },
+                            { type: 'output', text: 'developers curious about AI safety,' },
+                            { type: 'highlight', text: 'and anyone building with LLMs.' },
+                            { type: 'action', text: 'Complete', detail: 'Profile compiled' }
+                        ]
+                    }
+                ];
+
+                // Interactive responses
+                this.responses = {
+                    'date': [
+                        { type: 'highlight', text: 'March 14, 2026 (Pi Day - 3.14)' },
+                        { type: 'output', text: 'A single-day intensive hackathon event.' }
+                    ],
+                    'when': [
+                        { type: 'highlight', text: 'March 14, 2026 (Pi Day - 3.14)' },
+                        { type: 'output', text: 'A single-day intensive hackathon event.' }
+                    ],
+                    'what': [
+                        { type: 'output', text: 'NEBULA:FOG is an AI x Security hackathon' },
+                        { type: 'output', text: 'where builders create projects at the' },
+                        { type: 'highlight', text: 'intersection of AI and cybersecurity.' }
+                    ],
+                    'capacity': [
+                        { type: 'secondary', text: 'Limited to 100 operatives maximum.' },
+                        { type: 'output', text: 'Register early to secure your spot.' }
+                    ],
+                    'limit': [
+                        { type: 'secondary', text: 'Limited to 100 operatives maximum.' },
+                        { type: 'output', text: 'Register early to secure your spot.' }
+                    ],
+                    '100': [
+                        { type: 'secondary', text: 'Yes, capped at 100 participants.' },
+                        { type: 'output', text: 'This ensures quality mentorship and networking.' }
+                    ],
+                    'tracks': [
+                        { type: 'output', text: 'Challenge tracks include:' },
+                        { type: 'highlight', text: 'Adversarial ML, Agent Security, LLM Safety' },
+                        { type: 'output', text: 'Full track details coming soon.' }
+                    ],
+                    'challenges': [
+                        { type: 'output', text: 'Challenge tracks include:' },
+                        { type: 'highlight', text: 'Adversarial ML, Agent Security, LLM Safety' },
+                        { type: 'output', text: 'Full track details coming soon.' }
+                    ],
+                    '2025': [
+                        { type: 'output', text: '2025 stats: 120 hackers, 24 projects' },
+                        { type: 'output', text: 'built across 4 tracks in 8 hours.' },
+                        { type: 'highlight', text: 'Watch demos at youtube.com/@NEBULAFOG' }
+                    ],
+                    'last year': [
+                        { type: 'output', text: '2025 stats: 120 hackers, 24 projects' },
+                        { type: 'output', text: 'built across 4 tracks in 8 hours.' },
+                        { type: 'highlight', text: 'Watch demos at youtube.com/@NEBULAFOG' }
+                    ],
+                    'register': [
+                        { type: 'output', text: 'Registration opens soon.' },
+                        { type: 'secondary', text: 'Remember: Limited to 100 spots!' },
+                        { type: 'output', text: 'Stay tuned for announcements.' }
+                    ],
+                    'signup': [
+                        { type: 'output', text: 'Registration opens soon.' },
+                        { type: 'secondary', text: 'Remember: Limited to 100 spots!' },
+                        { type: 'output', text: 'Stay tuned for announcements.' }
+                    ],
+                    'who': [
+                        { type: 'output', text: 'Ideal for: Security researchers,' },
+                        { type: 'output', text: 'ML engineers, AI builders,' },
+                        { type: 'highlight', text: 'and anyone curious about AI safety.' }
+                    ],
+                    'help': [
+                        { type: 'highlight', text: 'Available queries:' },
+                        { type: 'output', text: 'date, what, capacity, tracks, 2025, register, who' },
+                        { type: 'output', text: 'Or ask any question about the event!' }
+                    ],
+                    'clear': [
+                        { type: 'action', text: 'Clear', detail: 'Terminal cleared' }
+                    ]
+                };
+
+                this.currentSequenceIndex = 0;
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Click on terminal to interact
+                this.output.addEventListener('click', () => this.activateInteractive());
+
+                // Input focus
+                this.input.addEventListener('focus', () => this.activateInteractive());
+
+                // Key press anywhere to activate
+                document.addEventListener('keydown', (e) => {
+                    if (!this.isInteractive && !e.metaKey && !e.ctrlKey && !e.altKey) {
+                        this.activateInteractive();
+                        this.input.focus();
+                    }
+                });
+
+                // Handle input submission
+                this.input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.handleUserInput();
+                    }
+                });
+            }
+
+            async start() {
+                this.autoLoopRunning = true;
+                this.runAutoLoop();
+            }
+
+            async runAutoLoop() {
+                while (this.autoLoopRunning && !this.isInteractive) {
+                    const sequence = this.infoSequences[this.currentSequenceIndex];
+                    await this.playSequence(sequence);
+
+                    this.currentSequenceIndex = (this.currentSequenceIndex + 1) % this.infoSequences.length;
+
+                    // Wait between sequences
+                    await this.sleep(3000);
+
+                    // Clear for next sequence if still in auto mode
+                    if (this.autoLoopRunning && !this.isInteractive) {
+                        this.clearOutput();
+                        await this.sleep(500);
+                    }
+                }
+            }
+
+            async playSequence(sequence) {
+                if (this.isInteractive) return;
+
+                // Show sequence title as thinking
+                await this.addLine({ type: 'thinking', text: sequence.title });
+                await this.sleep(600);
+
+                for (const line of sequence.content) {
+                    if (this.isInteractive || this.abortTyping) {
+                        this.abortTyping = false;
+                        return;
+                    }
+                    await this.addLine(line);
+                    await this.sleep(400);
+                }
+            }
+
+            async addLine(line, instant = false) {
+                const el = document.createElement('div');
+                el.className = 'terminal-line';
+
+                if (line.type === 'thinking') {
+                    el.classList.add('agent-thinking');
+                    el.innerHTML = `<span class="prefix">//</span> ${line.text}`;
+                } else if (line.type === 'action') {
+                    el.classList.add('agent-action');
+                    el.innerHTML = `<span class="tool-call">${line.text}</span> <span class="value">${line.detail}</span>`;
+                } else if (line.type === 'output') {
+                    el.classList.add('agent-output');
+                    el.textContent = line.text;
+                } else if (line.type === 'highlight') {
+                    el.classList.add('agent-highlight');
+                    el.textContent = line.text;
+                } else if (line.type === 'secondary') {
+                    el.classList.add('agent-secondary');
+                    el.textContent = line.text;
+                } else if (line.type === 'user') {
+                    el.classList.add('user-input-line');
+                    el.innerHTML = `<span class="prompt-symbol">></span> ${line.text}`;
+                }
+
+                this.output.appendChild(el);
+
+                if (instant) {
+                    el.classList.add('visible');
+                } else {
+                    // Typing effect with cursor
+                    await this.sleep(50);
+                    el.classList.add('visible');
+
+                    // Play subtle beep
+                    if (window.soundManager && window.soundManager.initialized) {
+                        window.soundManager.beep(500 + Math.random() * 300, 0.03, 0.02);
+                    }
+                }
+
+                // Scroll to bottom
+                this.output.scrollTop = this.output.scrollHeight;
+            }
+
+            activateInteractive() {
+                if (this.isInteractive) return;
+
+                this.isInteractive = true;
+                this.autoLoopRunning = false;
+                this.abortTyping = true;
+
+                // Update UI
+                this.inputArea.classList.add('active');
+                this.hint.classList.add('hidden');
+                this.statusText.textContent = 'INTERACTIVE';
+
+                // Clear and show welcome
+                this.clearOutput();
+                this.addLine({ type: 'highlight', text: 'Interactive mode activated.' }, true);
+                this.addLine({ type: 'output', text: 'Ask me anything about NEBULA:FOG 2026.' }, true);
+                this.addLine({ type: 'thinking', text: 'Type "help" for available commands.' }, true);
+
+                this.input.focus();
+            }
+
+            async handleUserInput() {
+                const query = this.input.value.trim().toLowerCase();
+                this.input.value = '';
+
+                if (!query) return;
+
+                // Echo user input
+                await this.addLine({ type: 'user', text: query }, true);
+
+                // Handle clear command
+                if (query === 'clear') {
+                    this.clearOutput();
+                    return;
+                }
+
+                // Simulate thinking
+                await this.addLine({ type: 'thinking', text: 'Processing query...' });
+                await this.sleep(300);
+
+                // Find matching response
+                let response = null;
+                for (const [key, value] of Object.entries(this.responses)) {
+                    if (query.includes(key)) {
+                        response = value;
+                        break;
+                    }
+                }
+
+                // Default response
+                if (!response) {
+                    response = [
+                        { type: 'output', text: 'NEBULA:FOG 2026 is an AI x Security hackathon' },
+                        { type: 'output', text: 'on March 14, 2026 (Pi Day).' },
+                        { type: 'highlight', text: 'Limited to 100 participants.' },
+                        { type: 'thinking', text: 'Try: date, what, capacity, tracks, help' }
+                    ];
+                }
+
+                // Output response
+                for (const line of response) {
+                    await this.addLine(line);
+                    await this.sleep(200);
+                }
+            }
+
+            clearOutput() {
+                this.output.innerHTML = '';
+            }
+
+            sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        // ========================================
         // ANIMATED FAVICON
         // ========================================
         function initFavicon() {
@@ -961,9 +1865,14 @@
         // INITIALIZATION
         // ========================================
         window.splashController = new SplashController();
+        window.countdownTimer = new CountdownTimer();
+        window.agentTerminal = new AgentTerminal();
 
         document.addEventListener('DOMContentLoaded', () => {
             initFavicon();
+
+            // Start countdown timer immediately
+            window.countdownTimer.start();
 
             // Initialize sound on first user interaction
             const initSound = () => {
