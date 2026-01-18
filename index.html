@@ -471,11 +471,14 @@
            AGENTIC TERMINAL
            ======================================== */
         .agent-terminal-section {
-            padding: 2rem 5vw 4rem;
+            padding: 2rem 0;
             position: relative;
             z-index: 10;
             display: flex;
             justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .agent-terminal {
@@ -993,6 +996,38 @@
 
             <div class="splash-date" id="splash-date">3.14...26</div>
 
+            <!-- Agentic Terminal -->
+            <div class="agent-terminal-section" id="agent-terminal-section">
+                <div class="agent-terminal" id="agent-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="terminal-title">NEBULA::AGENT v2.026</div>
+                        <div class="terminal-status">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">AUTONOMOUS</span>
+                        </div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-output" id="terminal-output">
+                            <!-- Output lines will be added dynamically -->
+                        </div>
+                        <div class="terminal-input-area" id="terminal-input-area">
+                            <span class="terminal-prompt">></span>
+                            <input type="text" class="terminal-input" id="terminal-input" placeholder="Ask about NEBULA:FOG 2026..." autocomplete="off" spellcheck="false">
+                            <span class="terminal-cursor"></span>
+                        </div>
+                    </div>
+                    <div class="terminal-hint">
+                        <i class="fas fa-keyboard"></i>
+                        <span>Click or press any key to interact</span>
+                    </div>
+                </div>
+            </div>
+
             <!-- Countdown Timer -->
             <div class="countdown-section" id="countdown-section">
                 <div class="countdown-grid">
@@ -1034,38 +1069,6 @@
             </div>
         </div>
     </main>
-
-    <!-- Agentic Terminal Section -->
-    <section class="agent-terminal-section" id="agent-terminal-section">
-        <div class="agent-terminal" id="agent-terminal">
-            <div class="terminal-header">
-                <div class="terminal-dots">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <div class="terminal-title">NEBULA::AGENT v2.026</div>
-                <div class="terminal-status">
-                    <span class="status-indicator"></span>
-                    <span class="status-text">AUTONOMOUS</span>
-                </div>
-            </div>
-            <div class="terminal-body">
-                <div class="terminal-output" id="terminal-output">
-                    <!-- Output lines will be added dynamically -->
-                </div>
-                <div class="terminal-input-area" id="terminal-input-area">
-                    <span class="terminal-prompt">></span>
-                    <input type="text" class="terminal-input" id="terminal-input" placeholder="Ask about NEBULA:FOG 2026..." autocomplete="off" spellcheck="false">
-                    <span class="terminal-cursor"></span>
-                </div>
-            </div>
-            <div class="terminal-hint">
-                <i class="fas fa-keyboard"></i>
-                <span>Click or press any key to interact</span>
-            </div>
-        </div>
-    </section>
 
     <footer class="footer" role="contentinfo">
         <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
