@@ -25,8 +25,8 @@ npx serve .
 **No package manager is used** - all libraries are loaded via CDN.
 
 **Deployment:**
-- `origin` remote: Development repository (github.com/basicScandal/nebulafog-hackathon)
-- `deploy` remote: GitHub Pages (github.com/basicScandal/nebulafog-2026)
+- `origin` and `deploy` remotes both point to github.com/basicScandal/nebulafog-2026
+- GitHub Pages serves from the main branch
 - Always use PRs to merge changes to main
 - Push to both remotes after merge: `git push origin main && git push deploy main`
 
