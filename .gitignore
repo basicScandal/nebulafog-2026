@@ -32,7 +32,8 @@ npm-debug.log*
 
 # Screenshots (development only)
 *.png
-!assets/images/*.png
+!images/**/*.png
+!images/*.png
 
 # Playwright
 .playwright-mcp/
