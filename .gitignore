@@ -40,3 +40,6 @@ npm-debug.log*
 
 # Claude
 .claude/
+
+# Python virtual environment
+.venv/
