@@ -24,9 +24,9 @@ AI × Cybersecurity Hackathon — March 14, 2026 — San Francisco
 
 **MISSION BRIEFING**
 
-One day. One hundred operatives. $5,000+ in bounties. Everyone demos.
+One day. One hundred operatives. $5,000+ in rewards. Everyone builds. Everyone demos.
 
-San Francisco's AI and security builders are converging—to learn from each other, form alliances, and stress-test the boundaries of what's possible. Build AI that defends or break AI to expose what the system missed.
+San Francisco's AI and security builders are converging—to learn from each other, form alliances, and stress-test the boundaries of what's possible. Build AI that defends or AI for offense to expose what the system missed.
 
 No observers. No slide decks. Operators only.
 
@@ -36,7 +36,7 @@ No observers. No slide decks. Operators only.
 
 ```
 [1] BUILD_NEW      → Start from zero. Ship by sundown.
-[2] SHOWCASE       → Bring something you already built. Separate bounty track.
+[2] SHOWCASE       → Bring something you already built. Separate reward track.
 [3] FIND_SQUAD     → Arrive alone. Leave with allies.
 ```
 
@@ -49,7 +49,7 @@ No observers. No slide decks. Operators only.
 📅 March 14, 2026
 👥 100 operators
 💰 $5,000+ in prizes
-🎤 3-min demos
+🎤 3-min demos 2-min Q&A
 ```
 
 ---
@@ -58,7 +58,7 @@ No observers. No slide decks. Operators only.
 
 Priority clearance for operators with a track record. Link your GitHub, portfolio, or prior work in AI × Security.
 
-New to the construct? Show us what you want to build.
+New to the construct? Show us what & why you want to build with us.
 
 ---
 
@@ -71,13 +71,13 @@ New to the construct? Show us what you want to build.
 **Event basics:**
 - Title: NEBULA:FOG: SINGULARITY PROTOCOL
 - Date: March 14, 2026
-- Location: San Francisco (can say "TBD" for venue)
+- Location: San Francisco (venue TBD )
 - Capacity: 100
 
 **Description:** Use the copy above
 
 **Registration questions (suggested):**
-1. Name
+1. Legal Name (IDs for access)
 2. Email
 3. What do you want to build? (short answer)
 4. Link your work (GitHub, portfolio, project) (optional but prioritized)
