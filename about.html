@@ -405,143 +405,7 @@
         }
 
         /* ========================================
-           SECTION 3: THE BUILDERS
-           ======================================== */
-        .section-builders {
-            background: linear-gradient(180deg, rgba(255, 0, 128, 0.03) 0%, var(--color-bg) 100%);
-        }
-
-        .builders-content {
-            text-align: center;
-        }
-
-        .stats-row {
-            display: flex;
-            justify-content: center;
-            gap: 6rem;
-            margin: 4rem 0;
-        }
-
-        .big-stat {
-            text-align: center;
-            opacity: 0;
-            transform: translateY(40px);
-        }
-
-        .big-stat-value {
-            font-size: clamp(4rem, 12vw, 8rem);
-            font-weight: 700;
-            color: var(--color-primary);
-            line-height: 1;
-            text-shadow: 0 0 80px rgba(0, 255, 159, 0.5);
-        }
-
-        .big-stat-label {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-        }
-
-        /* Demo Gallery */
-        .demo-gallery {
-            width: 100%;
-            max-width: 900px;
-            margin: 3rem auto;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .demo-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .demo-card {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            background: var(--color-bg-elevated);
-            border: 1px solid var(--color-text-dim);
-            border-radius: 8px;
-            text-decoration: none;
-            transition: all 0.3s var(--ease-out-expo);
-        }
-
-        .demo-card:hover {
-            border-color: var(--color-primary);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 255, 170, 0.15);
-        }
-
-        .demo-card.featured {
-            grid-column: span 2;
-            background: linear-gradient(135deg, rgba(0, 255, 170, 0.1), rgba(255, 0, 128, 0.1));
-            border-color: var(--color-primary);
-        }
-
-        .demo-thumbnail {
-            position: relative;
-            width: 80px;
-            height: 60px;
-            background: var(--color-bg-primary);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .demo-thumbnail i {
-            font-size: 1.5rem;
-            color: var(--color-primary);
-        }
-
-        .demo-card.featured .demo-thumbnail {
-            width: 120px;
-            height: 80px;
-        }
-
-        .demo-card.featured .demo-thumbnail i {
-            font-size: 2.5rem;
-            color: #ff0050;
-        }
-
-        .demo-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ff0050;
-            color: #fff;
-            font-size: 0.5rem;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        .demo-info {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-        }
-
-        .demo-title {
-            color: var(--color-text);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .demo-meta {
-            color: var(--color-text-dim);
-            font-size: 0.75rem;
-        }
-
-        /* ========================================
-           SECTION 4: CHALLENGE TRACKS
+           SECTION: CHALLENGE TRACKS
            ======================================== */
         .section-tracks {
             background: var(--color-bg);
@@ -617,85 +481,7 @@
         }
 
         /* ========================================
-           SECTION 5: 2026 AWAITS
-           ======================================== */
-        .section-future {
-            background: radial-gradient(ellipse at center, rgba(0, 255, 159, 0.08) 0%, transparent 60%);
-        }
-
-        .timeline-visual {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3rem;
-            margin: 4rem 0;
-        }
-
-        .timeline-year {
-            text-align: center;
-            opacity: 0;
-            transform: scale(0.8);
-        }
-
-        .timeline-year-value {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .timeline-year-label {
-            font-size: 0.7rem;
-            color: var(--color-text-muted);
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-        }
-
-        .timeline-year.past .timeline-year-value {
-            color: var(--color-text-dim);
-        }
-
-        .timeline-year.future .timeline-year-value {
-            color: var(--color-primary);
-            text-shadow: 0 0 60px rgba(0, 255, 159, 0.5);
-        }
-
-        .timeline-arrow {
-            font-size: 2rem;
-            color: var(--color-primary);
-            opacity: 0;
-        }
-
-        .evolution-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-            margin-top: 3rem;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .evolution-item {
-            padding: 1.5rem;
-            border: 1px solid var(--color-text-dim);
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .evolution-item-title {
-            color: var(--color-primary);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .evolution-item-text {
-            color: var(--color-text-muted);
-            font-size: 0.85rem;
-        }
-
-        /* ========================================
-           SECTION 7: CTA
+           SECTION: CTA
            ======================================== */
         .section-cta {
             text-align: center;
@@ -808,10 +594,6 @@
             .photo-gallery {
                 grid-template-columns: repeat(2, 1fr);
             }
-
-            .evolution-list {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 768px) {
@@ -831,11 +613,6 @@
                 right: 10px;
             }
 
-            .stats-row {
-                flex-direction: column;
-                gap: 3rem;
-            }
-
             .origin-stats {
                 flex-direction: column;
                 gap: 2rem;
@@ -845,34 +622,8 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .timeline-visual {
-                flex-direction: column;
-                gap: 2rem;
-            }
-
-            .timeline-arrow {
-                transform: rotate(90deg);
-            }
-
             .track-card {
                 flex: 0 0 260px;
-            }
-
-            .demo-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .demo-card.featured {
-                grid-column: span 1;
-            }
-
-            .demo-card.featured .demo-thumbnail {
-                width: 80px;
-                height: 60px;
-            }
-
-            .demo-card.featured .demo-thumbnail i {
-                font-size: 1.5rem;
             }
         }
 
@@ -925,6 +676,21 @@
             <p class="section-subtitle">
                 In a world where AI agents make decisions for us, securing them isn't optional. It's survival.
             </p>
+
+            <div style="display: flex; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--color-primary);">MARCH 14</div>
+                    <div style="font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em;">2026 • SAN FRANCISCO</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--color-secondary);">$5,000+</div>
+                    <div style="font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em;">IN PRIZES</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 1.8rem; font-weight: 700; color: var(--color-accent);">100</div>
+                    <div style="font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em;">OPERATORS MAX</div>
+                </div>
+            </div>
         </div>
 
         <div class="scroll-indicator">
@@ -933,149 +699,8 @@
         </div>
     </section>
 
-    <!-- SECTION 2: ORIGIN (2025) -->
-    <section class="story-section section-origin">
-        <div class="section-content">
-            <span class="section-tag">ARCHIVE // 2025</span>
-
-            <div class="origin-grid">
-                <div class="origin-text">
-                    <h2 class="section-title" style="font-size: clamp(2rem, 5vw, 3.5rem);">
-                        IT STARTED WITH<br>
-                        <span class="section-title-accent">A QUESTION</span>
-                    </h2>
-
-                    <p class="section-quote">
-                        "What happens when AI systems defend themselves?"
-                    </p>
-
-                    <p class="section-subtitle" style="opacity: 1; transform: none;">
-                        January 2025. 100 hackers gathered in San Francisco to find out.
-                        For 8 hours, they built, broke, and reimagined what AI security could be.
-                    </p>
-
-                    <div class="origin-stats">
-                        <div class="origin-stat">
-                            <span class="origin-stat-value">100</span>
-                            <span class="origin-stat-label">Operatives</span>
-                        </div>
-                        <div class="origin-stat">
-                            <span class="origin-stat-value">8</span>
-                            <span class="origin-stat-label">Hours</span>
-                        </div>
-                        <div class="origin-stat">
-                            <span class="origin-stat-value">4</span>
-                            <span class="origin-stat-label">Tracks</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Photo Gallery: 2025 Hackathon -->
-                <div class="photo-gallery" id="hackathon-gallery">
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2294.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2300.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2314.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2319.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2322.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                    <div class="photo-item">
-                        <img src="images/2025/hackathon/IMG_2328.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 3: THE BUILDERS -->
-    <section class="story-section section-builders">
-        <div class="section-content builders-content">
-            <span class="section-tag">THE BUILDERS</span>
-
-            <h2 class="section-title" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">
-                NOT A CTF.<br>
-                <span class="section-title-accent">A BUILD SESSION.</span>
-            </h2>
-
-            <p class="section-subtitle" style="margin: 0 auto;">
-                Participants shipped real tools, real exploits, real defenses.
-                Projects that lived beyond the event.
-            </p>
-
-            <div class="stats-row">
-                <div class="big-stat">
-                    <span class="big-stat-value" data-value="100">0</span>
-                    <span class="big-stat-label">Hackers</span>
-                </div>
-                <div class="big-stat">
-                    <span class="big-stat-value" data-value="8">0</span>
-                    <span class="big-stat-label">Hours</span>
-                </div>
-                <div class="big-stat">
-                    <span class="big-stat-value" data-value="4">0</span>
-                    <span class="big-stat-label">Tracks</span>
-                </div>
-            </div>
-
-            <!-- Demo Gallery: YouTube Highlights -->
-            <div class="demo-gallery">
-                <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--color-text);">
-                    <i class="fab fa-youtube" style="color: #ff0050; margin-right: 0.5rem;"></i>
-                    2025 DEMOS & HIGHLIGHTS
-                </h3>
-                <div class="demo-grid">
-                    <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-card featured">
-                        <div class="demo-thumbnail">
-                            <i class="fas fa-play-circle"></i>
-                            <span class="demo-badge">FEATURED</span>
-                        </div>
-                        <div class="demo-info">
-                            <span class="demo-title">2025 Hackathon Highlights</span>
-                            <span class="demo-meta">Watch the full playlist on YouTube</span>
-                        </div>
-                    </a>
-                    <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-card">
-                        <div class="demo-thumbnail">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="demo-info">
-                            <span class="demo-title">SENTINEL::MESH Demos</span>
-                            <span class="demo-meta">Defense track presentations</span>
-                        </div>
-                    </a>
-                    <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-card">
-                        <div class="demo-thumbnail">
-                            <i class="fas fa-skull-crossbones"></i>
-                        </div>
-                        <div class="demo-info">
-                            <span class="demo-title">SHADOW::VECTOR Demos</span>
-                            <span class="demo-meta">Attack track presentations</span>
-                        </div>
-                    </a>
-                    <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-card">
-                        <div class="demo-thumbnail">
-                            <i class="fas fa-user-secret"></i>
-                        </div>
-                        <div class="demo-info">
-                            <span class="demo-title">ZERO::PROOF Demos</span>
-                            <span class="demo-meta">Privacy track presentations</span>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION: WHAT MAKES THIS DIFFERENT -->
-    <section class="story-section" style="background: linear-gradient(180deg, var(--color-bg) 0%, rgba(0, 255, 159, 0.02) 100%);">
+    <!-- SECTION: WHY THIS EXISTS -->
+    <section class="story-section section-why" style="background: linear-gradient(180deg, var(--color-bg) 0%, rgba(0, 255, 159, 0.02) 100%);">
         <div class="section-content">
             <span class="section-tag">WHY THIS EXISTS</span>
 
@@ -1146,7 +771,69 @@
         </div>
     </section>
 
-    <!-- SECTION 4: CHALLENGE TRACKS -->
+    <!-- SECTION: ARCHIVE 2025 -->
+    <section class="story-section section-origin">
+        <div class="section-content">
+            <span class="section-tag">ARCHIVE // 2025</span>
+
+            <div class="origin-grid">
+                <div class="origin-text">
+                    <h2 class="section-title" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+                        IT STARTED WITH<br>
+                        <span class="section-title-accent">A QUESTION</span>
+                    </h2>
+
+                    <p class="section-quote">
+                        "What happens when AI systems defend themselves?"
+                    </p>
+
+                    <p class="section-subtitle" style="opacity: 1; transform: none;">
+                        January 2025. 100 hackers gathered in San Francisco to find out.
+                        For 8 hours, they built, broke, and reimagined what AI security could be.
+                    </p>
+
+                    <div class="origin-stats">
+                        <div class="origin-stat">
+                            <span class="origin-stat-value">100</span>
+                            <span class="origin-stat-label">Operatives</span>
+                        </div>
+                        <div class="origin-stat">
+                            <span class="origin-stat-value">8</span>
+                            <span class="origin-stat-label">Hours</span>
+                        </div>
+                        <div class="origin-stat">
+                            <span class="origin-stat-value">4</span>
+                            <span class="origin-stat-label">Tracks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Photo Gallery: 2025 Hackathon -->
+                <div class="photo-gallery" id="hackathon-gallery">
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2294.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2300.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2314.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2319.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2322.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                    <div class="photo-item">
+                        <img src="images/2025/hackathon/IMG_2328.jpg" alt="NEBULA:FOG 2025 Hackathon" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: CHALLENGE TRACKS -->
     <section class="story-section section-tracks">
         <div class="section-content">
             <span class="section-tag">PROTOCOL LAYERS</span>
@@ -1200,57 +887,7 @@
         </div>
     </section>
 
-    <!-- SECTION 5: 2026 AWAITS -->
-    <section class="story-section section-future">
-        <div class="section-content">
-            <span class="section-tag">THE EVOLUTION</span>
-
-            <h2 class="section-title" style="text-align: center; font-size: clamp(2rem, 5vw, 3.5rem);">
-                2026:<br>
-                <span class="section-title-accent">THE SINGULARITY PROTOCOL</span>
-            </h2>
-
-            <div class="timeline-visual">
-                <div class="timeline-year past">
-                    <span class="timeline-year-value">2025</span>
-                    <span class="timeline-year-label">The Beginning</span>
-                </div>
-                <div class="timeline-arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-                <div class="timeline-year future">
-                    <span class="timeline-year-value">2026</span>
-                    <span class="timeline-year-label">The Evolution</span>
-                </div>
-            </div>
-
-            <p class="section-subtitle" style="text-align: center; margin: 0 auto 3rem;">
-                This year, we trusted agents to manage themselves.
-                Now we learn what that really means.
-            </p>
-
-            <div class="evolution-list">
-                <div class="evolution-item">
-                    <h4 class="evolution-item-title">AUTONOMOUS AGENTS</h4>
-                    <p class="evolution-item-text">AI systems that make decisions without human intervention. The security implications are massive.</p>
-                </div>
-                <div class="evolution-item">
-                    <h4 class="evolution-item-title">SELF-GOVERNING AI</h4>
-                    <p class="evolution-item-text">When AI watches AI, who watches the watchers? Build the answer.</p>
-                </div>
-                <div class="evolution-item">
-                    <h4 class="evolution-item-title">TRUST PROTOCOLS</h4>
-                    <p class="evolution-item-text">New verification systems for a world where agents negotiate with agents.</p>
-                </div>
-                <div class="evolution-item">
-                    <h4 class="evolution-item-title">BIGGER STAKES</h4>
-                    <p class="evolution-item-text">More tracks. More prizes. More impact. March 2026.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SECTION 6: RULES OF ENGAGEMENT -->
+    <!-- SECTION: RULES OF ENGAGEMENT -->
     <section class="story-section" style="background: var(--color-bg);">
         <div class="section-content">
             <span class="section-tag">RULES OF ENGAGEMENT</span>
@@ -1392,44 +1029,28 @@
             once: true
         });
 
-        // SECTION 3: Builders animations with counter
+        // SECTION: Why This Exists animations
         ScrollTrigger.create({
-            trigger: '.section-builders',
-            start: 'top 60%',
+            trigger: '.section-why',
+            start: 'top 70%',
             onEnter: () => {
-                gsap.to('.section-builders .section-tag', {
+                gsap.to('.section-why .section-tag', {
                     opacity: 1, y: 0, duration: 0.6, ease: 'power3.out'
                 });
-                gsap.to('.section-builders .section-title', {
+                gsap.to('.section-why .section-title', {
                     opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: 'power3.out'
                 });
-                gsap.to('.section-builders .section-subtitle', {
+                gsap.to('.section-why .section-subtitle', {
                     opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out'
                 });
-                gsap.to('.big-stat', {
-                    opacity: 1, y: 0, duration: 0.8, stagger: 0.15, delay: 0.5, ease: 'power3.out'
-                });
-
-                // Animate counters
-                document.querySelectorAll('.big-stat-value').forEach(el => {
-                    const target = parseInt(el.dataset.value);
-                    gsap.to(el, {
-                        textContent: target,
-                        duration: 2,
-                        delay: 0.8,
-                        ease: 'power2.out',
-                        snap: { textContent: 1 }
-                    });
-                });
-
-                gsap.to('.demo-gallery', {
-                    opacity: 1, y: 0, duration: 0.8, delay: 1, ease: 'power3.out'
+                gsap.to('.section-why .unique-item', {
+                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 0.5, ease: 'power3.out'
                 });
             },
             once: true
         });
 
-        // SECTION 4: Tracks animations
+        // SECTION: Tracks animations
         ScrollTrigger.create({
             trigger: '.section-tracks',
             start: 'top 70%',
@@ -1447,46 +1068,7 @@
             once: true
         });
 
-        // SECTION 5: Future animations
-        ScrollTrigger.create({
-            trigger: '.section-future',
-            start: 'top 70%',
-            onEnter: () => {
-                gsap.to('.section-future .section-tag', {
-                    opacity: 1, y: 0, duration: 0.6, ease: 'power3.out'
-                });
-                gsap.to('.section-future .section-title', {
-                    opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: 'power3.out'
-                });
-                gsap.to('.timeline-year', {
-                    opacity: 1, scale: 1, duration: 0.8, stagger: 0.2, delay: 0.4, ease: 'power3.out'
-                });
-                gsap.to('.timeline-arrow', {
-                    opacity: 1, duration: 0.6, delay: 0.8, ease: 'power3.out'
-                });
-                gsap.to('.section-future .section-subtitle', {
-                    opacity: 1, y: 0, duration: 0.8, delay: 1, ease: 'power3.out'
-                });
-                gsap.to('.evolution-item', {
-                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 1.2, ease: 'power3.out'
-                });
-            },
-            once: true
-        });
-
-        // SECTION: What Makes This Different animations
-        ScrollTrigger.create({
-            trigger: '.unique-item',
-            start: 'top 80%',
-            onEnter: () => {
-                gsap.to('.unique-item', {
-                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out'
-                });
-            },
-            once: true
-        });
-
-        // SECTION 6: Rules of Engagement animations
+        // SECTION: Rules of Engagement animations
         ScrollTrigger.create({
             trigger: '.rules-item',
             start: 'top 80%',
