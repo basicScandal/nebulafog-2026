@@ -411,33 +411,17 @@
             background: var(--color-bg);
         }
 
-        .tracks-scroll {
-            display: flex;
+        .tracks-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
-            overflow-x: auto;
             padding: 2rem 0;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .tracks-scroll::-webkit-scrollbar {
-            height: 4px;
-        }
-
-        .tracks-scroll::-webkit-scrollbar-track {
-            background: var(--color-bg-elevated);
-        }
-
-        .tracks-scroll::-webkit-scrollbar-thumb {
-            background: var(--color-primary);
         }
 
         .track-card {
-            flex: 0 0 300px;
             padding: 2.5rem;
             background: var(--color-bg-elevated);
             border: 1px solid var(--color-text-dim);
-            scroll-snap-align: start;
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.4s var(--ease-out-expo);
@@ -622,8 +606,12 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .track-card {
-                flex: 0 0 260px;
+            .tracks-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .protocol-grid {
+                grid-template-columns: 1fr !important;
             }
         }
 
@@ -674,7 +662,7 @@
             </h1>
 
             <p class="section-subtitle">
-                In a world where AI agents make decisions for us, securing them isn't optional. It's survival.
+                The construct is open. Attack, defend, or build something the system's never seen.
             </p>
 
             <div style="display: flex; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;">
@@ -725,7 +713,7 @@
 
                 <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
                     <h3 style="color: var(--color-secondary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
-                        <i class="fas fa-users-cog" style="margin-right: 0.5rem;"></i>BUILDERS ONLY
+                        <i class="fas fa-users-cog" style="margin-right: 0.5rem;"></i>EVERYONE SHIPS
                     </h3>
                     <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
                         No spectators. No pitch decks. Everyone who comes, builds. Everyone who builds, demos. This is a room full of people who ship—come ready to create.
@@ -784,7 +772,7 @@
                     </h2>
 
                     <p class="section-quote">
-                        "24 projects shipped. Real tools. Real exploits. Real defenses."
+                        "<a href="https://www.youtube.com/@nebulafog" target="_blank" rel="noopener noreferrer" style="color: var(--color-secondary); text-decoration: underline;">24+ projects shipped</a>. Real tools. Real exploits. Real defenses."
                     </p>
 
                     <p class="section-subtitle" style="opacity: 1; transform: none;">
@@ -842,7 +830,7 @@
                 <span class="section-title-accent">BUILD?</span>
             </h2>
 
-            <div class="tracks-scroll">
+            <div class="tracks-grid">
                 <div class="track-card">
                     <span class="track-number">01</span>
                     <h3 class="track-title">SHADOW::VECTOR</h3>
@@ -896,7 +884,7 @@
                 <span class="section-title-accent">OPERATE</span>
             </h2>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin-top: 3rem;" class="protocol-grid">
                 <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="rules-item">
                     <h3 style="color: var(--color-primary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
                         <i class="fas fa-code" style="margin-right: 0.5rem;"></i>INTELLECTUAL PROPERTY
