@@ -950,13 +950,13 @@
                     </p>
 
                     <p class="section-subtitle" style="opacity: 1; transform: none;">
-                        January 2025. 120 hackers gathered in San Francisco to find out.
+                        January 2025. 100 hackers gathered in San Francisco to find out.
                         For 8 hours, they built, broke, and reimagined what AI security could be.
                     </p>
 
                     <div class="origin-stats">
                         <div class="origin-stat">
-                            <span class="origin-stat-value">120</span>
+                            <span class="origin-stat-value">100</span>
                             <span class="origin-stat-label">Operatives</span>
                         </div>
                         <div class="origin-stat">
@@ -1012,7 +1012,7 @@
 
             <div class="stats-row">
                 <div class="big-stat">
-                    <span class="big-stat-value" data-value="120">0</span>
+                    <span class="big-stat-value" data-value="100">0</span>
                     <span class="big-stat-label">Hackers</span>
                 </div>
                 <div class="big-stat">
@@ -1178,6 +1178,57 @@
         </div>
     </section>
 
+    <!-- SECTION 6: RULES OF ENGAGEMENT -->
+    <section class="story-section" style="background: var(--color-bg);">
+        <div class="section-content">
+            <span class="section-tag">RULES OF ENGAGEMENT</span>
+
+            <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem);">
+                FAIR PLAY.<br>
+                <span class="section-title-accent">REAL IMPACT.</span>
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="rules-item">
+                    <h3 style="color: var(--color-primary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-code" style="margin-right: 0.5rem;"></i>INTELLECTUAL PROPERTY
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        You own what you build. Period. We don't claim any rights to your code, ideas, or projects.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="rules-item">
+                    <h3 style="color: var(--color-secondary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-balance-scale" style="margin-right: 0.5rem;"></i>FAIR PLAY
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        New builds must start from scratch at kickoff. Open source libraries, APIs, and public tools are fair game. Pre-built showcase track has separate judging.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="rules-item">
+                    <h3 style="color: var(--color-accent); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-users" style="margin-right: 0.5rem;"></i>CODE OF CONDUCT
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        Respect the mission and each other. We're building a community, not just shipping code.
+                        <a href="code-of-conduct.html" style="color: var(--color-primary); text-decoration: underline;">Read the full protocol →</a>
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="rules-item">
+                    <h3 style="color: #aa44ff; font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-id-card" style="margin-right: 0.5rem;"></i>ELIGIBILITY
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        18+ required. All skill levels welcome. Priority to those with AI × Security track record, but newcomers who show passion get seats too.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION 7: CTA -->
     <section class="story-section section-cta">
         <div class="section-content">
@@ -1187,7 +1238,7 @@
             </h2>
 
             <p class="cta-subtitle">
-                March 2026. San Francisco. Be there.
+                March 2026. San Francisco. $5,000+ in prizes. 100 operators. Everyone demos.
             </p>
 
             <a href="register.html" class="btn-primary">
@@ -1346,6 +1397,18 @@
                 });
                 gsap.to('.evolution-item', {
                     opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 1.2, ease: 'power3.out'
+                });
+            },
+            once: true
+        });
+
+        // SECTION 6: Rules of Engagement animations
+        ScrollTrigger.create({
+            trigger: '.rules-item',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.to('.rules-item', {
+                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out'
                 });
             },
             once: true
