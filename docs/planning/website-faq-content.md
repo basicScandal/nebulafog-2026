@@ -8,7 +8,7 @@
 
 1. **Schedule**: What's the exact timeline? (start/end times)
 2. **Team size**: What's your limit? (Recommend 2-4)
-3. **Age requirement**: 18+ only, or allow minors with consent?
+3. **Age requirement**: All ages, minors with guardian ✓
 4. **Judging criteria**: What matters most? (Technical, Innovation, Impact, Demo quality?)
 5. **Prize categories**: Beyond grand prize, what other tracks?
 6. **Mentors**: Will there be mentors available during the build?
@@ -147,5 +147,5 @@
   Open source libraries, APIs, and public tools are fair game.
 
 > AGE
-  18+ required.
+  All ages welcome. Minors must be accompanied by a guardian.
 ```
