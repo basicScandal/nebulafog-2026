@@ -38,6 +38,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
+    <!-- Three.js for 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <style>
         /* ========================================
            CSS CUSTOM PROPERTIES
@@ -233,6 +236,26 @@
            ======================================== */
         .section-hero {
             background: radial-gradient(ellipse at center, rgba(0, 255, 159, 0.05) 0%, transparent 70%);
+            position: relative;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .section-hero .section-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-hero .scroll-indicator {
+            z-index: 2;
         }
 
         .hero-badge {
@@ -643,6 +666,7 @@
 
     <!-- SECTION 1: HERO -->
     <section class="story-section section-hero">
+        <canvas id="hero-canvas"></canvas>
         <div class="section-content">
             <div class="hero-badge">
                 <i class="fas fa-signal"></i>
@@ -1096,6 +1120,288 @@
                 }
             });
         });
+
+        // ========================================
+        // THREE.JS MATRIX RAIN + 3D GEOMETRY
+        // ========================================
+        (function() {
+            // Skip on mobile for performance
+            if (window.innerWidth < 768) return;
+
+            const canvas = document.getElementById('hero-canvas');
+            if (!canvas) return;
+
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 30;
+
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: true,
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Colors
+            const primaryColor = 0x00ff9f;
+            const secondaryColor = 0xff0080;
+            const accentColor = 0x00ffff;
+
+            // ========================================
+            // FLOATING 3D GEOMETRY
+            // ========================================
+            const geometries = [];
+            const geometryGroup = new THREE.Group();
+
+            // Create wireframe materials
+            const wireMaterial = new THREE.LineBasicMaterial({
+                color: primaryColor,
+                transparent: true,
+                opacity: 0.4
+            });
+            const wireMaterialPink = new THREE.LineBasicMaterial({
+                color: secondaryColor,
+                transparent: true,
+                opacity: 0.3
+            });
+            const wireMaterialCyan = new THREE.LineBasicMaterial({
+                color: accentColor,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            // Create various geometric shapes
+            const shapes = [
+                { geo: new THREE.IcosahedronGeometry(3, 0), mat: wireMaterial },
+                { geo: new THREE.OctahedronGeometry(2.5, 0), mat: wireMaterialPink },
+                { geo: new THREE.TetrahedronGeometry(2, 0), mat: wireMaterialCyan },
+                { geo: new THREE.BoxGeometry(2, 2, 2), mat: wireMaterial },
+                { geo: new THREE.IcosahedronGeometry(2, 1), mat: wireMaterialPink },
+                { geo: new THREE.OctahedronGeometry(1.5, 0), mat: wireMaterialCyan },
+            ];
+
+            shapes.forEach((shape, i) => {
+                const edges = new THREE.EdgesGeometry(shape.geo);
+                const wireframe = new THREE.LineSegments(edges, shape.mat);
+
+                // Position randomly in space
+                wireframe.position.x = (Math.random() - 0.5) * 50;
+                wireframe.position.y = (Math.random() - 0.5) * 30;
+                wireframe.position.z = (Math.random() - 0.5) * 20 - 10;
+
+                // Random initial rotation
+                wireframe.rotation.x = Math.random() * Math.PI;
+                wireframe.rotation.y = Math.random() * Math.PI;
+
+                // Store animation properties
+                wireframe.userData = {
+                    rotationSpeed: {
+                        x: (Math.random() - 0.5) * 0.005,
+                        y: (Math.random() - 0.5) * 0.005,
+                        z: (Math.random() - 0.5) * 0.003
+                    },
+                    floatSpeed: Math.random() * 0.5 + 0.5,
+                    floatOffset: Math.random() * Math.PI * 2,
+                    originalY: wireframe.position.y
+                };
+
+                geometries.push(wireframe);
+                geometryGroup.add(wireframe);
+            });
+
+            scene.add(geometryGroup);
+
+            // ========================================
+            // MATRIX RAIN PARTICLES
+            // ========================================
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]//\\|';
+            const rainDrops = [];
+            const rainCount = 150;
+
+            // Create canvas texture for matrix characters
+            function createCharTexture(char, color = '#00ff9f') {
+                const size = 64;
+                const canvas2d = document.createElement('canvas');
+                canvas2d.width = size;
+                canvas2d.height = size;
+                const ctx = canvas2d.getContext('2d');
+
+                ctx.fillStyle = color;
+                ctx.font = 'bold 48px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(char, size/2, size/2);
+
+                const texture = new THREE.CanvasTexture(canvas2d);
+                texture.needsUpdate = true;
+                return texture;
+            }
+
+            // Create rain drops
+            const rainGroup = new THREE.Group();
+
+            for (let i = 0; i < rainCount; i++) {
+                const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                const isAccent = Math.random() > 0.9;
+                const color = isAccent ? (Math.random() > 0.5 ? '#ff0080' : '#00ffff') : '#00ff9f';
+
+                const texture = createCharTexture(char, color);
+                const material = new THREE.SpriteMaterial({
+                    map: texture,
+                    transparent: true,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+
+                const sprite = new THREE.Sprite(material);
+
+                // Position in 3D space
+                sprite.position.x = (Math.random() - 0.5) * 60;
+                sprite.position.y = Math.random() * 40 + 20;
+                sprite.position.z = (Math.random() - 0.5) * 30 - 5;
+
+                const scale = Math.random() * 0.8 + 0.3;
+                sprite.scale.set(scale, scale, 1);
+
+                sprite.userData = {
+                    speed: Math.random() * 0.15 + 0.05,
+                    originalX: sprite.position.x,
+                    charChangeTimer: Math.random() * 100,
+                    char: char,
+                    color: color
+                };
+
+                rainDrops.push(sprite);
+                rainGroup.add(sprite);
+            }
+
+            scene.add(rainGroup);
+
+            // ========================================
+            // CONNECTING LINES (Neural mesh effect)
+            // ========================================
+            const lineMaterial = new THREE.LineBasicMaterial({
+                color: primaryColor,
+                transparent: true,
+                opacity: 0.1
+            });
+            let connectionLines = [];
+
+            function updateConnections() {
+                // Remove old lines
+                connectionLines.forEach(line => scene.remove(line));
+                connectionLines = [];
+
+                // Create new connections between nearby geometries
+                for (let i = 0; i < geometries.length; i++) {
+                    for (let j = i + 1; j < geometries.length; j++) {
+                        const dist = geometries[i].position.distanceTo(geometries[j].position);
+                        if (dist < 25) {
+                            const points = [
+                                geometries[i].position.clone(),
+                                geometries[j].position.clone()
+                            ];
+                            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                            const line = new THREE.Line(geometry, lineMaterial);
+                            connectionLines.push(line);
+                            scene.add(line);
+                        }
+                    }
+                }
+            }
+
+            // ========================================
+            // MOUSE INTERACTION
+            // ========================================
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
+
+            // ========================================
+            // ANIMATION LOOP
+            // ========================================
+            let time = 0;
+            let connectionTimer = 0;
+
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+                connectionTimer++;
+
+                // Animate floating geometry
+                geometries.forEach((geo, i) => {
+                    geo.rotation.x += geo.userData.rotationSpeed.x;
+                    geo.rotation.y += geo.userData.rotationSpeed.y;
+                    geo.rotation.z += geo.userData.rotationSpeed.z;
+
+                    // Floating motion
+                    geo.position.y = geo.userData.originalY +
+                        Math.sin(time * geo.userData.floatSpeed + geo.userData.floatOffset) * 2;
+                });
+
+                // Subtle camera movement based on mouse
+                camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
+                camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
+                camera.lookAt(0, 0, 0);
+
+                // Animate matrix rain
+                rainDrops.forEach((drop, i) => {
+                    drop.position.y -= drop.userData.speed;
+
+                    // Slight horizontal drift
+                    drop.position.x = drop.userData.originalX + Math.sin(time + i) * 0.5;
+
+                    // Reset when off screen
+                    if (drop.position.y < -25) {
+                        drop.position.y = 25 + Math.random() * 10;
+                        drop.position.x = (Math.random() - 0.5) * 60;
+                        drop.userData.originalX = drop.position.x;
+                    }
+
+                    // Occasionally change character
+                    drop.userData.charChangeTimer--;
+                    if (drop.userData.charChangeTimer <= 0) {
+                        const newChar = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                        drop.material.map = createCharTexture(newChar, drop.userData.color);
+                        drop.userData.charChangeTimer = Math.random() * 200 + 50;
+                    }
+                });
+
+                // Update connection lines periodically
+                if (connectionTimer % 60 === 0) {
+                    updateConnections();
+                }
+
+                renderer.render(scene, camera);
+            }
+
+            // Initial connection update
+            updateConnections();
+
+            // Start animation
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Pause when not visible
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    renderer.setAnimationLoop(null);
+                } else {
+                    renderer.setAnimationLoop(animate);
+                }
+            });
+        })();
     </script>
 </body>
 
