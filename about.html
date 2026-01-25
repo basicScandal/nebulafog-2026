@@ -1074,6 +1074,78 @@
         </div>
     </section>
 
+    <!-- SECTION: WHAT MAKES THIS DIFFERENT -->
+    <section class="story-section" style="background: linear-gradient(180deg, var(--color-bg) 0%, rgba(0, 255, 159, 0.02) 100%);">
+        <div class="section-content">
+            <span class="section-tag">WHY THIS EXISTS</span>
+
+            <h2 class="section-title" style="font-size: clamp(2rem, 5vw, 3rem);">
+                NOT ANOTHER<br>
+                <span class="section-title-accent">HACKATHON</span>
+            </h2>
+
+            <p class="section-subtitle" style="text-align: center; margin: 0 auto 3rem; max-width: 700px;">
+                Most hackathons are about shipping features. This one is about understanding what happens when AI systems operate autonomously—and what it takes to secure them.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: var(--color-primary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-crosshairs" style="margin-right: 0.5rem;"></i>THE INTERSECTION
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        Not an AI hackathon. Not a security hackathon. The collision point where both worlds meet—building AI that defends, breaking AI to expose, securing systems that think for themselves.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: var(--color-secondary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-users-cog" style="margin-right: 0.5rem;"></i>BUILDERS ONLY
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        No spectators. No pitch decks. Everyone who comes, builds. Everyone who builds, demos. This is a room full of people who ship—come ready to create.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: var(--color-accent); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-robot" style="margin-right: 0.5rem;"></i>AGENTIC ENGINEERING
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        Workshops on the cutting edge—how to build AI agents, how to secure them, how to break them. From beginner techniques to advanced patterns. Leave with real skills.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: #aa44ff; font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>SF LOCAL
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        San Francisco's AI and security builders in one room. Find your people. Form lasting collaborations. This is where the local community comes together.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: var(--color-primary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-code-branch" style="margin-right: 0.5rem;"></i>MULTIPLE PATHS
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        Build something new from scratch. Showcase something you've already built. Come solo and find a team. Three ways to participate—all lead to demos.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);" class="unique-item">
+                    <h3 style="color: var(--color-secondary); font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 1rem;">
+                        <i class="fas fa-microphone-alt" style="margin-right: 0.5rem;"></i>EXPERT PANELS
+                    </h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8;">
+                        Learn while you build. Expert panels at lunch and dinner. Practitioners who've shipped AI security at scale sharing what actually works.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION 4: CHALLENGE TRACKS -->
     <section class="story-section section-tracks">
         <div class="section-content">
@@ -1397,6 +1469,18 @@
                 });
                 gsap.to('.evolution-item', {
                     opacity: 1, y: 0, duration: 0.6, stagger: 0.1, delay: 1.2, ease: 'power3.out'
+                });
+            },
+            once: true
+        });
+
+        // SECTION: What Makes This Different animations
+        ScrollTrigger.create({
+            trigger: '.unique-item',
+            start: 'top 80%',
+            onEnter: () => {
+                gsap.to('.unique-item', {
+                    opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out'
                 });
             },
             once: true
