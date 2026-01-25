@@ -725,6 +725,60 @@
                 <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-top: 2rem; text-align: center;">Full prize breakdown coming soon. Categories for both new builds and showcase projects.</p>
             </section>
 
+            <!-- Judging Criteria -->
+            <section class="judging-section" style="margin-bottom: 4rem; opacity: 0; transform: translateY(40px);">
+                <h2 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">EVALUATION PROTOCOL</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">How judges score your mission. Different weights for BUILD_NEW vs SHOWCASE tracks.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div style="padding: 1.5rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-primary);">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <i class="fas fa-lightbulb" style="color: var(--color-primary); font-size: 1.2rem;"></i>
+                            <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text);">INNOVATION</h3>
+                        </div>
+                        <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">Novel approach to the problem. Creative use of AI × Security intersection. Something we haven't seen before.</p>
+                    </div>
+
+                    <div style="padding: 1.5rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-secondary);">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <i class="fas fa-code" style="color: var(--color-secondary); font-size: 1.2rem;"></i>
+                            <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text);">TECHNICAL</h3>
+                        </div>
+                        <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">Quality of implementation. Does it actually work? Complexity of the technical challenge tackled.</p>
+                    </div>
+
+                    <div style="padding: 1.5rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-accent);">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <i class="fas fa-bullseye" style="color: var(--color-accent); font-size: 1.2rem;"></i>
+                            <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text);">IMPACT</h3>
+                        </div>
+                        <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">Real-world relevance. Could this be deployed? Does it solve an actual problem in AI security?</p>
+                    </div>
+
+                    <div style="padding: 1.5rem; border: 1px solid var(--color-text-dim); border-left: 3px solid #aa44ff;">
+                        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                            <i class="fas fa-presentation" style="color: #aa44ff; font-size: 1.2rem;"></i>
+                            <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text);">DEMO QUALITY</h3>
+                        </div>
+                        <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">Clear explanation. Live demo that works. Effective use of 3 minutes. Handles Q&A well.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(0, 255, 159, 0.03); border: 1px solid var(--color-text-dim);">
+                    <h3 style="font-family: var(--font-display); font-size: 0.9rem; color: var(--color-primary); margin-bottom: 1rem;">TRACK-SPECIFIC WEIGHTING</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <h4 style="font-size: 0.8rem; color: var(--color-text); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">BUILD_NEW</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.8rem; line-height: 1.7;">Higher weight on innovation and what you accomplished in 8 hours. We know you're building from scratch—ambition matters.</p>
+                        </div>
+                        <div>
+                            <h4 style="font-size: 0.8rem; color: var(--color-text); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.1em;">SHOWCASE</h4>
+                            <p style="color: var(--color-text-muted); font-size: 0.8rem; line-height: 1.7;">Higher weight on technical depth and real-world impact. You've had time to polish—we expect it to show.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Squad Size -->
             <section class="squad-section" style="margin-bottom: 4rem; padding: 1.5rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(40px);">
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
@@ -946,12 +1000,21 @@
                 ease: 'power3.out'
             });
 
+            // Animate judging section
+            gsap.to('.judging-section', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                delay: 1.6,
+                ease: 'power3.out'
+            });
+
             // Animate squad section
             gsap.to('.squad-section', {
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
-                delay: 1.6,
+                delay: 1.8,
                 ease: 'power3.out'
             });
 
@@ -960,7 +1023,7 @@
                 opacity: 1,
                 y: 0,
                 duration: 0.8,
-                delay: 1.8,
+                delay: 2.0,
                 ease: 'power3.out'
             });
         });
