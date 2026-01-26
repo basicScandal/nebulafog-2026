@@ -211,22 +211,150 @@
             text-decoration: underline;
         }
 
+        /* Urgency Bar */
+        .urgency-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 0, 128, 0.1);
+            border: 1px solid rgba(255, 0, 128, 0.3);
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .urgency-countdown {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .urgency-countdown i {
+            color: var(--color-secondary);
+        }
+
+        .urgency-countdown-label {
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .urgency-countdown-timer {
+            color: var(--color-secondary);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .urgency-spots {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-text);
+            font-size: 0.85rem;
+        }
+
+        .urgency-spots-count {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        /* Social Proof */
+        .social-proof {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: rgba(0, 255, 159, 0.05);
+            border: 1px solid rgba(0, 255, 159, 0.1);
+        }
+
+        .social-proof-avatars {
+            display: flex;
+        }
+
+        .social-proof-avatar {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--color-bg-elevated);
+            border: 2px solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-left: -8px;
+        }
+
+        .social-proof-avatar:first-child {
+            margin-left: 0;
+        }
+
+        .social-proof-text {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        .social-proof-text strong {
+            color: var(--color-primary);
+        }
+
+        /* Form validation states */
+        .form-input.valid,
+        .form-select.valid {
+            border-color: var(--color-primary);
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-validation-icon {
+            position: absolute;
+            right: 1rem;
+            top: 2.5rem;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .form-validation-icon.show {
+            opacity: 1;
+        }
+
+        .form-validation-icon.valid {
+            color: var(--color-primary);
+        }
+
+        .form-validation-icon.invalid {
+            color: var(--color-error);
+        }
+
         /* Submit Button */
         .form-submit {
             width: 100%;
-            padding: 1rem 2rem;
-            background: transparent;
-            border: 1px solid var(--color-primary);
-            color: var(--color-primary);
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #00cc7f 100%);
+            border: none;
+            color: var(--color-bg);
             font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
+            font-size: 1rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
         }
 
         .form-submit::before {
@@ -241,9 +369,8 @@
         }
 
         .form-submit:hover {
-            background: var(--color-primary);
-            color: var(--color-bg);
-            box-shadow: 0 0 30px rgba(0, 255, 159, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 159, 0.4);
         }
 
         .form-submit:hover::before {
@@ -353,6 +480,21 @@
             .benefits-grid {
                 grid-template-columns: 1fr;
             }
+
+            .urgency-bar {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .urgency-countdown {
+                justify-content: center;
+            }
+
+            .social-proof {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -405,11 +547,27 @@
                     <p class="success-text">Registration confirmed. Check your email for next steps.</p>
                 </div>
 
+                <!-- Urgency Bar -->
+                <div class="urgency-bar">
+                    <div class="urgency-countdown">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div class="urgency-countdown-label">Registration closes in</div>
+                            <div class="urgency-countdown-timer" id="urgency-timer">47:00:00:00</div>
+                        </div>
+                    </div>
+                    <div class="urgency-spots">
+                        <i class="fas fa-users"></i>
+                        <span><span class="urgency-spots-count">53</span> spots remaining</span>
+                    </div>
+                </div>
+
                 <form id="registration-form" novalidate>
                     <!-- Callsign (Name) -->
                     <div class="form-group">
                         <label for="callsign" class="form-label">Callsign <span class="required">*</span></label>
                         <input type="text" id="callsign" name="callsign" class="form-input" required placeholder="Your operator name">
+                        <i class="fas fa-check form-validation-icon" id="callsign-valid"></i>
                         <div id="callsign-error" class="form-error"></div>
                     </div>
 
@@ -417,6 +575,7 @@
                     <div class="form-group">
                         <label for="email" class="form-label">Transmission Frequency <span class="required">*</span></label>
                         <input type="email" id="email" name="email" class="form-input" required placeholder="your@email.com">
+                        <i class="fas fa-check form-validation-icon" id="email-valid"></i>
                         <div id="email-error" class="form-error"></div>
                     </div>
 
@@ -473,9 +632,21 @@
                         </label>
                     </div>
 
+                    <!-- Social Proof -->
+                    <div class="social-proof">
+                        <div class="social-proof-avatars">
+                            <div class="social-proof-avatar">JK</div>
+                            <div class="social-proof-avatar">AL</div>
+                            <div class="social-proof-avatar">MR</div>
+                            <div class="social-proof-avatar">+</div>
+                        </div>
+                        <span class="social-proof-text"><strong>47 builders</strong> registered this week</span>
+                    </div>
+
                     <!-- Submit -->
                     <button type="submit" class="form-submit" id="submit-btn">
-                        Initialize Access
+                        <span>Secure My Spot</span>
+                        <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
 
@@ -746,10 +917,81 @@
                 return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
             }
 
-            // Clear errors on input
-            form.querySelectorAll('input, select, textarea').forEach(field => {
-                field.addEventListener('input', () => clearError(field));
+            // Real-time validation on input
+            form.querySelectorAll('input, select').forEach(field => {
+                field.addEventListener('input', () => {
+                    clearError(field);
+                    validateFieldRealtime(field);
+                });
+                field.addEventListener('blur', () => {
+                    validateFieldRealtime(field);
+                });
             });
+
+            function validateFieldRealtime(field) {
+                const validIcon = document.getElementById(`${field.id}-valid`);
+
+                if (field.type === 'checkbox') return;
+
+                let isValid = false;
+
+                if (field.type === 'email') {
+                    isValid = field.value.trim() && isValidEmail(field.value);
+                } else if (field.tagName === 'SELECT') {
+                    isValid = field.value && field.value !== '';
+                    if (isValid) field.classList.add('valid');
+                    else field.classList.remove('valid');
+                    return; // No icon for selects
+                } else {
+                    isValid = field.value.trim().length >= 2;
+                }
+
+                if (validIcon) {
+                    if (isValid) {
+                        validIcon.classList.add('show', 'valid');
+                        validIcon.classList.remove('invalid');
+                        field.classList.add('valid');
+                        field.classList.remove('error');
+                    } else if (field.value.trim()) {
+                        validIcon.classList.remove('show');
+                        field.classList.remove('valid');
+                    } else {
+                        validIcon.classList.remove('show');
+                        field.classList.remove('valid');
+                    }
+                }
+            }
+
+            // Urgency countdown timer
+            function initUrgencyTimer() {
+                const timerEl = document.getElementById('urgency-timer');
+                if (!timerEl) return;
+
+                // Event date: March 14, 2026
+                const eventDate = new Date('2026-03-14T09:00:00-08:00');
+
+                function updateTimer() {
+                    const now = new Date();
+                    const diff = eventDate - now;
+
+                    if (diff <= 0) {
+                        timerEl.textContent = '00:00:00:00';
+                        return;
+                    }
+
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    timerEl.textContent = `${String(days).padStart(2, '0')}:${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                }
+
+                updateTimer();
+                setInterval(updateTimer, 1000);
+            }
+
+            initUrgencyTimer();
 
             // iOS keyboard handling
             if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
