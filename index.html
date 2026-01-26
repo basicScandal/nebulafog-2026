@@ -258,6 +258,9 @@
             inset: 0;
             pointer-events: none;
             z-index: 1;
+            will-change: contents;
+            transform: translateZ(0);
+            contain: strict;
         }
 
         /* ========================================
@@ -1705,14 +1708,28 @@
 
             initParticles() {
                 const canvas = document.getElementById('particles');
-                const ctx = canvas.getContext('2d');
+                const ctx = canvas.getContext('2d', { alpha: true });
                 let particles = [];
                 let matrixDrops = [];
                 let animationId;
+                let isAnimating = false;
+                let lastFrameTime = 0;
                 const isMobile = window.matchMedia('(max-width: 768px)').matches;
+                const targetFPS = isMobile ? 30 : 60;
+                const frameInterval = 1000 / targetFPS;
 
                 // Matrix characters: Katakana + numbers + symbols
                 const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]/*-+';
+                const matrixCharsArray = matrixChars.split('');
+                const matrixCharsLen = matrixCharsArray.length;
+
+                // Pre-calculate font string
+                const fontSize = isMobile ? 12 : 14;
+                const fontString = `${fontSize}px "JetBrains Mono", monospace`;
+
+                // Pre-calculate colors to avoid string concatenation in loop
+                const headColor = 'rgba(180, 255, 200, 0.9)';
+                const particleColorBase = 'rgba(0, 255, 159, ';
 
                 function resize() {
                     canvas.width = window.innerWidth;
@@ -1720,25 +1737,29 @@
                 }
 
                 function createParticle() {
+                    const speedMult = isMobile ? 0.3 : 0.5;
                     return {
                         x: Math.random() * canvas.width,
                         y: Math.random() * canvas.height,
                         size: isMobile ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 0.5,
-                        speedX: (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5),
-                        speedY: (Math.random() - 0.5) * (isMobile ? 0.3 : 0.5),
+                        speedX: (Math.random() - 0.5) * speedMult,
+                        speedY: (Math.random() - 0.5) * speedMult,
                         opacity: Math.random() * 0.5 + 0.1
                     };
                 }
 
                 function createMatrixDrop() {
-                    const fontSize = isMobile ? 12 : 14;
+                    const length = Math.floor(Math.random() * 15) + 5;
+                    const chars = [];
+                    for (let j = 0; j < length; j++) {
+                        chars.push(matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)]);
+                    }
                     return {
-                        x: Math.random() * canvas.width,
+                        x: 0,
                         y: Math.random() * canvas.height - canvas.height,
                         speed: (Math.random() * 2 + 1) * (isMobile ? 0.7 : 1),
-                        chars: [],
-                        length: Math.floor(Math.random() * 15) + 5,
-                        fontSize: fontSize,
+                        chars: chars,
+                        length: length,
                         lastUpdate: 0,
                         updateInterval: Math.random() * 100 + 50
                     };
@@ -1755,7 +1776,7 @@
                         particles.push(createParticle());
                     }
 
-                    // Matrix rain columns (subtle - fewer columns than about.html)
+                    // Matrix rain columns
                     const columnWidth = isMobile ? 40 : 30;
                     const columns = Math.floor(canvas.width / columnWidth);
                     const dropCount = isMobile ? Math.floor(columns * 0.3) : Math.floor(columns * 0.5);
@@ -1763,94 +1784,139 @@
                     for (let i = 0; i < dropCount; i++) {
                         const drop = createMatrixDrop();
                         drop.x = Math.floor(Math.random() * columns) * columnWidth;
-                        // Initialize with random characters
-                        for (let j = 0; j < drop.length; j++) {
-                            drop.chars.push(matrixChars[Math.floor(Math.random() * matrixChars.length)]);
-                        }
                         matrixDrops.push(drop);
                     }
                 }
 
                 function animate(timestamp) {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    if (!isAnimating) return;
 
-                    // Draw floating particles
-                    particles.forEach(p => {
+                    // Frame rate limiting
+                    const elapsed = timestamp - lastFrameTime;
+                    if (elapsed < frameInterval) {
+                        animationId = requestAnimationFrame(animate);
+                        return;
+                    }
+                    lastFrameTime = timestamp - (elapsed % frameInterval);
+
+                    const w = canvas.width;
+                    const h = canvas.height;
+                    ctx.clearRect(0, 0, w, h);
+
+                    // Draw floating particles - batch by similar opacity ranges
+                    const particleLen = particles.length;
+                    for (let i = 0; i < particleLen; i++) {
+                        const p = particles[i];
                         p.x += p.speedX;
                         p.y += p.speedY;
 
-                        if (p.x < 0) p.x = canvas.width;
-                        if (p.x > canvas.width) p.x = 0;
-                        if (p.y < 0) p.y = canvas.height;
-                        if (p.y > canvas.height) p.y = 0;
+                        if (p.x < 0) p.x = w;
+                        else if (p.x > w) p.x = 0;
+                        if (p.y < 0) p.y = h;
+                        else if (p.y > h) p.y = 0;
 
                         ctx.beginPath();
-                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                        ctx.fillStyle = 'rgba(0, 255, 159, ' + p.opacity + ')';
+                        ctx.arc(p.x, p.y, p.size, 0, 6.283185);
+                        ctx.fillStyle = particleColorBase + p.opacity + ')';
                         ctx.fill();
-                    });
+                    }
+
+                    // Set font once for all Matrix rain
+                    ctx.font = fontString;
 
                     // Draw Matrix rain
-                    matrixDrops.forEach(drop => {
+                    const dropLen = matrixDrops.length;
+                    for (let d = 0; d < dropLen; d++) {
+                        const drop = matrixDrops[d];
                         drop.y += drop.speed;
 
-                        // Randomly change characters periodically
+                        // Randomly change one character periodically
                         if (timestamp - drop.lastUpdate > drop.updateInterval) {
-                            const changeIndex = Math.floor(Math.random() * drop.chars.length);
-                            drop.chars[changeIndex] = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                            const changeIndex = Math.floor(Math.random() * drop.length);
+                            drop.chars[changeIndex] = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
                             drop.lastUpdate = timestamp;
                         }
 
                         // Draw each character in the drop
-                        for (let i = 0; i < drop.chars.length; i++) {
-                            const charY = drop.y - (i * drop.fontSize);
+                        const charLen = drop.chars.length;
+                        for (let i = 0; i < charLen; i++) {
+                            const charY = drop.y - (i * fontSize);
 
                             // Skip if off screen
-                            if (charY < -drop.fontSize || charY > canvas.height + drop.fontSize) continue;
+                            if (charY < -fontSize || charY > h + fontSize) continue;
 
                             // First char is brightest, fade out towards tail
-                            const fadeRatio = 1 - (i / drop.length);
-                            const opacity = i === 0 ? 0.9 : fadeRatio * 0.4;
-
-                            // First char is white/bright green, rest are green
                             if (i === 0) {
-                                ctx.fillStyle = `rgba(180, 255, 200, ${opacity})`;
+                                ctx.fillStyle = headColor;
                             } else {
-                                ctx.fillStyle = `rgba(0, 255, 159, ${opacity})`;
+                                const opacity = (1 - (i / drop.length)) * 0.4;
+                                ctx.fillStyle = particleColorBase + opacity + ')';
                             }
 
-                            ctx.font = `${drop.fontSize}px "JetBrains Mono", monospace`;
                             ctx.fillText(drop.chars[i], drop.x, charY);
                         }
 
                         // Reset drop when it goes off screen
-                        if (drop.y - (drop.length * drop.fontSize) > canvas.height) {
-                            drop.y = -drop.length * drop.fontSize;
-                            drop.x = Math.floor(Math.random() * Math.floor(canvas.width / 30)) * 30;
+                        if (drop.y - (drop.length * fontSize) > h) {
+                            drop.y = -drop.length * fontSize;
+                            drop.x = Math.floor(Math.random() * Math.floor(w / 30)) * 30;
                             drop.speed = (Math.random() * 2 + 1) * (isMobile ? 0.7 : 1);
                         }
-                    });
+                    }
 
                     animationId = requestAnimationFrame(animate);
+                }
+
+                function startAnimation() {
+                    if (!isAnimating) {
+                        isAnimating = true;
+                        lastFrameTime = performance.now();
+                        animationId = requestAnimationFrame(animate);
+                    }
+                }
+
+                function stopAnimation() {
+                    isAnimating = false;
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                        animationId = null;
+                    }
                 }
 
                 // Pause when tab not visible
                 document.addEventListener('visibilitychange', () => {
                     if (document.hidden) {
-                        cancelAnimationFrame(animationId);
+                        stopAnimation();
                     } else {
-                        animationId = requestAnimationFrame(animate);
+                        startAnimation();
                     }
                 });
 
+                // IntersectionObserver to pause when scrolled out of view
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && !document.hidden) {
+                            startAnimation();
+                        } else {
+                            stopAnimation();
+                        }
+                    });
+                }, { threshold: 0.1 });
+                observer.observe(canvas);
+
+                // Debounced resize handler
+                let resizeTimeout;
                 window.addEventListener('resize', () => {
-                    resize();
-                    initParticles();
-                });
+                    if (resizeTimeout) clearTimeout(resizeTimeout);
+                    resizeTimeout = setTimeout(() => {
+                        resize();
+                        initParticles();
+                    }, 150);
+                }, { passive: true });
 
                 resize();
                 initParticles();
-                animationId = requestAnimationFrame(animate);
+                startAnimation();
             }
         }
 
