@@ -438,6 +438,96 @@
         }
 
         /* ========================================
+           VIDEO DEMOS STYLES
+           ======================================== */
+        .demos-section {
+            margin-top: 4rem;
+        }
+
+        .demos-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .demos-title {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .demos-link {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .demos-link:hover {
+            color: var(--color-primary);
+        }
+
+        .demos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .demo-item {
+            aspect-ratio: 16/9;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-text-dim);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.4s var(--ease-out-expo);
+            cursor: pointer;
+        }
+
+        .demo-item:hover {
+            border-color: var(--color-secondary);
+            transform: scale(1.02);
+        }
+
+        .demo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s var(--ease-out-expo);
+        }
+
+        .demo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .demo-play-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.4);
+            transition: background 0.3s;
+        }
+
+        .demo-play-overlay i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s;
+        }
+
+        .demo-item:hover .demo-play-overlay {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .demo-item:hover .demo-play-overlay i {
+            color: var(--color-secondary);
+            transform: scale(1.1);
+        }
+
+        /* ========================================
            SECTION: CHALLENGE TRACKS
            ======================================== */
         .section-tracks {
@@ -610,6 +700,10 @@
 
             .photo-gallery {
                 grid-template-columns: repeat(2, 1fr);
+            }
+
+            .demos-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -848,6 +942,34 @@
                     </div>
                     <div class="photo-item">
                         <img src="images/2025/hackathon/IMG_2429.jpg" alt="Engaged audience at NEBULA:FOG 2025" loading="lazy" decoding="async">
+                    </div>
+                </div>
+
+                <!-- Video Demos: 2025 Hackathon -->
+                <div class="demos-section">
+                    <div class="demos-header">
+                        <span class="demos-title"><i class="fab fa-youtube"></i> 2025 DEMO RECORDINGS</span>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demos-link">
+                            Watch All <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                    <div class="demos-grid">
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-item">
+                            <img src="images/demos/demo1.jpg" alt="2025 Hackathon Demo" loading="lazy" decoding="async">
+                            <div class="demo-play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </a>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-item">
+                            <img src="images/demos/demo2.jpg" alt="2025 Hackathon Demo" loading="lazy" decoding="async">
+                            <div class="demo-play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </a>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-item">
+                            <img src="images/demos/demo3.jpg" alt="2025 Hackathon Demo" loading="lazy" decoding="async">
+                            <div class="demo-play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </a>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="demo-item">
+                            <img src="images/demos/demo4.jpg" alt="2025 Hackathon Demo" loading="lazy" decoding="async">
+                            <div class="demo-play-overlay"><i class="fas fa-play-circle"></i></div>
+                        </a>
                     </div>
                 </div>
             </div>

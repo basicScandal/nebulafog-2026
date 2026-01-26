@@ -392,9 +392,82 @@
         }
 
         /* ========================================
-           PREVIEW SECTIONS
+           ABOUT CTA
            ======================================== */
-        .preview-sections {
+        .about-cta {
+            margin-top: 3rem;
+            opacity: 0;
+        }
+
+        .about-cta-link {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem 3rem;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid var(--color-text-dim);
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-cta-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg,
+                transparent,
+                var(--color-primary),
+                var(--color-secondary),
+                transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .about-cta-link:hover::before {
+            opacity: 1;
+        }
+
+        .about-cta-link:hover {
+            border-color: var(--color-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 255, 159, 0.15);
+        }
+
+        .about-cta-text {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--color-text);
+            letter-spacing: 0.05em;
+        }
+
+        .about-cta-subtext {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .about-cta-link i {
+            color: var(--color-primary);
+            font-size: 1rem;
+            margin-top: 0.5rem;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .about-cta-link:hover i {
+            transform: translateX(5px);
+        }
+
+        /* PREVIEW SECTIONS - REMOVED, styles kept for reference
+           ======================================== */
+        /* .preview-sections {
             display: flex;
             flex-direction: column;
             gap: 3rem;
@@ -609,7 +682,7 @@
         .preview-item:hover .preview-label {
             opacity: 1;
             transform: translateY(0);
-        }
+        } */
 
         /* ========================================
            COUNTDOWN TIMER
@@ -1155,43 +1228,17 @@
                 font-size: 0.6rem;
             }
 
-            /* Mobile preview sections */
-            .preview-sections {
-                gap: 2rem;
-                padding: 0 0.5rem;
+            /* Mobile about CTA */
+            .about-cta-link {
+                padding: 1.25rem 2rem;
             }
 
-            .preview-header {
-                padding: 0.75rem 1rem;
+            .about-cta-text {
+                font-size: 0.9rem;
             }
 
-            .preview-title {
-                font-size: 0.75rem;
-            }
-
-            .preview-link {
-                font-size: 0.6rem;
-                padding: 0.3rem 0.6rem;
-            }
-
-            .preview-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 0.4rem;
-                padding: 0.75rem;
-            }
-
-            .preview-video-grid {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-                padding: 0.75rem;
-            }
-
-            .preview-placeholder i {
-                font-size: 1rem;
-            }
-
-            .play-overlay i {
-                font-size: 2rem;
+            .about-cta-subtext {
+                font-size: 0.65rem;
             }
         }
 
@@ -1320,77 +1367,13 @@
                 </div>
             </div>
 
-            <!-- Preview Sections -->
-            <div class="preview-sections" id="preview-sections">
-                <!-- Photo Gallery Preview -->
-                <div class="preview-section" id="gallery-preview">
-                    <div class="preview-header">
-                        <div class="preview-title">
-                            <i class="fas fa-images"></i>
-                            <span>2025 Photo Gallery</span>
-                        </div>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-link">
-                            View All <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    <div class="preview-grid" id="gallery-grid">
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="0">
-                            <img class="preview-thumbnail" src="images/gallery/gallery1.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="1">
-                            <img class="preview-thumbnail" src="images/gallery/gallery2.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="2">
-                            <img class="preview-thumbnail" src="images/gallery/gallery3.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="3">
-                            <img class="preview-thumbnail" src="images/gallery/gallery4.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="4">
-                            <img class="preview-thumbnail" src="images/gallery/gallery5.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="5">
-                            <img class="preview-thumbnail" src="images/gallery/gallery6.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="6">
-                            <img class="preview-thumbnail" src="images/gallery/gallery7.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                        <a href="https://dub.sh/photo-gallery" target="_blank" rel="noopener noreferrer" class="preview-item" data-index="7">
-                            <img class="preview-thumbnail" src="images/gallery/gallery8.jpg" alt="Hackathon 2025" loading="lazy">
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Hackathon Demos Preview -->
-                <div class="preview-section" id="demos-preview">
-                    <div class="preview-header">
-                        <div class="preview-title">
-                            <i class="fab fa-youtube"></i>
-                            <span>2025 Hackathon Demos</span>
-                        </div>
-                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="preview-link">
-                            Watch All <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                    <div class="preview-video-grid" id="demos-grid">
-                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="preview-item preview-video-item" data-index="0">
-                            <img class="preview-thumbnail" src="images/demos/demo1.jpg" alt="Hackathon Demo" loading="lazy">
-                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
-                        </a>
-                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="preview-item preview-video-item" data-index="1">
-                            <img class="preview-thumbnail" src="images/demos/demo2.jpg" alt="Hackathon Demo" loading="lazy">
-                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
-                        </a>
-                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="preview-item preview-video-item" data-index="2">
-                            <img class="preview-thumbnail" src="images/demos/demo3.jpg" alt="Hackathon Demo" loading="lazy">
-                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
-                        </a>
-                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" class="preview-item preview-video-item" data-index="3">
-                            <img class="preview-thumbnail" src="images/demos/demo4.jpg" alt="Hackathon Demo" loading="lazy">
-                            <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
-                        </a>
-                    </div>
-                </div>
+            <!-- CTA to About Page -->
+            <div class="about-cta">
+                <a href="about.html" class="about-cta-link">
+                    <span class="about-cta-text">See 2025 Highlights</span>
+                    <span class="about-cta-subtext">Photos, demos, and the story</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
     </main>
@@ -1632,24 +1615,13 @@
                     });
                 }
 
-                // Animate preview sections
-                const previewSections = document.getElementById('preview-sections');
-                if (previewSections) {
-                    gsap.to(previewSections, {
+                // Animate about CTA
+                const aboutCta = document.querySelector('.about-cta');
+                if (aboutCta) {
+                    gsap.to(aboutCta, {
                         opacity: 1,
                         duration: 0.8,
                         delay: 1.4
-                    });
-
-                    // Stagger animate preview items
-                    gsap.to('.preview-item', {
-                        opacity: 1,
-                        y: 0,
-                        scale: 1,
-                        duration: 0.5,
-                        stagger: 0.08,
-                        ease: 'power2.out',
-                        delay: 1.6
                     });
                 }
 
