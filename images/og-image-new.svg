@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#030303"/>
+      <stop offset="100%" style="stop-color:#0a0a0a"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00ff9f"/>
+      <stop offset="50%" style="stop-color:#ff0080"/>
+      <stop offset="100%" style="stop-color:#0ff"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Grid pattern -->
+  <g opacity="0.1" stroke="#00ff9f" stroke-width="0.5">
+    <line x1="0" y1="0" x2="1200" y2="0"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/>
+    <line x1="0" y1="300" x2="1200" y2="300"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="500" x2="1200" y2="500"/>
+    <line x1="0" y1="630" x2="1200" y2="630"/>
+    <line x1="0" y1="0" x2="0" y2="630"/>
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+    <line x1="1200" y1="0" x2="1200" y2="630"/>
+  </g>
+
+  <!-- Top accent line -->
+  <rect x="0" y="0" width="1200" height="4" fill="url(#accentGrad)"/>
+
+  <!-- Tag line -->
+  <rect x="80" y="120" width="200" height="32" rx="2" fill="none" stroke="#00ff9f" stroke-width="1" opacity="0.8"/>
+  <text x="180" y="142" font-family="monospace" font-size="14" fill="#00ff9f" text-anchor="middle" letter-spacing="2">AI x SECURITY</text>
+
+  <!-- Main title -->
+  <text x="80" y="240" font-family="sans-serif" font-size="72" font-weight="bold" fill="#ffffff" filter="url(#glow)">NEBULA:FOG</text>
+  <text x="80" y="320" font-family="sans-serif" font-size="72" font-weight="bold" fill="#00ff9f" filter="url(#glow)">2026</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="380" font-family="sans-serif" font-size="28" fill="#666666">The AI x Security Hackathon</text>
+
+  <!-- Event details -->
+  <g font-family="monospace" font-size="20">
+    <text x="80" y="460" fill="#ff0080">MARCH 14, 2026</text>
+    <text x="300" y="460" fill="#666666">|</text>
+    <text x="330" y="460" fill="#0ff">SAN FRANCISCO</text>
+    <text x="560" y="460" fill="#666666">|</text>
+    <text x="590" y="460" fill="#00ff9f">$5K+ PRIZES</text>
+  </g>
+
+  <!-- CTA Button -->
+  <rect x="80" y="500" width="220" height="50" rx="2" fill="#00ff9f"/>
+  <text x="190" y="533" font-family="monospace" font-size="18" font-weight="bold" fill="#030303" text-anchor="middle" letter-spacing="2">REGISTER NOW</text>
+
+  <!-- Right side decorative element -->
+  <g transform="translate(900, 200)" opacity="0.3">
+    <circle cx="100" cy="100" r="150" fill="none" stroke="#00ff9f" stroke-width="1"/>
+    <circle cx="100" cy="100" r="120" fill="none" stroke="#ff0080" stroke-width="1"/>
+    <circle cx="100" cy="100" r="90" fill="none" stroke="#0ff" stroke-width="1"/>
+    <circle cx="100" cy="100" r="60" fill="none" stroke="#00ff9f" stroke-width="2"/>
+  </g>
+
+  <!-- Bottom accent line -->
+  <rect x="0" y="626" width="1200" height="4" fill="url(#accentGrad)"/>
+
+  <!-- URL -->
+  <text x="1120" y="590" font-family="monospace" font-size="16" fill="#444444" text-anchor="end">nebulafog.ai</text>
+</svg>
