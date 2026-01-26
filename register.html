@@ -385,11 +385,76 @@
             cursor: not-allowed;
         }
 
-        /* Success Message */
-        .form-success {
-            display: none;
+        /* Luma CTA */
+        .luma-cta {
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem 0;
+        }
+
+        .luma-cta-text {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .luma-register-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #00cc7f 100%);
+            border: none;
+            color: var(--color-bg);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luma-register-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 159, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .luma-register-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 255, 159, 0.4);
+        }
+
+        .luma-register-btn:hover::before {
+            left: 100%;
+        }
+
+        .luma-cta .social-proof {
+            margin-top: 1.5rem;
+        }
+
+        .luma-cta-note {
+            margin-top: 1.5rem;
+            font-size: 0.75rem;
+            color: var(--color-text-dim);
+        }
+
+        .luma-cta-note i {
+            margin-right: 0.5rem;
+        }
+
+        .luma-cta-note a {
+            color: var(--color-primary);
         }
 
         .form-success.show {
@@ -553,13 +618,6 @@
 
             <!-- Form -->
             <div class="register-form" id="register-form-container">
-                <!-- Success Message -->
-                <div class="form-success" id="form-success">
-                    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
-                    <h2 class="success-title">ACCESS_GRANTED</h2>
-                    <p class="success-text">Registration confirmed. Check your email for next steps.</p>
-                </div>
-
                 <!-- Urgency Bar -->
                 <div class="urgency-bar">
                     <div class="urgency-countdown">
@@ -575,75 +633,14 @@
                     </div>
                 </div>
 
-                <form id="registration-form" novalidate>
-                    <!-- Callsign (Name) -->
-                    <div class="form-group">
-                        <label for="callsign" class="form-label">Callsign <span class="required">*</span></label>
-                        <input type="text" id="callsign" name="callsign" class="form-input" required placeholder="Your operator name">
-                        <i class="fas fa-check form-validation-icon" id="callsign-valid"></i>
-                        <div id="callsign-error" class="form-error"></div>
-                    </div>
+                <!-- Luma Registration CTA -->
+                <div class="luma-cta">
+                    <p class="luma-cta-text">Registration is handled through Luma for a seamless experience.</p>
 
-                    <!-- Transmission Frequency (Email) -->
-                    <div class="form-group">
-                        <label for="email" class="form-label">Transmission Frequency <span class="required">*</span></label>
-                        <input type="email" id="email" name="email" class="form-input" required placeholder="your@email.com">
-                        <i class="fas fa-check form-validation-icon" id="email-valid"></i>
-                        <div id="email-error" class="form-error"></div>
-                    </div>
-
-                    <!-- Primary Protocol & Clearance Level -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="track" class="form-label">Primary Protocol <span class="required">*</span></label>
-                            <select id="track" name="track" class="form-select" required>
-                                <option value="">Select track</option>
-                                <option value="shadow-vector">SHADOW::VECTOR (Offensive)</option>
-                                <option value="sentinel-mesh">SENTINEL::MESH (Defensive)</option>
-                                <option value="zero-proof">ZERO::PROOF (Trust/Privacy)</option>
-                                <option value="rogue-agent">ROGUE::AGENT (Open/Wildcard)</option>
-                                <option value="undecided">Undecided</option>
-                            </select>
-                            <div id="track-error" class="form-error"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="experience" class="form-label">Clearance Level <span class="required">*</span></label>
-                            <select id="experience" name="experience" class="form-select" required>
-                                <option value="">Select level</option>
-                                <option value="first">First infiltration</option>
-                                <option value="veteran">Veteran operator</option>
-                                <option value="elite">Elite threat actor</option>
-                            </select>
-                            <div id="experience-error" class="form-error"></div>
-                        </div>
-                    </div>
-
-                    <!-- Squad Status -->
-                    <div class="form-group">
-                        <label for="squad" class="form-label">Squad Status <span class="required">*</span></label>
-                        <select id="squad" name="squad" class="form-select" required>
-                            <option value="">Select status</option>
-                            <option value="solo">Solo operative</option>
-                            <option value="existing">Existing squad</option>
-                            <option value="looking">Looking for squad</option>
-                        </select>
-                        <div id="squad-error" class="form-error"></div>
-                    </div>
-
-                    <!-- Agreements -->
-                    <div class="form-checkbox-group">
-                        <input type="checkbox" id="codeOfConduct" name="codeOfConduct" class="form-checkbox" required>
-                        <label for="codeOfConduct" class="form-checkbox-label">
-                            I agree to the <a href="code-of-conduct.html" target="_blank">Code of Conduct</a> and event rules. *
-                        </label>
-                    </div>
-
-                    <div class="form-checkbox-group">
-                        <input type="checkbox" id="dataPrivacy" name="dataPrivacy" class="form-checkbox" required>
-                        <label for="dataPrivacy" class="form-checkbox-label">
-                            I consent to data collection for event organization. *
-                        </label>
-                    </div>
+                    <a href="https://lu.ma/87ci1l0h" target="_blank" rel="noopener noreferrer" class="luma-register-btn">
+                        <span>Register on Luma</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
 
                     <!-- Social Proof -->
                     <div class="social-proof">
@@ -656,12 +653,11 @@
                         <span class="social-proof-text"><strong>47 builders</strong> registered this week</span>
                     </div>
 
-                    <!-- Submit -->
-                    <button type="submit" class="form-submit" id="submit-btn">
-                        <span>Secure My Spot</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
+                    <p class="luma-cta-note">
+                        <i class="fas fa-info-circle"></i>
+                        By registering, you agree to our <a href="code-of-conduct.html">Code of Conduct</a>.
+                    </p>
+                </div>
 
                 <!-- Benefits -->
                 <div class="benefits">
@@ -860,126 +856,6 @@
                 delay: 0.4
             });
 
-            // Form handling
-            const form = document.getElementById('registration-form');
-            const submitBtn = document.getElementById('submit-btn');
-            const successMsg = document.getElementById('form-success');
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                if (!validateForm()) return;
-
-                submitBtn.disabled = true;
-                submitBtn.textContent = 'Processing...';
-
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                // Show success
-                form.style.display = 'none';
-                document.querySelector('.benefits').style.display = 'none';
-                successMsg.classList.add('show');
-
-                gsap.from('.form-success', {
-                    scale: 0.9,
-                    opacity: 0,
-                    duration: 0.5,
-                    ease: 'back.out'
-                });
-            });
-
-            function validateForm() {
-                let isValid = true;
-                const required = form.querySelectorAll('[required]');
-
-                required.forEach(field => {
-                    clearError(field);
-
-                    if (field.type === 'checkbox') {
-                        if (!field.checked) {
-                            showError(field, 'This field is required');
-                            isValid = false;
-                        }
-                    } else if (!field.value.trim()) {
-                        showError(field, 'This field is required');
-                        isValid = false;
-                    } else if (field.type === 'email' && !isValidEmail(field.value)) {
-                        showError(field, 'Please enter a valid email');
-                        isValid = false;
-                    }
-                });
-
-                return isValid;
-            }
-
-            function showError(field, message) {
-                field.classList.add('error');
-                const errorEl = document.getElementById(`${field.id}-error`);
-                if (errorEl) {
-                    errorEl.textContent = message;
-                    errorEl.classList.add('show');
-                }
-            }
-
-            function clearError(field) {
-                field.classList.remove('error');
-                const errorEl = document.getElementById(`${field.id}-error`);
-                if (errorEl) {
-                    errorEl.textContent = '';
-                    errorEl.classList.remove('show');
-                }
-            }
-
-            function isValidEmail(email) {
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-            }
-
-            // Real-time validation on input
-            form.querySelectorAll('input, select').forEach(field => {
-                field.addEventListener('input', () => {
-                    clearError(field);
-                    validateFieldRealtime(field);
-                });
-                field.addEventListener('blur', () => {
-                    validateFieldRealtime(field);
-                });
-            });
-
-            function validateFieldRealtime(field) {
-                const validIcon = document.getElementById(`${field.id}-valid`);
-
-                if (field.type === 'checkbox') return;
-
-                let isValid = false;
-
-                if (field.type === 'email') {
-                    isValid = field.value.trim() && isValidEmail(field.value);
-                } else if (field.tagName === 'SELECT') {
-                    isValid = field.value && field.value !== '';
-                    if (isValid) field.classList.add('valid');
-                    else field.classList.remove('valid');
-                    return; // No icon for selects
-                } else {
-                    isValid = field.value.trim().length >= 2;
-                }
-
-                if (validIcon) {
-                    if (isValid) {
-                        validIcon.classList.add('show', 'valid');
-                        validIcon.classList.remove('invalid');
-                        field.classList.add('valid');
-                        field.classList.remove('error');
-                    } else if (field.value.trim()) {
-                        validIcon.classList.remove('show');
-                        field.classList.remove('valid');
-                    } else {
-                        validIcon.classList.remove('show');
-                        field.classList.remove('valid');
-                    }
-                }
-            }
-
             // Urgency countdown timer
             function initUrgencyTimer() {
                 const timerEl = document.getElementById('urgency-timer');
@@ -1010,35 +886,6 @@
             }
 
             initUrgencyTimer();
-
-            // iOS keyboard handling
-            if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-                // Scroll input into view when focused
-                const inputs = form.querySelectorAll('input, select, textarea');
-                inputs.forEach(input => {
-                    input.addEventListener('focus', () => {
-                        setTimeout(() => {
-                            input.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center',
-                                inline: 'nearest'
-                            });
-                        }, 300); // Delay to let keyboard appear
-                    }, { passive: true });
-                });
-
-                // Handle visual viewport changes (keyboard appearance)
-                if (window.visualViewport) {
-                    window.visualViewport.addEventListener('resize', () => {
-                        const focusedElement = document.activeElement;
-                        if (focusedElement && (focusedElement.tagName === 'INPUT' ||
-                            focusedElement.tagName === 'TEXTAREA' ||
-                            focusedElement.tagName === 'SELECT')) {
-                            focusedElement.scrollIntoView({ block: 'center' });
-                        }
-                    });
-                }
-            }
         });
     </script>
 </body>
