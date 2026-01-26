@@ -12,6 +12,8 @@
     <meta property="og:title" content="Register Now | NEBULA:FOG 2026 AI x Security Hackathon">
     <meta property="og:description" content="Secure your spot at SF's AI x Security hackathon. $5K+ prizes, 100 builders max, everyone demos. March 14, 2026. Limited spots remaining.">
     <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://nebulafog.ai/register.html">
 
     <!-- Twitter -->
@@ -89,6 +91,7 @@
            FORM STYLES
            ======================================== */
         .register-form {
+            position: relative;
             background: rgba(10, 10, 10, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 2.5rem;
@@ -584,7 +587,7 @@
     <!-- Visual Effects -->
     <div class="scanlines"></div>
     <div class="grid-bg"></div>
-    <canvas class="particles-canvas" id="particles"></canvas>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
 
     <!-- Navigation -->
     <nav class="hud-nav" role="navigation" aria-label="System Interface">

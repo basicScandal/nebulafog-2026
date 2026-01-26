@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>NEBULA:FOG 2026 | AI x Security Hackathon</title>
     <meta name="description"
         content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026.">
@@ -14,6 +14,8 @@
     <meta property="og:description"
         content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026. Register now.">
     <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://nebulafog.ai">
 
     <!-- Twitter -->
@@ -1493,7 +1495,7 @@
     <div class="scanlines"></div>
     <div class="noise"></div>
     <div class="grid-bg"></div>
-    <canvas class="particles-canvas" id="particles"></canvas>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
 
     <!-- Breach Sequence Overlay -->
     <div class="breach-overlay" id="breach-overlay">
@@ -1538,7 +1540,7 @@
                         </div>
                         <div class="terminal-input-area" id="terminal-input-area">
                             <span class="terminal-prompt">></span>
-                            <input type="text" class="terminal-input" id="terminal-input" placeholder="Ask about NEBULA:FOG 2026..." autocomplete="off" spellcheck="false">
+                            <input type="text" class="terminal-input" id="terminal-input" placeholder="Ask about NEBULA:FOG 2026..." aria-label="Terminal command input" autocomplete="off" spellcheck="false">
                             <span class="terminal-cursor"></span>
                         </div>
                     </div>
@@ -2380,12 +2382,12 @@
                     'tracks': [
                         { type: 'output', text: 'Challenge tracks include:' },
                         { type: 'highlight', text: 'Adversarial ML, Agent Security, LLM Safety' },
-                        { type: 'output', text: 'Full track details coming soon.' }
+                        { type: 'output', text: 'See challenges.html for full details.' }
                     ],
                     'challenges': [
                         { type: 'output', text: 'Challenge tracks include:' },
                         { type: 'highlight', text: 'Adversarial ML, Agent Security, LLM Safety' },
-                        { type: 'output', text: 'Full track details coming soon.' }
+                        { type: 'output', text: 'See challenges.html for full details.' }
                     ],
                     '2025': [
                         { type: 'output', text: '2025 stats: 120 hackers, 24 projects' },
