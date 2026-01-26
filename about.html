@@ -54,6 +54,9 @@
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
     <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
 
+    <!-- Simplex Noise for morphing sphere -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js" defer></script>
+
     <style>
         /* ========================================
            CSS CUSTOM PROPERTIES
@@ -246,10 +249,10 @@
         }
 
         /* ========================================
-           SECTION 1: HERO
+           SECTION 1: HERO (Full Cyberpunk Atmosphere)
            ======================================== */
         .section-hero {
-            background: radial-gradient(ellipse at center, rgba(0, 255, 159, 0.05) 0%, transparent 70%);
+            background: radial-gradient(ellipse at center, rgba(0, 255, 159, 0.08) 0%, rgba(0, 0, 0, 0.9) 70%);
             position: relative;
         }
 
@@ -268,6 +271,31 @@
         .section-hero .section-content {
             position: relative;
             z-index: 2;
+            /* Subtle text glow for readability */
+            text-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+        }
+
+        .section-hero .section-title {
+            /* Override base opacity for hero - word animations handle visibility */
+            opacity: 1;
+            transform: none;
+            text-shadow:
+                0 0 40px rgba(0, 0, 0, 0.9),
+                0 0 80px rgba(0, 0, 0, 0.5),
+                0 2px 4px rgba(0, 255, 159, 0.3);
+        }
+
+        .section-hero .section-title-accent {
+            text-shadow:
+                0 0 20px rgba(0, 255, 159, 0.5),
+                0 0 40px rgba(0, 255, 159, 0.3),
+                0 0 60px rgba(0, 255, 159, 0.2);
+        }
+
+        .section-hero .hero-badge {
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 159, 0.3);
         }
 
         .section-hero .scroll-indicator {
@@ -1301,10 +1329,101 @@
             renderer.toneMappingExposure = 1.0;
 
             // ========================================
-            // POST-PROCESSING: UNREAL BLOOM (Rezmason-style)
+            // CUSTOM SHADERS: CHROMATIC ABERRATION & GLITCH
+            // ========================================
+
+            // Chromatic Aberration Shader
+            const ChromaticAberrationShader = {
+                uniforms: {
+                    tDiffuse: { value: null },
+                    amount: { value: 0.003 },
+                    angle: { value: 0.0 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float amount;
+                    uniform float angle;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 offset = amount * vec2(cos(angle), sin(angle));
+                        vec4 cr = texture2D(tDiffuse, vUv + offset);
+                        vec4 cg = texture2D(tDiffuse, vUv);
+                        vec4 cb = texture2D(tDiffuse, vUv - offset);
+                        gl_FragColor = vec4(cr.r, cg.g, cb.b, cg.a);
+                    }
+                `
+            };
+
+            // Glitch Shader
+            const GlitchShader = {
+                uniforms: {
+                    tDiffuse: { value: null },
+                    time: { value: 0.0 },
+                    glitchIntensity: { value: 0.0 },
+                    scanlineIntensity: { value: 0.04 }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    uniform float glitchIntensity;
+                    uniform float scanlineIntensity;
+                    varying vec2 vUv;
+
+                    float random(vec2 st) {
+                        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+                    }
+
+                    void main() {
+                        vec2 uv = vUv;
+
+                        // Glitch displacement
+                        if (glitchIntensity > 0.0) {
+                            float noise = random(vec2(floor(uv.y * 20.0), time));
+                            if (noise > 0.97) {
+                                uv.x += (random(vec2(time, uv.y)) - 0.5) * glitchIntensity * 0.3;
+                            }
+                            // Occasional horizontal line shifts
+                            if (random(vec2(time * 0.1, floor(uv.y * 50.0))) > 0.995) {
+                                uv.x += glitchIntensity * 0.1 * (random(vec2(time)) - 0.5);
+                            }
+                        }
+
+                        vec4 color = texture2D(tDiffuse, uv);
+
+                        // Scanlines
+                        float scanline = sin(vUv.y * 400.0 + time * 2.0) * 0.5 + 0.5;
+                        color.rgb -= scanline * scanlineIntensity;
+
+                        // Vignette
+                        float vignette = 1.0 - smoothstep(0.5, 1.5, length(vUv - 0.5) * 1.5);
+                        color.rgb *= vignette * 0.3 + 0.7;
+
+                        gl_FragColor = color;
+                    }
+                `
+            };
+
+            // ========================================
+            // POST-PROCESSING: BLOOM + CHROMATIC + GLITCH
             // ========================================
             let composer;
             let bloomPass;
+            let chromaticPass;
+            let glitchPass;
             const useBloom = typeof THREE.EffectComposer !== 'undefined';
 
             if (useBloom) {
@@ -1315,12 +1434,25 @@
                 // UnrealBloomPass(resolution, strength, radius, threshold)
                 bloomPass = new THREE.UnrealBloomPass(
                     new THREE.Vector2(window.innerWidth, window.innerHeight),
-                    0.8,   // strength - intensity of bloom
-                    0.4,   // radius - how far bloom spreads
-                    0.2    // threshold - brightness threshold for bloom
+                    1.0,   // strength - increased for more dramatic glow
+                    0.5,   // radius - how far bloom spreads
+                    0.15   // threshold - lower to bloom more elements
                 );
                 composer.addPass(bloomPass);
+
+                // Chromatic Aberration Pass
+                chromaticPass = new THREE.ShaderPass(ChromaticAberrationShader);
+                composer.addPass(chromaticPass);
+
+                // Glitch Pass (last in chain)
+                glitchPass = new THREE.ShaderPass(GlitchShader);
+                composer.addPass(glitchPass);
             }
+
+            // Glitch state management
+            let glitchTimer = 0;
+            let isGlitching = false;
+            let glitchDuration = 0;
 
             // Colors
             const primaryColor = 0x00ff9f;
@@ -1390,6 +1522,246 @@
             });
 
             scene.add(geometryGroup);
+
+            // ========================================
+            // MORPHING NOISE SPHERE (Award-winning centerpiece)
+            // ========================================
+            let morphSphere = null;
+            let morphSphereTime = 0;
+            const simplex = typeof SimplexNoise !== 'undefined' ? new SimplexNoise() : null;
+
+            if (simplex) {
+                // Create custom shader material for the morphing sphere
+                const sphereVertexShader = `
+                    uniform float time;
+                    uniform float noiseStrength;
+                    varying vec3 vNormal;
+                    varying float vDisplacement;
+
+                    // Simplex noise function (simplified 3D)
+                    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                    vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                    vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+                    vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+
+                    float snoise(vec3 v) {
+                        const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+                        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+                        vec3 i = floor(v + dot(v, C.yyy));
+                        vec3 x0 = v - i + dot(i, C.xxx);
+                        vec3 g = step(x0.yzx, x0.xyz);
+                        vec3 l = 1.0 - g;
+                        vec3 i1 = min(g.xyz, l.zxy);
+                        vec3 i2 = max(g.xyz, l.zxy);
+                        vec3 x1 = x0 - i1 + C.xxx;
+                        vec3 x2 = x0 - i2 + C.yyy;
+                        vec3 x3 = x0 - D.yyy;
+                        i = mod289(i);
+                        vec4 p = permute(permute(permute(
+                            i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                            + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                            + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+                        float n_ = 0.142857142857;
+                        vec3 ns = n_ * D.wyz - D.xzx;
+                        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+                        vec4 x_ = floor(j * ns.z);
+                        vec4 y_ = floor(j - 7.0 * x_);
+                        vec4 x = x_ *ns.x + ns.yyyy;
+                        vec4 y = y_ *ns.x + ns.yyyy;
+                        vec4 h = 1.0 - abs(x) - abs(y);
+                        vec4 b0 = vec4(x.xy, y.xy);
+                        vec4 b1 = vec4(x.zw, y.zw);
+                        vec4 s0 = floor(b0)*2.0 + 1.0;
+                        vec4 s1 = floor(b1)*2.0 + 1.0;
+                        vec4 sh = -step(h, vec4(0.0));
+                        vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+                        vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+                        vec3 p0 = vec3(a0.xy, h.x);
+                        vec3 p1 = vec3(a0.zw, h.y);
+                        vec3 p2 = vec3(a1.xy, h.z);
+                        vec3 p3 = vec3(a1.zw, h.w);
+                        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
+                        p0 *= norm.x;
+                        p1 *= norm.y;
+                        p2 *= norm.z;
+                        p3 *= norm.w;
+                        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+                        m = m * m;
+                        return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+                    }
+
+                    void main() {
+                        vNormal = normal;
+                        vec3 pos = position;
+
+                        // Multi-octave noise for organic deformation
+                        float noise1 = snoise(pos * 0.8 + time * 0.3) * 0.5;
+                        float noise2 = snoise(pos * 1.5 + time * 0.5) * 0.25;
+                        float noise3 = snoise(pos * 3.0 + time * 0.7) * 0.125;
+                        float displacement = (noise1 + noise2 + noise3) * noiseStrength;
+
+                        vDisplacement = displacement;
+                        pos += normal * displacement;
+
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                    }
+                `;
+
+                const sphereFragmentShader = `
+                    uniform vec3 color1;
+                    uniform vec3 color2;
+                    uniform float time;
+                    varying vec3 vNormal;
+                    varying float vDisplacement;
+
+                    void main() {
+                        // Color based on displacement and normal
+                        float colorMix = vDisplacement * 2.0 + 0.5;
+                        colorMix = clamp(colorMix, 0.0, 1.0);
+
+                        vec3 color = mix(color1, color2, colorMix);
+
+                        // Fresnel-like edge glow
+                        float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
+                        color += fresnel * 0.3;
+
+                        // Pulsing alpha
+                        float alpha = 0.6 + sin(time * 2.0) * 0.1;
+
+                        gl_FragColor = vec4(color, alpha);
+                    }
+                `;
+
+                const sphereGeometry = new THREE.IcosahedronGeometry(6, 4);
+                const sphereMaterial = new THREE.ShaderMaterial({
+                    uniforms: {
+                        time: { value: 0 },
+                        noiseStrength: { value: 1.2 },
+                        color1: { value: new THREE.Color(0x00ff9f) },
+                        color2: { value: new THREE.Color(0x00ffff) }
+                    },
+                    vertexShader: sphereVertexShader,
+                    fragmentShader: sphereFragmentShader,
+                    wireframe: true,
+                    transparent: true,
+                    side: THREE.DoubleSide
+                });
+
+                morphSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                morphSphere.position.set(0, 0, -8);
+                scene.add(morphSphere);
+
+                // Add inner glow sphere
+                const glowGeometry = new THREE.IcosahedronGeometry(5.5, 3);
+                const glowMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x00ff9f,
+                    transparent: true,
+                    opacity: 0.05,
+                    side: THREE.BackSide
+                });
+                const glowSphere = new THREE.Mesh(glowGeometry, glowMaterial);
+                glowSphere.position.copy(morphSphere.position);
+                scene.add(glowSphere);
+            }
+
+            // ========================================
+            // HOLOGRAPHIC UI ELEMENTS
+            // ========================================
+            const holoGroup = new THREE.Group();
+
+            // Floating corner brackets
+            const bracketMaterial = new THREE.LineBasicMaterial({
+                color: 0x00ff9f,
+                transparent: true,
+                opacity: 0.4
+            });
+
+            function createBracket(size, corner) {
+                const points = [];
+                const l = size;
+                const s = size * 0.3;
+
+                if (corner === 'tl') {
+                    points.push(new THREE.Vector3(-l, l - s, 0));
+                    points.push(new THREE.Vector3(-l, l, 0));
+                    points.push(new THREE.Vector3(-l + s, l, 0));
+                } else if (corner === 'tr') {
+                    points.push(new THREE.Vector3(l - s, l, 0));
+                    points.push(new THREE.Vector3(l, l, 0));
+                    points.push(new THREE.Vector3(l, l - s, 0));
+                } else if (corner === 'bl') {
+                    points.push(new THREE.Vector3(-l, -l + s, 0));
+                    points.push(new THREE.Vector3(-l, -l, 0));
+                    points.push(new THREE.Vector3(-l + s, -l, 0));
+                } else if (corner === 'br') {
+                    points.push(new THREE.Vector3(l - s, -l, 0));
+                    points.push(new THREE.Vector3(l, -l, 0));
+                    points.push(new THREE.Vector3(l, -l + s, 0));
+                }
+
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                return new THREE.Line(geometry, bracketMaterial);
+            }
+
+            // Create multiple bracket frames at different depths
+            const bracketSizes = [12, 18, 24];
+            const bracketDepths = [-5, -12, -20];
+            const brackets = [];
+
+            bracketSizes.forEach((size, i) => {
+                const depth = bracketDepths[i];
+                ['tl', 'tr', 'bl', 'br'].forEach(corner => {
+                    const bracket = createBracket(size, corner);
+                    bracket.position.z = depth;
+                    bracket.userData = {
+                        baseZ: depth,
+                        rotationSpeed: 0.001 * (i + 1),
+                        pulseOffset: Math.random() * Math.PI * 2
+                    };
+                    brackets.push(bracket);
+                    holoGroup.add(bracket);
+                });
+            });
+
+            // Floating data lines (horizontal scanlines at different depths)
+            const dataLineMaterial = new THREE.LineBasicMaterial({
+                color: 0xff0080,
+                transparent: true,
+                opacity: 0.15
+            });
+
+            const dataLines = [];
+            for (let i = 0; i < 8; i++) {
+                const y = (Math.random() - 0.5) * 30;
+                const z = -5 - Math.random() * 20;
+                const width = 20 + Math.random() * 30;
+
+                const points = [
+                    new THREE.Vector3(-width / 2, y, z),
+                    new THREE.Vector3(width / 2, y, z)
+                ];
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                const line = new THREE.Line(geometry, dataLineMaterial.clone());
+                line.userData = {
+                    baseY: y,
+                    speed: 0.02 + Math.random() * 0.03,
+                    amplitude: 0.5 + Math.random() * 1,
+                    phase: Math.random() * Math.PI * 2
+                };
+                dataLines.push(line);
+                holoGroup.add(line);
+            }
+
+            // Grid plane (far background)
+            const gridHelper = new THREE.GridHelper(100, 40, 0x00ff9f, 0x002211);
+            gridHelper.position.y = -20;
+            gridHelper.position.z = -15;
+            gridHelper.rotation.x = Math.PI * 0.4;
+            gridHelper.material.transparent = true;
+            gridHelper.material.opacity = 0.15;
+            holoGroup.add(gridHelper);
+
+            scene.add(holoGroup);
 
             // ========================================
             // MATRIX RAIN - CASCADING COLUMNS (2026 Edition)
@@ -1644,12 +2016,112 @@
             let connectionTimer = 0;
             let animationId;
             let isAnimating = true;
+            let glitchCooldown = 0;
 
             function animate() {
                 if (!isAnimating) return;
                 animationId = requestAnimationFrame(animate);
                 time += 0.01;
                 connectionTimer++;
+
+                // ========================================
+                // MORPHING SPHERE ANIMATION
+                // ========================================
+                if (morphSphere && morphSphere.material.uniforms) {
+                    morphSphereTime += 0.008;
+                    morphSphere.material.uniforms.time.value = morphSphereTime;
+
+                    // Subtle rotation
+                    morphSphere.rotation.y += 0.002;
+                    morphSphere.rotation.x += 0.001;
+
+                    // Color shift over time
+                    const hue1 = (Math.sin(time * 0.5) + 1) * 0.5; // 0-1
+                    const hue2 = (Math.sin(time * 0.5 + 1) + 1) * 0.5;
+
+                    // Shift between green, cyan, and pink
+                    if (hue1 < 0.33) {
+                        morphSphere.material.uniforms.color1.value.setHex(0x00ff9f);
+                    } else if (hue1 < 0.66) {
+                        morphSphere.material.uniforms.color1.value.setHex(0x00ffff);
+                    } else {
+                        morphSphere.material.uniforms.color1.value.setHex(0xff0080);
+                    }
+
+                    // Mouse reactivity - sphere follows mouse subtly
+                    morphSphere.position.x += (mouseX * 2 - morphSphere.position.x) * 0.01;
+                    morphSphere.position.y += (mouseY * 1.5 - morphSphere.position.y) * 0.01;
+                }
+
+                // ========================================
+                // HOLOGRAPHIC UI ANIMATION
+                // ========================================
+                // Animate brackets
+                brackets.forEach((bracket, i) => {
+                    // Subtle rotation
+                    bracket.rotation.z += bracket.userData.rotationSpeed;
+
+                    // Pulsing opacity
+                    const pulse = Math.sin(time * 2 + bracket.userData.pulseOffset) * 0.5 + 0.5;
+                    bracket.material.opacity = 0.2 + pulse * 0.3;
+
+                    // Parallax with mouse
+                    const parallaxStrength = (bracket.userData.baseZ + 20) / 20;
+                    bracket.position.x = mouseX * 3 * parallaxStrength;
+                    bracket.position.y = mouseY * 2 * parallaxStrength;
+                });
+
+                // Animate data lines
+                dataLines.forEach(line => {
+                    const newY = line.userData.baseY +
+                        Math.sin(time * line.userData.speed * 10 + line.userData.phase) * line.userData.amplitude;
+                    line.position.y = newY;
+
+                    // Flickering opacity
+                    if (Math.random() < 0.01) {
+                        line.material.opacity = 0.3 + Math.random() * 0.2;
+                    } else {
+                        line.material.opacity *= 0.98;
+                        line.material.opacity = Math.max(0.1, line.material.opacity);
+                    }
+                });
+
+                // ========================================
+                // GLITCH EFFECT TIMING
+                // ========================================
+                if (glitchPass) {
+                    glitchPass.uniforms.time.value = time;
+
+                    // Random glitch trigger (every 3-8 seconds on average)
+                    glitchCooldown--;
+                    if (glitchCooldown <= 0 && Math.random() < 0.005) {
+                        isGlitching = true;
+                        glitchDuration = 5 + Math.floor(Math.random() * 15); // 5-20 frames
+                        glitchCooldown = 180 + Math.floor(Math.random() * 300); // 3-8 second cooldown
+                    }
+
+                    if (isGlitching) {
+                        glitchPass.uniforms.glitchIntensity.value = 0.3 + Math.random() * 0.7;
+                        glitchDuration--;
+                        if (glitchDuration <= 0) {
+                            isGlitching = false;
+                        }
+                    } else {
+                        glitchPass.uniforms.glitchIntensity.value *= 0.9; // Fade out
+                    }
+                }
+
+                // ========================================
+                // CHROMATIC ABERRATION (mouse reactive)
+                // ========================================
+                if (chromaticPass) {
+                    // Increase chromatic aberration at screen edges
+                    const mouseDistance = Math.sqrt(mouseX * mouseX + mouseY * mouseY);
+                    const baseAmount = 0.001;
+                    const mouseAmount = mouseDistance * 0.003;
+                    chromaticPass.uniforms.amount.value = baseAmount + mouseAmount;
+                    chromaticPass.uniforms.angle.value = Math.atan2(mouseY, mouseX);
+                }
 
                 // Animate floating geometry
                 geometries.forEach((geo, i) => {
@@ -1660,6 +2132,9 @@
                     // Floating motion
                     geo.position.y = geo.userData.originalY +
                         Math.sin(time * geo.userData.floatSpeed + geo.userData.floatOffset) * 2;
+
+                    // Mouse parallax for geometries
+                    geo.position.x += (mouseX * 2 - geo.position.x) * 0.005;
                 });
 
                 // REZMASON-STYLE: Animate brightness waves on stationary background glyphs
@@ -1681,10 +2156,10 @@
                     }
                 });
 
-                // Subtle camera movement based on mouse
-                camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
-                camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
-                camera.lookAt(0, 0, 0);
+                // Enhanced camera movement based on mouse (more dramatic parallax)
+                camera.position.x += (mouseX * 5 - camera.position.x) * 0.02;
+                camera.position.y += (mouseY * 3 - camera.position.y) * 0.02;
+                camera.lookAt(0, 0, -5);
 
                 // Animate matrix rain columns (VOLUMETRIC + Rezmason-style)
                 rainColumns.forEach((column) => {
@@ -1798,7 +2273,7 @@
                     camera.aspect = window.innerWidth / window.innerHeight;
                     camera.updateProjectionMatrix();
                     renderer.setSize(window.innerWidth, window.innerHeight);
-                    // Update bloom composer on resize
+                    // Update post-processing composer on resize
                     if (useBloom && composer) {
                         composer.setSize(window.innerWidth, window.innerHeight);
                         if (bloomPass) {
