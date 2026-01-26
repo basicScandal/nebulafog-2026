@@ -1668,10 +1668,20 @@
             }
 
             async start() {
+                // Skip for reduced motion preference
                 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                     this.skip();
                     return;
                 }
+
+                // Skip for returning visitors (seen splash this session)
+                if (sessionStorage.getItem('splashSeen')) {
+                    this.skip();
+                    return;
+                }
+
+                // Mark splash as seen for this session
+                sessionStorage.setItem('splashSeen', 'true');
 
                 for (const line of this.lines) {
                     await this.addLine(line);
@@ -1758,7 +1768,12 @@
             init() {
                 this.animateContent();
                 this.initCursor();
-                this.initParticles();
+                // Defer heavy particle system until after initial paint
+                if ('requestIdleCallback' in window) {
+                    requestIdleCallback(() => this.initParticles(), { timeout: 2000 });
+                } else {
+                    setTimeout(() => this.initParticles(), 1000);
+                }
             }
 
             animateContent() {

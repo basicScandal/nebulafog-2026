@@ -1631,7 +1631,8 @@
         // ========================================
         // THREE.JS MATRIX RAIN + 3D GEOMETRY
         // ========================================
-        (function() {
+        // Defer heavy WebGL initialization until after first paint
+        function initThreeJS() {
             // Skip on mobile for performance
             if (window.innerWidth < 768) return;
 
@@ -2642,7 +2643,14 @@
                     startAnimation();
                 }
             });
-        })();
+        }
+
+        // Defer Three.js init until after first paint for better FCP
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initThreeJS, { timeout: 2000 });
+        } else {
+            setTimeout(initThreeJS, 1000);
+        }
 
         // ========================================
         // COUNTDOWN TIMER
@@ -2742,7 +2750,8 @@
         // ========================================
         // GLOBAL PARTICLES SYSTEM (WebGL noise + grid)
         // ========================================
-        (function() {
+        // Defer particles until after main content is interactive
+        function initGlobalParticles() {
             if (window.matchMedia('(max-width: 768px)').matches) return;
             const canvas = document.getElementById('particles');
             if (!canvas) return;
@@ -2817,7 +2826,15 @@
                 requestAnimationFrame(animate);
             };
             animate();
-        })();
+        }
+
+        // Defer global particles until page is idle
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(initGlobalParticles, { timeout: 3000 });
+        } else {
+            setTimeout(initGlobalParticles, 2000);
+        }
+
         function initParticles2D(canvas) {
             const ctx = canvas.getContext('2d'); let particles = []; const maxParticles = 60;
             const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
