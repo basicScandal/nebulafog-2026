@@ -1361,43 +1361,76 @@
             scene.add(geometryGroup);
 
             // ========================================
-            // MATRIX RAIN - CASCADING COLUMNS
+            // MATRIX RAIN - CASCADING COLUMNS (2026 Edition)
             // ========================================
             const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]';
             const matrixCharsArray = matrixChars.split('');
             const matrixCharsLen = matrixCharsArray.length;
             const rainColumns = [];
-            const columnCount = 35; // Number of vertical columns
-            const charsPerColumn = 12; // Characters per column (head + tail)
+            const columnCount = 40; // Slightly more columns for density
+            const charsPerColumn = 14; // Longer tails
 
             // Pre-create texture cache
             const textureCache = new Map();
 
-            // Pre-compute opacity levels for tail fade (like 2D version)
+            // 2026 Color themes - 80% green, 10% cyan, 10% pink
+            const colorThemes = {
+                green: { head: '#b4ffc8', tail: '#00ff9f', glow: '#00ff9f' },
+                cyan: { head: '#ffffff', tail: '#00ffff', glow: '#00ffff' },
+                pink: { head: '#ffffff', tail: '#ff0080', glow: '#ff0080' }
+            };
+
+            function getRandomColorTheme() {
+                const rand = Math.random();
+                if (rand < 0.10) return 'cyan';
+                if (rand < 0.20) return 'pink';
+                return 'green';
+            }
+
+            // Pre-compute opacity levels for tail fade
             const tailOpacities = [];
             for (let i = 0; i < charsPerColumn; i++) {
                 if (i === 0) {
-                    tailOpacities.push(0.95); // Bright head
+                    tailOpacities.push(1.0); // Bright head
+                } else if (i === 1) {
+                    tailOpacities.push(0.85); // Secondary glow
                 } else {
-                    tailOpacities.push(Math.max(0.05, (1 - (i / charsPerColumn)) * 0.5));
+                    tailOpacities.push(Math.max(0.03, (1 - (i / charsPerColumn)) * 0.45));
                 }
             }
 
-            // Create canvas texture for matrix characters - with caching
-            function createCharTexture(char, color = '#00ff9f') {
-                const cacheKey = char + color;
+            // Create canvas texture with BLOOM GLOW effect
+            function createCharTexture(char, color = '#00ff9f', isHead = false, glowColor = '#00ff9f') {
+                const cacheKey = char + color + (isHead ? '_glow' : '');
                 if (textureCache.has(cacheKey)) {
                     return textureCache.get(cacheKey);
                 }
 
-                const size = 64;
+                const size = 128; // Larger for better glow quality
                 const canvas = document.createElement('canvas');
                 canvas.width = size;
                 canvas.height = size;
                 const ctx = canvas.getContext('2d');
 
+                // Add bloom glow for head characters
+                if (isHead) {
+                    ctx.shadowColor = glowColor;
+                    ctx.shadowBlur = 20;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
+                    // Draw multiple times for stronger glow
+                    ctx.fillStyle = glowColor;
+                    ctx.font = 'bold 56px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(char, size/2, size/2);
+                    ctx.fillText(char, size/2, size/2); // Double draw for bloom
+                }
+
+                // Draw the main character
+                ctx.shadowBlur = isHead ? 8 : 0;
                 ctx.fillStyle = color;
-                ctx.font = 'bold 48px monospace';
+                ctx.font = 'bold 56px monospace';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(char, size/2, size/2);
@@ -1413,23 +1446,38 @@
 
             // Create each column as a group of sprites
             for (let col = 0; col < columnCount; col++) {
-                const columnX = (col - columnCount / 2) * 2; // Spread columns
-                const columnZ = (Math.random() - 0.5) * 25 - 5; // Random depth
-                const columnSpeed = Math.random() * 0.12 + 0.06;
-                const columnScale = Math.random() * 0.4 + 0.4;
-                const charSpacing = columnScale * 1.2; // Vertical spacing between chars
+                const columnX = (col - columnCount / 2) * 1.8; // Spread columns
+                const columnZ = (Math.random() - 0.5) * 30 - 5; // Random depth (wider range)
+
+                // 2026: Depth-based speed for parallax effect (closer = faster)
+                const depthFactor = (columnZ + 20) / 40; // Normalize 0-1 based on Z
+                const columnSpeed = 0.04 + depthFactor * 0.16 + Math.random() * 0.04;
+
+                // Scale also varies with depth (closer = larger)
+                const columnScale = 0.35 + depthFactor * 0.35 + Math.random() * 0.1;
+                const charSpacing = columnScale * 1.1;
+
+                // 2026: Assign color theme to entire column
+                const theme = getRandomColorTheme();
+                const colors = colorThemes[theme];
 
                 const columnData = {
                     sprites: [],
                     chars: [],
                     x: columnX,
                     z: columnZ,
-                    y: Math.random() * 50 - 10, // Starting Y position
+                    y: Math.random() * 60 - 15, // Starting Y position
                     speed: columnSpeed,
                     scale: columnScale,
                     charSpacing: charSpacing,
                     charChangeTimer: Math.random() * 60,
-                    charChangeInterval: Math.random() * 40 + 30
+                    charChangeInterval: Math.random() * 30 + 20,
+                    theme: theme,
+                    colors: colors,
+                    // 2026: Flicker state
+                    flickerTimer: Math.random() * 100,
+                    flickerTarget: null,
+                    flickerIntensity: 0
                 };
 
                 // Create sprites for each character in the column
@@ -1437,11 +1485,10 @@
                     const char = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
                     columnData.chars.push(char);
 
-                    // Head is bright white-green, tail fades to green
                     const isHead = i === 0;
-                    const color = isHead ? '#b4ffc8' : '#00ff9f';
+                    const color = isHead ? colors.head : colors.tail;
 
-                    const texture = createCharTexture(char, color);
+                    const texture = createCharTexture(char, color, isHead, colors.glow);
                     const material = new THREE.SpriteMaterial({
                         map: texture,
                         transparent: true,
@@ -1454,7 +1501,11 @@
                     sprite.position.z = columnZ;
                     sprite.scale.set(columnScale, columnScale, 1);
 
-                    sprite.userData = { isHead: isHead, index: i };
+                    sprite.userData = {
+                        isHead: isHead,
+                        index: i,
+                        baseOpacity: tailOpacities[i]
+                    };
                     columnData.sprites.push(sprite);
                     rainGroup.add(sprite);
                 }
@@ -1547,19 +1598,46 @@
                     for (let i = 0; i < column.sprites.length; i++) {
                         const sprite = column.sprites[i];
                         sprite.position.y = column.y - (i * column.charSpacing);
+
+                        // 2026: Flicker effect - random opacity pulse
+                        if (column.flickerTarget === i && column.flickerIntensity > 0) {
+                            sprite.material.opacity = Math.min(1, sprite.userData.baseOpacity + column.flickerIntensity * 0.5);
+                        } else {
+                            sprite.material.opacity = sprite.userData.baseOpacity;
+                        }
+                    }
+
+                    // 2026: Random flicker trigger
+                    column.flickerTimer--;
+                    if (column.flickerTimer <= 0) {
+                        column.flickerTarget = Math.floor(Math.random() * column.sprites.length);
+                        column.flickerIntensity = 0.8 + Math.random() * 0.2;
+                        column.flickerTimer = 15 + Math.random() * 60;
+                    }
+                    // Decay flicker
+                    if (column.flickerIntensity > 0) {
+                        column.flickerIntensity -= 0.08;
+                        if (column.flickerIntensity < 0) column.flickerIntensity = 0;
                     }
 
                     // Reset column when tail goes off screen
                     const tailY = column.y - (charsPerColumn * column.charSpacing);
-                    if (tailY < -30) {
-                        column.y = 30 + Math.random() * 15;
-                        // Randomize new characters when column resets
+                    if (tailY < -35) {
+                        column.y = 35 + Math.random() * 20;
+
+                        // 2026: Possibly change color theme on reset (5% chance)
+                        if (Math.random() < 0.05) {
+                            column.theme = getRandomColorTheme();
+                            column.colors = colorThemes[column.theme];
+                        }
+
+                        // Randomize new characters with column's color theme
                         for (let i = 0; i < column.chars.length; i++) {
                             const newChar = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
                             column.chars[i] = newChar;
                             const isHead = i === 0;
-                            const color = isHead ? '#b4ffc8' : '#00ff9f';
-                            column.sprites[i].material.map = createCharTexture(newChar, color);
+                            const color = isHead ? column.colors.head : column.colors.tail;
+                            column.sprites[i].material.map = createCharTexture(newChar, color, isHead, column.colors.glow);
                         }
                     }
 
@@ -1567,10 +1645,10 @@
                     column.charChangeTimer--;
                     if (column.charChangeTimer <= 0) {
                         const changeIdx = Math.floor(Math.random() * column.chars.length);
-                        if (changeIdx > 0) { // Don't change head as often
+                        if (changeIdx > 0) {
                             const newChar = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
                             column.chars[changeIdx] = newChar;
-                            column.sprites[changeIdx].material.map = createCharTexture(newChar, '#00ff9f');
+                            column.sprites[changeIdx].material.map = createCharTexture(newChar, column.colors.tail, false, column.colors.glow);
                         }
                         column.charChangeTimer = column.charChangeInterval;
                     }
