@@ -276,6 +276,44 @@
                 </p>
             </header>
 
+            <!-- Sponsor Logos (HIDDEN - Reveals when SPONSORS array has data) -->
+            <section id="sponsor-logos" style="display: none; margin-bottom: 4rem; opacity: 0; transform: translateY(40px);">
+                <h2 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">OUR PARTNERS</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Organizations powering the future of AI security.</p>
+
+                <!-- Tier 1: Platinum -->
+                <div id="sponsors-platinum" style="display: none; margin-bottom: 3rem;">
+                    <h3 style="font-size: 0.75rem; color: var(--color-primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">PLATINUM PARTNERS</h3>
+                    <div class="sponsor-grid-platinum" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; align-items: center; justify-items: center;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tier 2: Gold -->
+                <div id="sponsors-gold" style="display: none; margin-bottom: 3rem;">
+                    <h3 style="font-size: 0.75rem; color: #ffd700; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">GOLD PARTNERS</h3>
+                    <div class="sponsor-grid-gold" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; align-items: center; justify-items: center;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tier 3: Silver -->
+                <div id="sponsors-silver" style="display: none; margin-bottom: 3rem;">
+                    <h3 style="font-size: 0.75rem; color: #c0c0c0; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">SILVER PARTNERS</h3>
+                    <div class="sponsor-grid-silver" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; align-items: center; justify-items: center;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tier 4: Community -->
+                <div id="sponsors-community" style="display: none;">
+                    <h3 style="font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">COMMUNITY PARTNERS</h3>
+                    <div class="sponsor-grid-community" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; align-items: center; justify-items: center;">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </section>
+
             <section class="cta-section">
                 <h2 class="cta-title">Power the Neural Network</h2>
                 <p class="cta-text">
@@ -448,6 +486,74 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // ============================================
+            // SPONSOR DATA - Populate when sponsors confirm
+            // ============================================
+            const SPONSORS = {
+                platinum: [
+                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                ],
+                gold: [
+                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                ],
+                silver: [
+                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                ],
+                community: [
+                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                ]
+            };
+
+            // Render sponsor logos if data exists
+            function renderSponsors() {
+                const section = document.getElementById('sponsor-logos');
+                let hasAnySponsors = false;
+
+                Object.entries(SPONSORS).forEach(([tier, sponsors]) => {
+                    if (sponsors.length > 0) {
+                        hasAnySponsors = true;
+                        const tierSection = document.getElementById(`sponsors-${tier}`);
+                        const grid = tierSection.querySelector(`.sponsor-grid-${tier}`);
+
+                        sponsors.forEach(sponsor => {
+                            const link = document.createElement('a');
+                            link.href = sponsor.url;
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                            link.title = sponsor.name;
+                            link.style.cssText = 'transition: all 0.3s ease; opacity: 0.8;';
+                            link.onmouseover = () => { link.style.opacity = '1'; link.style.transform = 'scale(1.05)'; };
+                            link.onmouseout = () => { link.style.opacity = '0.8'; link.style.transform = 'scale(1)'; };
+
+                            const img = document.createElement('img');
+                            img.src = sponsor.logo;
+                            img.alt = sponsor.name;
+                            img.style.cssText = 'max-width: 100%; height: auto; filter: grayscale(100%) brightness(1.2); transition: filter 0.3s ease;';
+                            img.onmouseover = () => { img.style.filter = 'grayscale(0%) brightness(1)'; };
+                            img.onmouseout = () => { img.style.filter = 'grayscale(100%) brightness(1.2)'; };
+
+                            link.appendChild(img);
+                            grid.appendChild(link);
+                        });
+
+                        tierSection.style.display = 'block';
+                    }
+                });
+
+                if (hasAnySponsors) {
+                    section.style.display = 'block';
+                    gsap.to(section, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 0.5,
+                        ease: 'power3.out'
+                    });
+                }
+            }
+
+            renderSponsors();
+
             // Animate page header
             gsap.to('.page-header', {
                 opacity: 1,

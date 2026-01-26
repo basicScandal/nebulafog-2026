@@ -437,6 +437,42 @@
                 </div>
             </section>
 
+            <!-- Judges Section (HIDDEN - Reveals when JUDGES array has data) -->
+            <section id="judges-section" style="display: none; margin-top: 4rem; padding: 2.5rem; background: rgba(10, 10, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.05); opacity: 0; transform: translateY(20px);">
+                <h2 style="font-family: var(--font-display); font-size: 1.3rem; color: var(--color-primary); margin-bottom: 0.5rem;">JUDGES & SPEAKERS</h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 2rem;">The experts evaluating your builds.</p>
+
+                <div id="judges-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <!-- Venue Section (HIDDEN - Reveals when VENUE object has data) -->
+            <section id="venue-section" style="display: none; margin-top: 4rem; padding: 2.5rem; background: linear-gradient(135deg, rgba(0, 255, 159, 0.03) 0%, rgba(255, 0, 128, 0.03) 100%); border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px);">
+                <h2 style="font-family: var(--font-display); font-size: 1.3rem; color: var(--color-primary); margin-bottom: 0.5rem;">
+                    <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem;"></i>VENUE
+                </h2>
+                <p style="color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 2rem;">Where the mission takes place.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <div id="venue-details">
+                        <h3 id="venue-name" style="font-family: var(--font-display); font-size: 1.1rem; color: var(--color-text); margin-bottom: 0.5rem;"></h3>
+                        <p id="venue-address" style="color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;"></p>
+                        <a id="venue-directions" href="#" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-primary); font-size: 0.85rem; transition: all 0.3s ease;">
+                            <i class="fas fa-directions"></i> Get Directions
+                        </a>
+                    </div>
+                    <div id="venue-logistics">
+                        <h4 style="font-size: 0.85rem; color: var(--color-text); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em;">
+                            <i class="fas fa-info-circle" style="color: var(--color-primary); margin-right: 0.5rem;"></i>LOGISTICS
+                        </h4>
+                        <ul id="venue-info-list" style="list-style: none; color: var(--color-text-muted); font-size: 0.85rem; line-height: 2;">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
             <!-- Afterparty Section -->
             <aside class="afterparty">
                 <h2 class="afterparty-title">AFTER::PROTOCOL</h2>
@@ -608,6 +644,135 @@
         // Initialize GSAP animations
         document.addEventListener('DOMContentLoaded', () => {
             gsap.registerPlugin(ScrollTrigger);
+
+            // ============================================
+            // JUDGES DATA - Populate when judges confirmed
+            // ============================================
+            const JUDGES = [
+                // { name: 'Jane Doe', title: 'Security Engineer', company: 'Company', photo: '/images/judges/jane.jpg', linkedin: 'https://linkedin.com/in/jane' }
+            ];
+
+            // ============================================
+            // VENUE DATA - Populate when venue confirmed
+            // ============================================
+            const VENUE = {
+                // name: 'Venue Name',
+                // address: '123 Main St, San Francisco, CA 94105',
+                // mapsUrl: 'https://maps.google.com/?q=...',
+                // info: [
+                //     'Street parking available',
+                //     'Nearest BART: Montgomery St',
+                //     'Accessible entrance on Main St'
+                // ]
+            };
+
+            // Render judges if data exists
+            function renderJudges() {
+                if (JUDGES.length === 0) return;
+
+                const section = document.getElementById('judges-section');
+                const grid = document.getElementById('judges-grid');
+
+                JUDGES.forEach(judge => {
+                    const card = document.createElement('div');
+                    card.style.cssText = 'text-align: center; padding: 1.5rem; border: 1px solid var(--color-text-dim); transition: all 0.3s ease;';
+                    card.onmouseover = () => { card.style.borderColor = 'var(--color-primary)'; card.style.background = 'rgba(0, 255, 159, 0.02)'; };
+                    card.onmouseout = () => { card.style.borderColor = 'var(--color-text-dim)'; card.style.background = 'transparent'; };
+
+                    // Photo or initials
+                    if (judge.photo) {
+                        const img = document.createElement('img');
+                        img.src = judge.photo;
+                        img.alt = judge.name;
+                        img.style.cssText = 'width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--color-primary); margin-bottom: 1rem;';
+                        card.appendChild(img);
+                    } else {
+                        const initialsDiv = document.createElement('div');
+                        initialsDiv.style.cssText = 'width: 80px; height: 80px; border-radius: 50%; background: var(--color-text-dim); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; color: var(--color-text-muted);';
+                        initialsDiv.textContent = judge.name.split(' ').map(n => n[0]).join('');
+                        card.appendChild(initialsDiv);
+                    }
+
+                    const nameEl = document.createElement('h3');
+                    nameEl.style.cssText = 'font-family: var(--font-display); font-size: 1rem; color: var(--color-text); margin-bottom: 0.25rem;';
+                    nameEl.textContent = judge.name;
+                    card.appendChild(nameEl);
+
+                    const titleEl = document.createElement('p');
+                    titleEl.style.cssText = 'font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 0.25rem;';
+                    titleEl.textContent = judge.title;
+                    card.appendChild(titleEl);
+
+                    const companyEl = document.createElement('p');
+                    companyEl.style.cssText = 'font-size: 0.75rem; color: var(--color-primary);';
+                    companyEl.textContent = judge.company;
+                    card.appendChild(companyEl);
+
+                    if (judge.linkedin) {
+                        const link = document.createElement('a');
+                        link.href = judge.linkedin;
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                        link.style.cssText = 'display: inline-block; margin-top: 0.75rem; color: var(--color-text-muted); font-size: 1rem;';
+                        const icon = document.createElement('i');
+                        icon.className = 'fab fa-linkedin';
+                        link.appendChild(icon);
+                        card.appendChild(link);
+                    }
+
+                    grid.appendChild(card);
+                });
+
+                section.style.display = 'block';
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%'
+                    }
+                });
+            }
+
+            // Render venue if data exists
+            function renderVenue() {
+                if (!VENUE.name) return;
+
+                const section = document.getElementById('venue-section');
+                document.getElementById('venue-name').textContent = VENUE.name;
+                document.getElementById('venue-address').textContent = VENUE.address;
+                document.getElementById('venue-directions').href = VENUE.mapsUrl;
+
+                if (VENUE.info && VENUE.info.length > 0) {
+                    const list = document.getElementById('venue-info-list');
+                    VENUE.info.forEach(item => {
+                        const li = document.createElement('li');
+                        const icon = document.createElement('i');
+                        icon.className = 'fas fa-check';
+                        icon.style.cssText = 'color: var(--color-primary); margin-right: 0.5rem; font-size: 0.7rem;';
+                        li.appendChild(icon);
+                        li.appendChild(document.createTextNode(item));
+                        list.appendChild(li);
+                    });
+                }
+
+                section.style.display = 'block';
+                gsap.to(section, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 85%'
+                    }
+                });
+            }
+
+            renderJudges();
+            renderVenue();
 
             // Page header animation
             gsap.to('.page-header', {
