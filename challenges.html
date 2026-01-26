@@ -172,6 +172,20 @@
             line-height: 1.8;
         }
 
+        .protocol-example {
+            font-size: 0.8rem;
+            color: var(--color-text-dim);
+            line-height: 1.6;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--color-text-dim);
+        }
+
+        .protocol-example strong {
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
         .protocol-skills {
             display: flex;
             gap: 0.5rem;
@@ -355,7 +369,10 @@
                 <h1 class="page-title">CHALLENGE TRACKS</h1>
                 <p class="page-subtitle">
                     2026: The year we trusted agents to manage themselves. Four tracks.
-                    Eight hours. Build something that matters. This isn't a CTF—it's a build session.
+                    Eight hours. Build something that matters. This isn't a capture-the-flag—it's a build session.
+                </p>
+                <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-top: 1rem;">
+                    New to hackathons? <a href="about.html#first-time" style="color: var(--color-primary);">We've got you covered</a>.
                 </p>
                 <a href="https://ideas.nebulafog.ai" target="_blank" rel="noopener noreferrer" class="btn-secondary">
                     <i class="fas fa-database"></i>
@@ -376,6 +393,9 @@
                             Your mission: exploit that trust. Compromise decision systems,
                             manipulate agent-to-agent relationships, and demonstrate how
                             self-governing AI can be turned against itself.
+                        </p>
+                        <p class="protocol-example">
+                            <strong>Example projects:</strong> Prompt injection toolkit, agent jailbreak framework, AI-powered phishing detector evasion
                         </p>
                         <div class="protocol-skills">
                             <span class="skill-tag">Agent Exploitation</span>
@@ -398,6 +418,9 @@
                             and deploy self-healing defenses that adapt faster than
                             attackers can pivot.
                         </p>
+                        <p class="protocol-example">
+                            <strong>Example projects:</strong> Real-time prompt injection detector, agent behavior monitor, automated security scanner for LLM apps
+                        </p>
                         <div class="protocol-skills">
                             <span class="skill-tag">Detection Systems</span>
                             <span class="skill-tag">Self-Healing Defenses</span>
@@ -419,6 +442,9 @@
                             verification, establish trust anchors, and prove security
                             without revealing secrets.
                         </p>
+                        <p class="protocol-example">
+                            <strong>Example projects:</strong> ZK proof for AI model authenticity, privacy-preserving credential verification, encrypted inference pipeline
+                        </p>
                         <div class="protocol-skills">
                             <span class="skill-tag">Zero-Knowledge Proofs</span>
                             <span class="skill-tag">Trust Anchors</span>
@@ -439,6 +465,9 @@
                             Novel attack surfaces, experimental defenses, agent alignment
                             research, AI-powered security tooling, or something nobody's
                             thought of yet. You define the problem. You define the solution.
+                        </p>
+                        <p class="protocol-example">
+                            <strong>Example projects:</strong> AI-assisted threat hunting, autonomous red team agent, security copilot for code review
                         </p>
                         <div class="protocol-skills">
                             <span class="skill-tag">Novel Research</span>

@@ -787,6 +787,20 @@
             line-height: 1.7;
         }
 
+        .track-example {
+            color: var(--color-text-dim);
+            font-size: 0.75rem;
+            line-height: 1.6;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-text-dim);
+        }
+
+        .track-example strong {
+            color: var(--color-text-muted);
+            font-weight: 500;
+        }
+
         /* ========================================
            SECTION: CTA
            ======================================== */
@@ -1327,6 +1341,56 @@
         </div>
     </section>
 
+    <!-- SECTION: NEW TO THIS? -->
+    <section id="first-time" class="story-section" style="background: linear-gradient(180deg, rgba(255, 0, 128, 0.02) 0%, var(--color-bg) 100%); min-height: auto; padding: 8vh 8vw;">
+        <div class="section-content">
+            <span class="section-tag">FIRST TIME?</span>
+
+            <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem);">
+                DECODE THE<br>
+                <span class="section-title-accent">JARGON</span>
+            </h2>
+
+            <p class="section-subtitle" style="text-align: center; margin: 0 auto 2rem; max-width: 600px;">
+                New to hackathons or the AI security space? Here's what the cyberpunk-speak actually means.
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                <div style="padding: 1.5rem; background: rgba(0, 255, 159, 0.03); border: 1px solid var(--color-text-dim);">
+                    <div style="color: var(--color-primary); font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 0.5rem;">HACKATHON</div>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        A build event where teams create working projects in a short time. Think of it as a creative sprint—you show up, form a team (or go solo), and ship something by the end of the day.
+                    </p>
+                </div>
+
+                <div style="padding: 1.5rem; background: rgba(255, 0, 128, 0.03); border: 1px solid var(--color-text-dim);">
+                    <div style="color: var(--color-secondary); font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 0.5rem;">AI AGENT</div>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        Software that uses AI to take actions autonomously—like a chatbot that can browse the web, write code, or make decisions without constant human input.
+                    </p>
+                </div>
+
+                <div style="padding: 1.5rem; background: rgba(0, 255, 255, 0.03); border: 1px solid var(--color-text-dim);">
+                    <div style="color: var(--color-accent); font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 0.5rem;">DEMO</div>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        A 3-minute presentation where you show what you built. It doesn't have to be polished—judges want to see what works and understand your approach.
+                    </p>
+                </div>
+
+                <div style="padding: 1.5rem; background: rgba(170, 68, 255, 0.03); border: 1px solid var(--color-text-dim);">
+                    <div style="color: var(--color-track-purple); font-size: 0.75rem; letter-spacing: 0.15em; margin-bottom: 0.5rem;">TRACK</div>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        A category or theme for your project. Choose one that fits what you want to build. Each track has different judging criteria.
+                    </p>
+                </div>
+            </div>
+
+            <p style="color: var(--color-text-dim); font-size: 0.8rem; text-align: center; margin-top: 2rem;">
+                Still have questions? <a href="mailto:info@nebulafog.ai" style="color: var(--color-primary);">Reach out</a>—we want builders of all experience levels.
+            </p>
+        </div>
+    </section>
+
     <!-- SECTION: CHALLENGE TRACKS -->
     <section class="story-section section-tracks">
         <div class="section-content">
@@ -1346,6 +1410,9 @@
                         Break the chain of trust. Exploit autonomous agents,
                         manipulate decision systems, compromise AI-to-AI relationships.
                     </p>
+                    <p class="track-example">
+                        <strong>Example projects:</strong> Prompt injection toolkit, agent jailbreak framework, AI-powered phishing detector evasion
+                    </p>
                 </div>
 
                 <div class="track-card">
@@ -1355,6 +1422,9 @@
                     <p class="track-desc">
                         Guard the protocol. Build detection systems,
                         harden architectures, deploy self-healing defenses.
+                    </p>
+                    <p class="track-example">
+                        <strong>Example projects:</strong> Real-time prompt injection detector, agent behavior monitor, automated security scanner for LLM apps
                     </p>
                 </div>
 
@@ -1366,6 +1436,9 @@
                         Trust without compromise. Design privacy-preserving verification,
                         establish trust anchors, prove security without revealing secrets.
                     </p>
+                    <p class="track-example">
+                        <strong>Example projects:</strong> ZK proof for AI model authenticity, privacy-preserving credential verification, encrypted inference pipeline
+                    </p>
                 </div>
 
                 <div class="track-card">
@@ -1375,6 +1448,9 @@
                     <p class="track-desc">
                         Write your own protocol. Novel attack surfaces,
                         experimental defenses, AI security tools nobody's thought of yet.
+                    </p>
+                    <p class="track-example">
+                        <strong>Example projects:</strong> AI-assisted threat hunting, autonomous red team agent, security copilot for code review
                     </p>
                 </div>
             </div>
@@ -1432,6 +1508,52 @@
         </div>
     </section>
 
+    <!-- SECTION: WHAT YOU'LL WALK AWAY WITH -->
+    <section class="story-section" style="background: linear-gradient(180deg, var(--color-bg) 0%, rgba(0, 255, 159, 0.03) 100%); min-height: auto; padding: 8vh 8vw;">
+        <div class="section-content">
+            <span class="section-tag">BEYOND PRIZES</span>
+
+            <h2 class="section-title" style="font-size: clamp(1.8rem, 4vw, 2.5rem);">
+                WHAT YOU'LL<br>
+                <span class="section-title-accent">WALK AWAY WITH</span>
+            </h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div style="text-align: center; padding: 1.5rem;">
+                    <i class="fas fa-project-diagram" style="font-size: 2rem; color: var(--color-primary); margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text); margin-bottom: 0.5rem;">A PORTFOLIO PIECE</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        Ship a working project you can demo to employers, investors, or collaborators. Every project gets recorded.
+                    </p>
+                </div>
+
+                <div style="text-align: center; padding: 1.5rem;">
+                    <i class="fas fa-user-friends" style="font-size: 2rem; color: var(--color-secondary); margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text); margin-bottom: 0.5rem;">YOUR PEOPLE</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        100 builders who care about AI and security as much as you do. Collaborators, co-founders, and friends.
+                    </p>
+                </div>
+
+                <div style="text-align: center; padding: 1.5rem;">
+                    <i class="fas fa-brain" style="font-size: 2rem; color: var(--color-accent); margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text); margin-bottom: 0.5rem;">REAL SKILLS</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        Workshops and panels from practitioners. Learn techniques you can't find in tutorials—the stuff that actually works.
+                    </p>
+                </div>
+
+                <div style="text-align: center; padding: 1.5rem;">
+                    <i class="fas fa-trophy" style="font-size: 2rem; color: var(--color-track-purple); margin-bottom: 1rem;"></i>
+                    <h3 style="font-family: var(--font-display); font-size: 1rem; color: var(--color-text); margin-bottom: 0.5rem;">PRIZES & RECOGNITION</h3>
+                    <p style="color: var(--color-text-muted); font-size: 0.85rem; line-height: 1.7;">
+                        $5,000+ in cash prizes across multiple categories. But honestly? The network is worth more.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- SECTION 7: CTA -->
     <section class="story-section section-cta">
         <div class="section-content">
@@ -1442,11 +1564,11 @@
 
             <p class="cta-subtitle">
                 Priority clearance for operators with AI × Security experience.<br>
-                New to the construct? Show us what you want to build.
+                New to this space? That's fine—show us what you want to build.
             </p>
 
             <a href="register.html" class="btn-primary">
-                <span>[ INITIATE REGISTRATION ]</span>
+                <span>Register Now</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
         </div>
