@@ -1,0 +1,324 @@
+/* ========================================
+   NEBULA:FOG:PROTOCOL 2026
+   Shared Styles - Common across all pages
+   ======================================== */
+
+/* ========================================
+   CSS CUSTOM PROPERTIES
+   ======================================== */
+:root {
+    /* Core Colors - Standardized across all pages */
+    --color-bg: #030303;
+    --color-bg-elevated: #0a0a0a;
+    --color-primary: #00ff9f;
+    --color-secondary: #ff0080;
+    --color-accent: #0ff;
+    --color-warning: #ff3d00;
+    --color-text: #ffffff;
+    --color-text-muted: #666666;
+    --color-text-dim: #333333;
+    /* Status Colors */
+    --color-error: #ff4444;
+    --color-success: #00ff9f;
+    /* Track Colors */
+    --color-track-red: #ff4444;
+    --color-track-blue: #4488ff;
+    --color-track-cyan: #0ff;
+    --color-track-purple: #aa44ff;
+    /* Typography */
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    --font-display: 'Space Grotesk', system-ui, sans-serif;
+    /* Animation */
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-mono);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-primary); color: var(--color-bg); }
+
+a { color: inherit; text-decoration: none; }
+
+/* ========================================
+   CUSTOM CURSOR
+   ======================================== */
+.cursor { position: fixed; pointer-events: none; z-index: 99999; mix-blend-mode: difference; }
+.cursor-dot { width: 8px; height: 8px; background: var(--color-primary); border-radius: 50%; transform: translate(-50%, -50%); }
+.cursor-ring { width: 40px; height: 40px; border: 1px solid var(--color-primary); border-radius: 50%; transform: translate(-50%, -50%); transition: all 0.15s var(--ease-out-expo); }
+.cursor-ring.hover { width: 60px; height: 60px; border-color: var(--color-secondary); }
+.cursor-ring.clicking { transform: translate(-50%, -50%) scale(0.8); }
+
+/* ========================================
+   PARTICLES CANVAS
+   ======================================== */
+.particles-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 1; }
+
+/* ========================================
+   GRID BACKGROUND & EFFECTS
+   ======================================== */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    background-image:
+        linear-gradient(rgba(0, 255, 159, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 159, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+}
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    background: repeating-linear-gradient(0deg,
+        transparent, transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px, rgba(0, 0, 0, 0.1) 4px);
+    opacity: 0.15;
+}
+
+/* ========================================
+   HUD NAVIGATION
+   ======================================== */
+.hud-nav {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 10px 20px;
+    background: rgba(3, 3, 3, 0.85);
+    border: 1px solid rgba(0, 255, 159, 0.2);
+    border-radius: 4px;
+    backdrop-filter: blur(15px);
+}
+
+.hud-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-right: 15px;
+    border-right: 1px solid rgba(0, 255, 159, 0.2);
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--color-primary);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.hud-links {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+}
+
+.hud-link {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.hud-link:hover, .hud-link.active {
+    color: var(--color-primary);
+    text-shadow: 0 0 10px var(--color-primary);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+    padding: 60px 5vw;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: center;
+}
+
+.footer-logo {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    color: var(--color-text-dim);
+    font-size: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.footer-links a {
+    color: var(--color-text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: var(--color-primary);
+}
+
+.footer-copyright {
+    color: var(--color-text-dim);
+    font-size: 0.75rem;
+}
+
+/* ========================================
+   MOBILE NAV
+   ======================================== */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(3, 3, 3, 0.95);
+    border-top: 1px solid var(--color-text-dim);
+    padding: 0.5rem 0;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+    z-index: 1000;
+    backdrop-filter: blur(15px);
+}
+
+.mobile-nav-links {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+}
+
+.mobile-nav-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 0.5rem;
+    color: var(--color-text-muted);
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    min-height: 44px; /* WCAG AAA touch target */
+    transition: color 0.3s ease;
+}
+
+.mobile-nav-links a i {
+    font-size: 1.1rem;
+}
+
+.mobile-nav-links a.active,
+.mobile-nav-links a:hover {
+    color: var(--color-primary);
+}
+
+/* ========================================
+   COMMON PAGE ELEMENTS
+   ======================================== */
+.main {
+    padding: 120px 5vw 80px;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.page-tag {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--color-text-dim);
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+}
+
+.page-title {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-primary);
+    text-shadow: 0 0 40px rgba(0, 255, 159, 0.3);
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-dot, .cursor-ring { display: none !important; }
+    .particles-canvas { display: none !important; }
+
+    .hud-nav {
+        display: none;
+    }
+
+    .mobile-nav {
+        display: block;
+    }
+
+    .main {
+        padding-bottom: calc(100px + env(safe-area-inset-bottom));
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
