@@ -94,6 +94,29 @@
            RESET & BASE
            ======================================== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Page Transitions */
+        .page-transition-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--color-bg);
+            z-index: 10000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+        }
+        .page-transition-overlay.fade-out {
+            opacity: 1;
+            pointer-events: all;
+        }
+        body {
+            animation: pageEnter 0.4s ease-out;
+        }
+        @keyframes pageEnter {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
         html { font-size: 16px; }
         body {
             font-family: var(--font-mono);
@@ -370,6 +393,120 @@
 
         .scroll-indicator i {
             font-size: 1.2rem;
+        }
+
+        /* ========================================
+           HERO TRUST BAR (Social Proof)
+           ======================================== */
+        .hero-trust-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+        }
+
+        .hero-trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.05em;
+        }
+
+        .hero-trust-item strong {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+
+        .hero-trust-separator {
+            width: 4px;
+            height: 4px;
+            background: var(--color-text-dim);
+            border-radius: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .hero-trust-bar {
+                flex-wrap: wrap;
+                gap: 0.75rem 1.5rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .hero-trust-item {
+                font-size: 0.65rem;
+            }
+
+            .hero-trust-separator {
+                display: none;
+            }
+        }
+
+        /* ========================================
+           HERO COUNTDOWN TIMER
+           ======================================== */
+        .hero-countdown {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 159, 0.2);
+            border-radius: 12px;
+            display: inline-block;
+        }
+
+        .hero-countdown-label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .hero-countdown-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .hero-countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 50px;
+        }
+
+        .hero-countdown-value {
+            font-family: var(--font-mono);
+            font-size: clamp(1.25rem, 4vw, 2rem);
+            font-weight: 700;
+            color: var(--color-primary);
+            text-shadow: 0 0 20px rgba(0, 255, 159, 0.5);
+            line-height: 1;
+        }
+
+        .hero-countdown-unit {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        .hero-countdown-separator {
+            font-family: var(--font-mono);
+            font-size: clamp(1.25rem, 4vw, 2rem);
+            color: var(--color-text-dim);
+            line-height: 1;
         }
 
         /* ========================================
@@ -714,6 +851,103 @@
         }
 
         /* ========================================
+           STICKY CTA BAR
+           ======================================== */
+        .sticky-cta-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: rgba(3, 3, 3, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 255, 159, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateY(100%);
+            transition: transform 0.5s var(--ease-out-expo);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .sticky-cta-bar.visible {
+            transform: translateY(0);
+        }
+
+        .sticky-cta-countdown {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .sticky-cta-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            letter-spacing: 0.1em;
+        }
+
+        .sticky-cta-timer {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-shadow: 0 0 15px rgba(0, 255, 159, 0.5);
+        }
+
+        .sticky-cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 2rem;
+            background: linear-gradient(135deg, var(--color-primary) 0%, #00cc7f 100%);
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #030303;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            box-shadow: 0 0 20px rgba(0, 255, 159, 0.3);
+        }
+
+        .sticky-cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 255, 159, 0.5);
+        }
+
+        .sticky-cta-close {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .sticky-cta-close:hover {
+            color: var(--color-text);
+        }
+
+        /* Hide sticky bar on mobile */
+        @media (max-width: 768px) {
+            .sticky-cta-bar {
+                display: none;
+            }
+        }
+
+        /* ========================================
            FOOTER (Minimal)
            ======================================== */
         .footer-minimal {
@@ -815,6 +1049,9 @@
 </head>
 
 <body>
+    <!-- Page Transition Overlay -->
+    <div class="page-transition-overlay" id="page-transition"></div>
+
     <!-- Global Particles Canvas (for sections below hero) -->
     <canvas class="particles-canvas" id="particles"></canvas>
 
@@ -869,6 +1106,50 @@
                 <div style="text-align: center;">
                     <div style="font-size: 1.8rem; font-weight: 700; color: var(--color-accent);">100</div>
                     <div style="font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em;">OPERATORS MAX</div>
+                </div>
+            </div>
+
+            <!-- Trust Bar - Social Proof -->
+            <div class="hero-trust-bar">
+                <div class="hero-trust-item">
+                    <i class="fas fa-users" style="color: var(--color-primary);"></i>
+                    <span><strong>100+</strong> builders in 2025</span>
+                </div>
+                <div class="hero-trust-separator"></div>
+                <div class="hero-trust-item">
+                    <i class="fas fa-rocket" style="color: var(--color-secondary);"></i>
+                    <span><strong>24</strong> projects shipped</span>
+                </div>
+                <div class="hero-trust-separator"></div>
+                <div class="hero-trust-item">
+                    <i class="fas fa-trophy" style="color: var(--color-accent);"></i>
+                    <span><strong>$5K+</strong> in prizes</span>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="hero-countdown">
+                <div class="hero-countdown-label">COUNTDOWN TO BREACH</div>
+                <div class="hero-countdown-grid">
+                    <div class="hero-countdown-item">
+                        <span class="hero-countdown-value" id="about-countdown-days">00</span>
+                        <span class="hero-countdown-unit">DAYS</span>
+                    </div>
+                    <span class="hero-countdown-separator">:</span>
+                    <div class="hero-countdown-item">
+                        <span class="hero-countdown-value" id="about-countdown-hours">00</span>
+                        <span class="hero-countdown-unit">HRS</span>
+                    </div>
+                    <span class="hero-countdown-separator">:</span>
+                    <div class="hero-countdown-item">
+                        <span class="hero-countdown-value" id="about-countdown-mins">00</span>
+                        <span class="hero-countdown-unit">MIN</span>
+                    </div>
+                    <span class="hero-countdown-separator">:</span>
+                    <div class="hero-countdown-item">
+                        <span class="hero-countdown-value" id="about-countdown-secs">00</span>
+                        <span class="hero-countdown-unit">SEC</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1176,6 +1457,21 @@
         </div>
         <p class="footer-copyright">© 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
     </footer>
+
+    <!-- Sticky CTA Bar -->
+    <div class="sticky-cta-bar" id="sticky-cta">
+        <div class="sticky-cta-countdown">
+            <span class="sticky-cta-label">BREACH IN</span>
+            <span class="sticky-cta-timer" id="sticky-countdown">00:00:00:00</span>
+        </div>
+        <a href="register.html" class="sticky-cta-button">
+            <span>Register Now</span>
+            <i class="fas fa-arrow-right"></i>
+        </a>
+        <button class="sticky-cta-close" id="sticky-close" aria-label="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
     <script>
         // Wait for deferred scripts to load
@@ -1661,7 +1957,7 @@
                     }
                 `;
 
-                const sphereGeometry = new THREE.IcosahedronGeometry(6, 4);
+                const sphereGeometry = new THREE.IcosahedronGeometry(9, 4);
                 const sphereMaterial = new THREE.ShaderMaterial({
                     uniforms: {
                         time: { value: 0 },
@@ -1677,11 +1973,11 @@
                 });
 
                 morphSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-                morphSphere.position.set(12, 0, -8); // Offset right so visible beside text
+                morphSphere.position.set(18, 0, -8); // Offset right so visible beside text
                 scene.add(morphSphere);
 
                 // Add inner glow sphere
-                const glowGeometry = new THREE.IcosahedronGeometry(5.5, 3);
+                const glowGeometry = new THREE.IcosahedronGeometry(8.5, 3);
                 const glowMaterial = new THREE.MeshBasicMaterial({
                     color: 0x00ff9f,
                     transparent: true,
@@ -2347,6 +2643,100 @@
                 }
             });
         })();
+
+        // ========================================
+        // COUNTDOWN TIMER
+        // ========================================
+        (function initCountdown() {
+            const targetDate = new Date('2026-03-14T00:00:00').getTime();
+            const daysEl = document.getElementById('about-countdown-days');
+            const hoursEl = document.getElementById('about-countdown-hours');
+            const minsEl = document.getElementById('about-countdown-mins');
+            const secsEl = document.getElementById('about-countdown-secs');
+
+            if (!daysEl) return;
+
+            function update() {
+                const now = Date.now();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minsEl.textContent = '00';
+                    secsEl.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                daysEl.textContent = String(days).padStart(2, '0');
+                hoursEl.textContent = String(hours).padStart(2, '0');
+                minsEl.textContent = String(mins).padStart(2, '0');
+                secsEl.textContent = String(secs).padStart(2, '0');
+            }
+
+            update();
+            setInterval(update, 1000);
+        })();
+
+        // ========================================
+        // STICKY CTA BAR
+        // ========================================
+        (function initStickyBar() {
+            const stickyBar = document.getElementById('sticky-cta');
+            const closeBtn = document.getElementById('sticky-close');
+            const stickyCountdown = document.getElementById('sticky-countdown');
+            const targetDate = new Date('2026-03-14T00:00:00').getTime();
+
+            if (!stickyBar) return;
+
+            // Show sticky bar after 2.5s delay
+            setTimeout(() => {
+                stickyBar.classList.add('visible');
+            }, 2500);
+
+            // Close button handler
+            closeBtn.addEventListener('click', () => {
+                stickyBar.classList.remove('visible');
+                // Don't show again this session
+                sessionStorage.setItem('stickyClosed', 'true');
+            });
+
+            // Don't show if already closed this session
+            if (sessionStorage.getItem('stickyClosed')) {
+                return;
+            }
+
+            // Update sticky countdown
+            function updateStickyCountdown() {
+                const now = Date.now();
+                const diff = targetDate - now;
+
+                if (diff <= 0) {
+                    stickyCountdown.textContent = '00:00:00:00';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+                stickyCountdown.textContent =
+                    String(days).padStart(2, '0') + ':' +
+                    String(hours).padStart(2, '0') + ':' +
+                    String(mins).padStart(2, '0') + ':' +
+                    String(secs).padStart(2, '0');
+            }
+
+            updateStickyCountdown();
+            setInterval(updateStickyCountdown, 1000);
+        })();
+
         }); // End DOMContentLoaded
 
         // ========================================
@@ -2453,6 +2843,41 @@
             };
             animate();
         }
+    </script>
+
+    <!-- Page Transition Handler -->
+    <script>
+        (function() {
+            const overlay = document.getElementById('page-transition');
+            if (!overlay) return;
+
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+                if (!link) return;
+
+                const href = link.getAttribute('href');
+                if (!href) return;
+
+                if (href.startsWith('http') ||
+                    href.startsWith('#') ||
+                    href.startsWith('mailto:') ||
+                    href.startsWith('tel:') ||
+                    link.hasAttribute('target')) {
+                    return;
+                }
+
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    return;
+                }
+
+                e.preventDefault();
+                overlay.classList.add('fade-out');
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300);
+            });
+        })();
     </script>
 </body>
 
