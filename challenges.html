@@ -515,7 +515,7 @@
                 </div>
             </section>
 
-            <!-- Prizes Section -->
+            <!-- Prizes Section (Summary - Always Visible) -->
             <section class="prizes-section" style="margin-bottom: 4rem; padding: 2.5rem; background: linear-gradient(135deg, rgba(0, 255, 159, 0.03) 0%, rgba(255, 0, 128, 0.03) 100%); border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(40px);">
                 <h2 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-primary);">BOUNTIES</h2>
                 <p style="color: var(--color-text-muted); margin-bottom: 2rem;">$5,000+ in cash prizes across multiple categories.</p>
@@ -536,6 +536,122 @@
                 </div>
 
                 <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-top: 2rem; text-align: center;">Prize categories for both BUILD_NEW and SHOWCASE tracks. Winners announced at closing ceremony.</p>
+            </section>
+
+            <!-- Prize Breakdown (HIDDEN - Remove display:none to reveal) -->
+            <section class="prize-breakdown" id="prize-breakdown" style="display: none; margin-bottom: 4rem; opacity: 0; transform: translateY(40px);">
+                <!-- Track Awards -->
+                <div style="margin-bottom: 3rem;">
+                    <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">
+                        <span style="color: var(--color-primary);">TIER 1:</span> TRACK AWARDS
+                    </h3>
+                    <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 1.5rem;">$2,000 total — Best project in each challenge track</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-track-red);">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-track-red);">$500</div>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">SHADOW::VECTOR</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Best attack/red-team tool</div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-track-blue);">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-track-blue);">$500</div>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">SENTINEL::MESH</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Best defense/detection system</div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-track-cyan);">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-track-cyan);">$500</div>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">ZERO::PROOF</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Best privacy-preserving solution</div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim); border-left: 3px solid var(--color-track-purple);">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-track-purple);">$500</div>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">ROGUE::AGENT</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Best novel innovation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cross-Track Awards -->
+                <div style="margin-bottom: 3rem;">
+                    <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">
+                        <span style="color: var(--color-secondary);">TIER 2:</span> CROSS-TRACK AWARDS
+                    </h3>
+                    <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 1.5rem;">$2,500 total — Excellence across all tracks</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                        <div style="padding: 1.5rem; border: 1px solid var(--color-primary); background: rgba(0, 255, 159, 0.05);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-size: 0.7rem; color: var(--color-primary); letter-spacing: 0.15em; margin-bottom: 0.25rem;">GRAND PRIZE</div>
+                                    <div style="font-size: 1.1rem; font-weight: 600; color: var(--color-text);">SINGULARITY</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">Most impressive overall</div>
+                                </div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--color-primary);">$1,000</div>
+                            </div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-size: 1rem; font-weight: 600; color: var(--color-text);">SEED ROUND</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">Most likely to get funding</div>
+                                </div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-secondary);">$750</div>
+                            </div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-size: 1rem; font-weight: 600; color: var(--color-text);">CHAOS AGENT</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">Most creative and unexpected</div>
+                                </div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-accent);">$500</div>
+                            </div>
+                        </div>
+                        <div style="padding: 1.25rem; border: 1px solid var(--color-text-dim);">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <div style="font-size: 1rem; font-weight: 600; color: var(--color-text);">BEST SOLO HACKER</div>
+                                    <div style="font-size: 0.75rem; color: var(--color-text-muted);">Best project by a solo participant</div>
+                                </div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-track-purple);">$250</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recognition Awards -->
+                <div style="margin-bottom: 2rem;">
+                    <h3 style="font-family: var(--font-display); font-size: 1.2rem; font-weight: 600; color: var(--color-text); margin-bottom: 0.5rem;">
+                        <span style="color: var(--color-accent);">TIER 3:</span> RECOGNITION
+                    </h3>
+                    <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-bottom: 1.5rem;">Non-cash awards for outstanding contributions</p>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="padding: 1rem; border: 1px solid var(--color-text-dim); text-align: center;">
+                            <i class="fas fa-mug-hot" style="font-size: 1.5rem; color: var(--color-primary); margin-bottom: 0.5rem;"></i>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">DEMO MUG</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Everyone who demos</div>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--color-text-dim); text-align: center;">
+                            <i class="fas fa-heart" style="font-size: 1.5rem; color: var(--color-secondary); margin-bottom: 0.5rem;"></i>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">PEOPLE'S CHOICE</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">Voted by attendees</div>
+                        </div>
+                        <div style="padding: 1rem; border: 1px solid var(--color-text-dim); text-align: center;">
+                            <i class="fas fa-seedling" style="font-size: 1.5rem; color: var(--color-accent); margin-bottom: 0.5rem;"></i>
+                            <div style="font-size: 0.85rem; color: var(--color-text);">ROOKIE OF THE YEAR</div>
+                            <div style="font-size: 0.7rem; color: var(--color-text-muted);">First hackathon ever</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stacking Note -->
+                <div style="padding: 1rem; background: rgba(0, 255, 159, 0.05); border-left: 3px solid var(--color-primary);">
+                    <p style="color: var(--color-text-muted); font-size: 0.8rem; margin: 0;">
+                        <strong style="color: var(--color-primary);">STACKING ALLOWED:</strong>
+                        A single project can win multiple awards. If you're that good, you deserve it.
+                    </p>
+                </div>
             </section>
 
             <!-- Judging Criteria -->
@@ -841,6 +957,22 @@
                 delay: 2.0,
                 ease: 'power3.out'
             });
+
+            // Reveal prize breakdown on March 14, 2026 or after
+            const revealDate = new Date('2026-03-14T00:00:00');
+            const now = new Date();
+            const prizeSection = document.getElementById('prize-breakdown');
+
+            if (now >= revealDate && prizeSection) {
+                prizeSection.style.display = 'block';
+                gsap.to(prizeSection, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 2.2,
+                    ease: 'power3.out'
+                });
+            }
         });
     </script>
 </body>
