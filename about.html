@@ -46,6 +46,13 @@
 
     <!-- Three.js for 3D background - defer loading -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <!-- Three.js Post-Processing for Bloom Effect -->
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/CopyShader.js" defer></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js" defer></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/EffectComposer.js" defer></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/RenderPass.js" defer></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/ShaderPass.js" defer></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js" defer></script>
 
     <style>
         /* ========================================
@@ -1290,6 +1297,30 @@
             });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.toneMapping = THREE.ReinhardToneMapping;
+            renderer.toneMappingExposure = 1.0;
+
+            // ========================================
+            // POST-PROCESSING: UNREAL BLOOM (Rezmason-style)
+            // ========================================
+            let composer;
+            let bloomPass;
+            const useBloom = typeof THREE.EffectComposer !== 'undefined';
+
+            if (useBloom) {
+                composer = new THREE.EffectComposer(renderer);
+                const renderPass = new THREE.RenderPass(scene, camera);
+                composer.addPass(renderPass);
+
+                // UnrealBloomPass(resolution, strength, radius, threshold)
+                bloomPass = new THREE.UnrealBloomPass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    0.8,   // strength - intensity of bloom
+                    0.4,   // radius - how far bloom spreads
+                    0.2    // threshold - brightness threshold for bloom
+                );
+                composer.addPass(bloomPass);
+            }
 
             // Colors
             const primaryColor = 0x00ff9f;
@@ -1466,6 +1497,7 @@
                     chars: [],
                     x: columnX,
                     z: columnZ,
+                    initialZ: columnZ, // Track starting Z for reset
                     y: Math.random() * 60 - 15, // Starting Y position
                     speed: columnSpeed,
                     scale: columnScale,
@@ -1477,7 +1509,10 @@
                     // 2026: Flicker state
                     flickerTimer: Math.random() * 100,
                     flickerTarget: null,
-                    flickerIntensity: 0
+                    flickerIntensity: 0,
+                    // VOLUMETRIC: Z-movement toward camera (Rezmason-style)
+                    forwardSpeed: 0.02 + Math.random() * 0.03, // Speed toward camera
+                    maxZ: 25 // Reset when passing this Z
                 };
 
                 // Create sprites for each character in the column
@@ -1549,6 +1584,49 @@
             }
 
             // ========================================
+            // STATIONARY BACKGROUND GLYPHS (Rezmason-style brightness waves)
+            // ========================================
+            const bgGlyphs = [];
+            const bgGlyphGroup = new THREE.Group();
+            const bgRows = 20;
+            const bgCols = 30;
+            const bgSpacing = 2.2;
+            const bgZ = -25; // Far background
+
+            for (let row = 0; row < bgRows; row++) {
+                for (let col = 0; col < bgCols; col++) {
+                    const char = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                    const texture = createCharTexture(char, '#00ff9f', false, '#00ff9f');
+                    const material = new THREE.SpriteMaterial({
+                        map: texture,
+                        transparent: true,
+                        opacity: 0.03 // Very dim by default
+                    });
+
+                    const sprite = new THREE.Sprite(material);
+                    sprite.position.x = (col - bgCols / 2) * bgSpacing;
+                    sprite.position.y = (row - bgRows / 2) * bgSpacing;
+                    sprite.position.z = bgZ;
+                    sprite.scale.set(0.6, 0.6, 1);
+
+                    sprite.userData = {
+                        row: row,
+                        col: col,
+                        baseOpacity: 0.03,
+                        char: char
+                    };
+
+                    bgGlyphs.push(sprite);
+                    bgGlyphGroup.add(sprite);
+                }
+            }
+            scene.add(bgGlyphGroup);
+
+            // Brightness wave parameters
+            const waveSpeed = 0.08;
+            let wavePhase = 0;
+
+            // ========================================
             // MOUSE INTERACTION
             // ========================================
             let mouseX = 0;
@@ -1584,26 +1662,59 @@
                         Math.sin(time * geo.userData.floatSpeed + geo.userData.floatOffset) * 2;
                 });
 
+                // REZMASON-STYLE: Animate brightness waves on stationary background glyphs
+                wavePhase += waveSpeed;
+                bgGlyphs.forEach((glyph) => {
+                    // Create diagonal wave pattern (row + col creates diagonal)
+                    const waveOffset = (glyph.userData.row + glyph.userData.col) * 0.3;
+                    const wave = Math.sin(wavePhase + waveOffset);
+
+                    // Map wave (-1 to 1) to opacity (0.02 to 0.15)
+                    const brightness = 0.02 + (wave + 1) * 0.065;
+                    glyph.material.opacity = brightness;
+
+                    // Occasionally change character (very slow)
+                    if (Math.random() < 0.0002) {
+                        const newChar = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                        glyph.material.map = createCharTexture(newChar, '#00ff9f', false, '#00ff9f');
+                        glyph.userData.char = newChar;
+                    }
+                });
+
                 // Subtle camera movement based on mouse
                 camera.position.x += (mouseX * 3 - camera.position.x) * 0.02;
                 camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
                 camera.lookAt(0, 0, 0);
 
-                // Animate matrix rain columns
+                // Animate matrix rain columns (VOLUMETRIC + Rezmason-style)
                 rainColumns.forEach((column) => {
-                    // Move entire column down
+                    // Move entire column down (Y-axis rain)
                     column.y -= column.speed;
+
+                    // VOLUMETRIC: Move column toward camera (Z-axis approach)
+                    column.z += column.forwardSpeed;
+
+                    // Calculate scale growth as column approaches (perspective effect)
+                    const zProgress = (column.z - column.initialZ) / (column.maxZ - column.initialZ);
+                    const scaleMultiplier = 1 + zProgress * 0.5; // Grow up to 1.5x as it approaches
 
                     // Update all sprites in this column
                     for (let i = 0; i < column.sprites.length; i++) {
                         const sprite = column.sprites[i];
                         sprite.position.y = column.y - (i * column.charSpacing);
+                        sprite.position.z = column.z; // Volumetric Z position
+
+                        // Scale grows as column approaches camera
+                        const newScale = column.scale * scaleMultiplier;
+                        sprite.scale.set(newScale, newScale, 1);
 
                         // 2026: Flicker effect - random opacity pulse
                         if (column.flickerTarget === i && column.flickerIntensity > 0) {
                             sprite.material.opacity = Math.min(1, sprite.userData.baseOpacity + column.flickerIntensity * 0.5);
                         } else {
-                            sprite.material.opacity = sprite.userData.baseOpacity;
+                            // Fade slightly as column approaches (depth fog effect)
+                            const depthFade = Math.max(0.3, 1 - zProgress * 0.4);
+                            sprite.material.opacity = sprite.userData.baseOpacity * depthFade;
                         }
                     }
 
@@ -1620,12 +1731,16 @@
                         if (column.flickerIntensity < 0) column.flickerIntensity = 0;
                     }
 
-                    // Reset column when tail goes off screen
+                    // Reset column when it passes camera OR tail goes off screen
                     const tailY = column.y - (charsPerColumn * column.charSpacing);
-                    if (tailY < -35) {
-                        column.y = 35 + Math.random() * 20;
+                    const shouldReset = tailY < -35 || column.z > column.maxZ;
 
-                        // 2026: Possibly change color theme on reset (5% chance)
+                    if (shouldReset) {
+                        column.y = 35 + Math.random() * 20;
+                        // VOLUMETRIC: Reset Z to back of scene
+                        column.z = column.initialZ - Math.random() * 10;
+
+                        // Possibly change color theme on reset (5% chance)
                         if (Math.random() < 0.05) {
                             column.theme = getRandomColorTheme();
                             column.colors = colorThemes[column.theme];
@@ -1638,6 +1753,8 @@
                             const isHead = i === 0;
                             const color = isHead ? column.colors.head : column.colors.tail;
                             column.sprites[i].material.map = createCharTexture(newChar, color, isHead, column.colors.glow);
+                            // Reset scale
+                            column.sprites[i].scale.set(column.scale, column.scale, 1);
                         }
                     }
 
@@ -1659,7 +1776,12 @@
                     updateConnections();
                 }
 
-                renderer.render(scene, camera);
+                // Render with bloom post-processing if available
+                if (useBloom && composer) {
+                    composer.render();
+                } else {
+                    renderer.render(scene, camera);
+                }
             }
 
             // Initial connection update
@@ -1676,6 +1798,13 @@
                     camera.aspect = window.innerWidth / window.innerHeight;
                     camera.updateProjectionMatrix();
                     renderer.setSize(window.innerWidth, window.innerHeight);
+                    // Update bloom composer on resize
+                    if (useBloom && composer) {
+                        composer.setSize(window.innerWidth, window.innerHeight);
+                        if (bloomPass) {
+                            bloomPass.resolution.set(window.innerWidth, window.innerHeight);
+                        }
+                    }
                 }, 100);
             });
 
