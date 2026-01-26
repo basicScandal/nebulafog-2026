@@ -1361,18 +1361,27 @@
             scene.add(geometryGroup);
 
             // ========================================
-            // MATRIX RAIN PARTICLES
+            // MATRIX RAIN - CASCADING COLUMNS
             // ========================================
-            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]//\\|';
-            const rainDrops = [];
-            const rainCount = 100; // Reduced from 150 for better performance
+            const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]';
+            const matrixCharsArray = matrixChars.split('');
+            const matrixCharsLen = matrixCharsArray.length;
+            const rainColumns = [];
+            const columnCount = 35; // Number of vertical columns
+            const charsPerColumn = 12; // Characters per column (head + tail)
 
-            // Pre-create texture cache to avoid creating new canvases every frame
+            // Pre-create texture cache
             const textureCache = new Map();
-            const reusableCanvas = document.createElement('canvas');
-            reusableCanvas.width = 64;
-            reusableCanvas.height = 64;
-            const reusableCtx = reusableCanvas.getContext('2d');
+
+            // Pre-compute opacity levels for tail fade (like 2D version)
+            const tailOpacities = [];
+            for (let i = 0; i < charsPerColumn; i++) {
+                if (i === 0) {
+                    tailOpacities.push(0.95); // Bright head
+                } else {
+                    tailOpacities.push(Math.max(0.05, (1 - (i / charsPerColumn)) * 0.5));
+                }
+            }
 
             // Create canvas texture for matrix characters - with caching
             function createCharTexture(char, color = '#00ff9f') {
@@ -1382,60 +1391,75 @@
                 }
 
                 const size = 64;
-                reusableCtx.clearRect(0, 0, size, size);
-                reusableCtx.fillStyle = color;
-                reusableCtx.font = 'bold 48px monospace';
-                reusableCtx.textAlign = 'center';
-                reusableCtx.textBaseline = 'middle';
-                reusableCtx.fillText(char, size/2, size/2);
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
 
-                // Create a new canvas for this texture (needed for unique textures)
-                const texCanvas = document.createElement('canvas');
-                texCanvas.width = size;
-                texCanvas.height = size;
-                texCanvas.getContext('2d').drawImage(reusableCanvas, 0, 0);
+                ctx.fillStyle = color;
+                ctx.font = 'bold 48px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(char, size/2, size/2);
 
-                const texture = new THREE.CanvasTexture(texCanvas);
+                const texture = new THREE.CanvasTexture(canvas);
                 texture.needsUpdate = true;
                 textureCache.set(cacheKey, texture);
                 return texture;
             }
 
-            // Create rain drops
+            // Create rain columns group
             const rainGroup = new THREE.Group();
 
-            for (let i = 0; i < rainCount; i++) {
-                const char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                const isAccent = Math.random() > 0.9;
-                const color = isAccent ? (Math.random() > 0.5 ? '#ff0080' : '#00ffff') : '#00ff9f';
+            // Create each column as a group of sprites
+            for (let col = 0; col < columnCount; col++) {
+                const columnX = (col - columnCount / 2) * 2; // Spread columns
+                const columnZ = (Math.random() - 0.5) * 25 - 5; // Random depth
+                const columnSpeed = Math.random() * 0.12 + 0.06;
+                const columnScale = Math.random() * 0.4 + 0.4;
+                const charSpacing = columnScale * 1.2; // Vertical spacing between chars
 
-                const texture = createCharTexture(char, color);
-                const material = new THREE.SpriteMaterial({
-                    map: texture,
-                    transparent: true,
-                    opacity: Math.random() * 0.5 + 0.2
-                });
-
-                const sprite = new THREE.Sprite(material);
-
-                // Position in 3D space
-                sprite.position.x = (Math.random() - 0.5) * 60;
-                sprite.position.y = Math.random() * 40 + 20;
-                sprite.position.z = (Math.random() - 0.5) * 30 - 5;
-
-                const scale = Math.random() * 0.8 + 0.3;
-                sprite.scale.set(scale, scale, 1);
-
-                sprite.userData = {
-                    speed: Math.random() * 0.15 + 0.05,
-                    originalX: sprite.position.x,
-                    charChangeTimer: Math.random() * 100,
-                    char: char,
-                    color: color
+                const columnData = {
+                    sprites: [],
+                    chars: [],
+                    x: columnX,
+                    z: columnZ,
+                    y: Math.random() * 50 - 10, // Starting Y position
+                    speed: columnSpeed,
+                    scale: columnScale,
+                    charSpacing: charSpacing,
+                    charChangeTimer: Math.random() * 60,
+                    charChangeInterval: Math.random() * 40 + 30
                 };
 
-                rainDrops.push(sprite);
-                rainGroup.add(sprite);
+                // Create sprites for each character in the column
+                for (let i = 0; i < charsPerColumn; i++) {
+                    const char = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                    columnData.chars.push(char);
+
+                    // Head is bright white-green, tail fades to green
+                    const isHead = i === 0;
+                    const color = isHead ? '#b4ffc8' : '#00ff9f';
+
+                    const texture = createCharTexture(char, color);
+                    const material = new THREE.SpriteMaterial({
+                        map: texture,
+                        transparent: true,
+                        opacity: tailOpacities[i]
+                    });
+
+                    const sprite = new THREE.Sprite(material);
+                    sprite.position.x = columnX;
+                    sprite.position.y = columnData.y - (i * charSpacing);
+                    sprite.position.z = columnZ;
+                    sprite.scale.set(columnScale, columnScale, 1);
+
+                    sprite.userData = { isHead: isHead, index: i };
+                    columnData.sprites.push(sprite);
+                    rainGroup.add(sprite);
+                }
+
+                rainColumns.push(columnData);
             }
 
             scene.add(rainGroup);
@@ -1514,26 +1538,41 @@
                 camera.position.y += (mouseY * 2 - camera.position.y) * 0.02;
                 camera.lookAt(0, 0, 0);
 
-                // Animate matrix rain
-                rainDrops.forEach((drop, i) => {
-                    drop.position.y -= drop.userData.speed;
+                // Animate matrix rain columns
+                rainColumns.forEach((column) => {
+                    // Move entire column down
+                    column.y -= column.speed;
 
-                    // Slight horizontal drift
-                    drop.position.x = drop.userData.originalX + Math.sin(time + i) * 0.5;
-
-                    // Reset when off screen
-                    if (drop.position.y < -25) {
-                        drop.position.y = 25 + Math.random() * 10;
-                        drop.position.x = (Math.random() - 0.5) * 60;
-                        drop.userData.originalX = drop.position.x;
+                    // Update all sprites in this column
+                    for (let i = 0; i < column.sprites.length; i++) {
+                        const sprite = column.sprites[i];
+                        sprite.position.y = column.y - (i * column.charSpacing);
                     }
 
-                    // Occasionally change character
-                    drop.userData.charChangeTimer--;
-                    if (drop.userData.charChangeTimer <= 0) {
-                        const newChar = matrixChars[Math.floor(Math.random() * matrixChars.length)];
-                        drop.material.map = createCharTexture(newChar, drop.userData.color);
-                        drop.userData.charChangeTimer = Math.random() * 200 + 50;
+                    // Reset column when tail goes off screen
+                    const tailY = column.y - (charsPerColumn * column.charSpacing);
+                    if (tailY < -30) {
+                        column.y = 30 + Math.random() * 15;
+                        // Randomize new characters when column resets
+                        for (let i = 0; i < column.chars.length; i++) {
+                            const newChar = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                            column.chars[i] = newChar;
+                            const isHead = i === 0;
+                            const color = isHead ? '#b4ffc8' : '#00ff9f';
+                            column.sprites[i].material.map = createCharTexture(newChar, color);
+                        }
+                    }
+
+                    // Randomly change one character in the column periodically
+                    column.charChangeTimer--;
+                    if (column.charChangeTimer <= 0) {
+                        const changeIdx = Math.floor(Math.random() * column.chars.length);
+                        if (changeIdx > 0) { // Don't change head as often
+                            const newChar = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                            column.chars[changeIdx] = newChar;
+                            column.sprites[changeIdx].material.map = createCharTexture(newChar, '#00ff9f');
+                        }
+                        column.charChangeTimer = column.charChangeInterval;
                     }
                 });
 
