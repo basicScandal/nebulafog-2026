@@ -1758,7 +1758,7 @@
                     // Matrix rain columns (subtle - fewer columns than about.html)
                     const columnWidth = isMobile ? 40 : 30;
                     const columns = Math.floor(canvas.width / columnWidth);
-                    const dropCount = isMobile ? Math.floor(columns * 0.15) : Math.floor(columns * 0.25);
+                    const dropCount = isMobile ? Math.floor(columns * 0.3) : Math.floor(columns * 0.5);
 
                     for (let i = 0; i < dropCount; i++) {
                         const drop = createMatrixDrop();
