@@ -258,9 +258,8 @@
             inset: 0;
             pointer-events: none;
             z-index: 1;
-            will-change: contents;
+            will-change: transform;
             transform: translateZ(0);
-            contain: strict;
         }
 
         /* ========================================
@@ -1892,17 +1891,20 @@
                     }
                 });
 
-                // IntersectionObserver to pause when scrolled out of view
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting && !document.hidden) {
-                            startAnimation();
-                        } else {
-                            stopAnimation();
-                        }
-                    });
-                }, { threshold: 0.1 });
-                observer.observe(canvas);
+                // IntersectionObserver to pause when splash section scrolled out of view
+                const splashSection = document.querySelector('.splash');
+                if (splashSection) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && !document.hidden) {
+                                startAnimation();
+                            } else {
+                                stopAnimation();
+                            }
+                        });
+                    }, { threshold: 0.05 });
+                    observer.observe(splashSection);
+                }
 
                 // Debounced resize handler
                 let resizeTimeout;
