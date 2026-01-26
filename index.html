@@ -1726,9 +1726,25 @@
                 const fontSize = isMobile ? 12 : 14;
                 const fontString = `${fontSize}px "JetBrains Mono", monospace`;
 
-                // Pre-calculate colors to avoid string concatenation in loop
+                // Pre-calculate colors - lookup tables avoid string concatenation in hot loop
                 const headColor = 'rgba(180, 255, 200, 0.9)';
-                const particleColorBase = 'rgba(0, 255, 159, ';
+
+                // Pre-compute 20 tail opacity levels (0.4 down to ~0)
+                const tailColors = [];
+                for (let i = 0; i < 20; i++) {
+                    const opacity = ((1 - (i / 20)) * 0.4).toFixed(3);
+                    tailColors.push(`rgba(0, 255, 159, ${opacity})`);
+                }
+
+                // Pre-compute 10 particle opacity levels
+                const particleColors = [];
+                for (let i = 0; i < 10; i++) {
+                    const opacity = (0.1 + (i * 0.05)).toFixed(2);
+                    particleColors.push(`rgba(0, 255, 159, ${opacity})`);
+                }
+
+                // Helper for random int
+                const randInt = (max) => Math.floor(Math.random() * max);
 
                 function resize() {
                     canvas.width = window.innerWidth;
@@ -1743,15 +1759,15 @@
                         size: isMobile ? Math.random() * 1.5 + 0.5 : Math.random() * 2 + 0.5,
                         speedX: (Math.random() - 0.5) * speedMult,
                         speedY: (Math.random() - 0.5) * speedMult,
-                        opacity: Math.random() * 0.5 + 0.1
+                        colorIdx: randInt(10) // Index into particleColors lookup
                     };
                 }
 
                 function createMatrixDrop() {
-                    const length = Math.floor(Math.random() * 15) + 5;
+                    const length = randInt(15) + 5;
                     const chars = [];
                     for (let j = 0; j < length; j++) {
-                        chars.push(matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)]);
+                        chars.push(matrixCharsArray[randInt(matrixCharsLen)]);
                     }
                     return {
                         x: 0,
@@ -1760,7 +1776,7 @@
                         chars: chars,
                         length: length,
                         lastUpdate: 0,
-                        updateInterval: Math.random() * 100 + 50
+                        updateInterval: randInt(100) + 50
                     };
                 }
 
@@ -1802,7 +1818,7 @@
                     const h = canvas.height;
                     ctx.clearRect(0, 0, w, h);
 
-                    // Draw floating particles - batch by similar opacity ranges
+                    // Draw floating particles using pre-computed color lookup
                     const particleLen = particles.length;
                     for (let i = 0; i < particleLen; i++) {
                         const p = particles[i];
@@ -1816,7 +1832,7 @@
 
                         ctx.beginPath();
                         ctx.arc(p.x, p.y, p.size, 0, 6.283185);
-                        ctx.fillStyle = particleColorBase + p.opacity + ')';
+                        ctx.fillStyle = particleColors[p.colorIdx];
                         ctx.fill();
                     }
 
@@ -1831,34 +1847,35 @@
 
                         // Randomly change one character periodically
                         if (timestamp - drop.lastUpdate > drop.updateInterval) {
-                            const changeIndex = Math.floor(Math.random() * drop.length);
-                            drop.chars[changeIndex] = matrixCharsArray[Math.floor(Math.random() * matrixCharsLen)];
+                            drop.chars[randInt(drop.length)] = matrixCharsArray[randInt(matrixCharsLen)];
                             drop.lastUpdate = timestamp;
                         }
 
-                        // Draw each character in the drop
+                        // Draw each character in the drop using color lookup
                         const charLen = drop.chars.length;
+                        const tailStep = Math.max(1, Math.floor(charLen / 19));
                         for (let i = 0; i < charLen; i++) {
                             const charY = drop.y - (i * fontSize);
 
                             // Skip if off screen
                             if (charY < -fontSize || charY > h + fontSize) continue;
 
-                            // First char is brightest, fade out towards tail
+                            // First char is brightest, rest use pre-computed tail colors
                             if (i === 0) {
                                 ctx.fillStyle = headColor;
                             } else {
-                                const opacity = (1 - (i / drop.length)) * 0.4;
-                                ctx.fillStyle = particleColorBase + opacity + ')';
+                                // Map character position to tail color index (0-19)
+                                const colorIdx = Math.min(19, Math.floor(i / tailStep));
+                                ctx.fillStyle = tailColors[colorIdx];
                             }
 
                             ctx.fillText(drop.chars[i], drop.x, charY);
                         }
 
                         // Reset drop when it goes off screen
-                        if (drop.y - (drop.length * fontSize) > h) {
-                            drop.y = -drop.length * fontSize;
-                            drop.x = Math.floor(Math.random() * Math.floor(w / 30)) * 30;
+                        if (drop.y - (charLen * fontSize) > h) {
+                            drop.y = -charLen * fontSize;
+                            drop.x = randInt(Math.floor(w / 30)) * 30;
                             drop.speed = (Math.random() * 2 + 1) * (isMobile ? 0.7 : 1);
                         }
                     }
