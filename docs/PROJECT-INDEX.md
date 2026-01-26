@@ -13,21 +13,22 @@
 | **Server** | `python3 -m http.server 8000` |
 | **Deploy** | GitHub Pages (main branch) |
 | **Domain** | nebulafog.ai |
+| **Remotes** | `origin` + `deploy` (both push to main) |
 
 ---
 
 ## Pages
 
 | Page | Purpose | Key Features |
-|------|---------|--------------|
-| [index.html](../index.html) | Homepage | Terminal interface, countdown, breach animation |
-| [about.html](../about.html) | Mission/Story | 3D effects, 2025 stats, photo gallery |
-| [challenges.html](../challenges.html) | Challenge tracks | 4 tracks, prize breakdown (hidden until 3/14) |
-| [schedule.html](../schedule.html) | Event timeline | Animated schedule, logistics |
-| [register.html](../register.html) | Registration | Luma integration, countdown |
-| [partners.html](../partners.html) | Sponsors | Partner CTA |
-| [code-of-conduct.html](../code-of-conduct.html) | Policies | Community guidelines |
-| [404.html](../404.html) | Error page | Navigation back |
+|------|---------|-----------------|
+| [index.html](../index.html) | Homepage | Terminal interface, countdown, breach animation, testimonials |
+| [about.html](../about.html) | Mission/Story | 3D effects, 2025 stats, photo gallery, video links |
+| [challenges.html](../challenges.html) | Challenge tracks | 4 tracks, prize breakdown (auto-reveals 3/14/26) |
+| [schedule.html](../schedule.html) | Event timeline | Animated schedule, logistics, phase cards |
+| [register.html](../register.html) | Registration | Luma integration, countdown timer |
+| [partners.html](../partners.html) | Sponsors | Partner grid, CTA section |
+| [code-of-conduct.html](../code-of-conduct.html) | Policies | Community guidelines, collapsible sections |
+| [404.html](../404.html) | Error page | Navigation back to home |
 
 ---
 
@@ -37,20 +38,27 @@
 
 ```
 nebulafog-2026/
-├── *.html                 # 8 pages (inline CSS/JS)
+├── *.html                 # 8 pages (inline CSS/JS per page)
 ├── styles/
-│   └── common.css         # Shared design system (335 lines)
+│   └── common.css         # Shared design system (334 lines)
 ├── images/
-│   ├── 2025/hackathon/    # 24 event photos
-│   ├── gallery/           # Gallery images
-│   └── demos/             # Demo screenshots
-├── content/               # Markdown reference files
+│   ├── 2025/hackathon/    # 26 event photos
+│   ├── gallery/           # 8 gallery images
+│   ├── demos/             # 4 demo screenshots
+│   ├── og-image.png       # Open Graph image
+│   └── og-image-new.svg   # OG image source
+├── content/               # 11 markdown reference files
 ├── docs/                  # Planning & documentation
+│   ├── PROJECT-INDEX.md   # This file
+│   ├── prize-structure-2026.md
+│   ├── ux-analysis-customer-journey.md
+│   └── planning/          # Strategy docs
 ├── CLAUDE.md              # AI assistant instructions
 ├── README.md              # Project overview
+├── favicon.svg            # Site favicon
 ├── sitemap.xml            # SEO sitemap
 ├── robots.txt             # Crawler directives
-└── CNAME                  # GitHub Pages domain
+└── CNAME                  # GitHub Pages domain (nebulafog.ai)
 ```
 
 ### Design System
@@ -58,9 +66,14 @@ nebulafog-2026/
 ```css
 /* Colors */
 --color-bg: #030303           /* Dark background */
+--color-bg-elevated: #0a0a0a  /* Elevated surfaces */
 --color-primary: #00ff9f      /* Neon green */
 --color-secondary: #ff0080    /* Neon pink */
 --color-accent: #0ff          /* Cyan */
+--color-warning: #ff3d00      /* Orange alerts */
+--color-text: #ffffff
+--color-text-muted: #666666
+--color-text-dim: #333333
 
 /* Track Colors */
 SHADOW::VECTOR  → #ff4444 (red)
@@ -80,11 +93,11 @@ Mobile: 768px
 
 | Library | Version | Usage |
 |---------|---------|-------|
-| GSAP | 3.12.5 | Animations |
-| ScrollTrigger | 3.12.5 | Scroll effects |
-| Three.js | r128 | 3D effects |
+| GSAP | 3.12.5 | Animations, ScrollTrigger |
+| Three.js | r162 | 3D challenge matrix |
+| Anime.js | 3.2.2 | Story animations |
 | Font Awesome | 6.5.1 | Icons |
-| Plausible | - | Analytics |
+| Plausible | - | Privacy-friendly analytics |
 
 ---
 
@@ -97,12 +110,13 @@ Mobile: 768px
 - **Breach Animation** - Boot sequence on homepage load
 - **Custom Cursor** - Neon dot + ring (desktop only)
 - **Particle System** - WebGL canvas (desktop only)
+- **Testimonial Carousel** - Swipeable cards with dot navigation
 
 ### Hidden/Timed Content
 
 | Content | Location | Trigger |
 |---------|----------|---------|
-| Prize Breakdown | challenges.html | Auto-reveals March 14, 2026 |
+| Prize Breakdown | challenges.html | Auto-reveals March 14, 2026 via JS date check |
 
 ### Accessibility
 
@@ -111,6 +125,7 @@ Mobile: 768px
 - `prefers-reduced-motion` support
 - Focus states on all interactive elements
 - 44px minimum touch targets (WCAG AAA)
+- Language improvements for screen readers
 
 ### SEO
 
@@ -118,26 +133,30 @@ Mobile: 768px
 - Open Graph meta tags (all pages)
 - Twitter card tags
 - sitemap.xml + robots.txt
+- Plausible analytics (privacy-friendly)
 
 ---
 
 ## Content Updates
 
 ### Update 2025 Stats
-- **about.html:1087** - Trust bar ("120+ builders")
-- **about.html:1198** - Origin stats (120 Operatives)
+- **about.html** - Trust bar ("120+ builders")
+- **about.html** - Origin stats section
 
 ### Update Event Details
 - **index.html** - Countdown target date
 - **schedule.html** - Timeline items
-- **register.html** - Luma link
+- **register.html** - Luma embed link
 
 ### Add Sponsors
 - **partners.html** - Add logo images and links
 
 ### Prize Structure
 - **docs/prize-structure-2026.md** - Planning document
-- **challenges.html:542** - Hidden section (display:none until 3/14)
+- **challenges.html** - Hidden section (`display:none` until 3/14)
+
+### Video Links
+- **about.html** - "24+ projects shipped" links to YouTube (@NEBULAFOG)
 
 ---
 
@@ -158,9 +177,8 @@ git checkout -b feature/name
 # Commit
 git add . && git commit -m "message"
 
-# Push & deploy
-git push origin main
-git push deploy main
+# Push & deploy (both remotes)
+git push origin main && git push deploy main
 ```
 
 ### Testing
@@ -174,20 +192,51 @@ git push deploy main
 
 | Document | Purpose |
 |----------|---------|
-| [prize-structure-2026.md](prize-structure-2026.md) | Prize distribution plan |
-| [planning/storytelling-improvement-plan.md](planning/storytelling-improvement-plan.md) | Content strategy |
+| [prize-structure-2026.md](prize-structure-2026.md) | Prize distribution ($5,000+ pool) |
 | [ux-analysis-customer-journey.md](ux-analysis-customer-journey.md) | User journey mapping |
+| [planning/storytelling-improvement-plan.md](planning/storytelling-improvement-plan.md) | Content strategy |
+| [planning/luma-registration-copy.md](planning/luma-registration-copy.md) | Registration copy |
+| [planning/website-faq-content.md](planning/website-faq-content.md) | FAQ content |
 
 ---
 
 ## Recent Changes (Jan 2026)
 
-- Cleaned up "24+ projects shipped" link styling
-- Added hidden prize breakdown (reveals 3/14/26)
-- Made all 4-item sections 2x2 grids
+### Latest Session
+- Added project index documentation
 - Removed hardcoded registration numbers
-- Fixed 2025 stats (120 builders, no cash prizes)
+- Cleaned up "24+ projects shipped" quote styling
+- Made video links more apparent with play icons
+- Made "What You'll Leave With" 2x2 grid
+- Added hidden prize breakdown (auto-reveals 3/14/26)
+- Added prize structure planning document
+
+### Earlier in January
 - Comprehensive QA fixes (a11y, SEO, content)
+- Fixed 2025 stats (120 builders, no cash prizes)
+- Updated Code of Conduct layout
+- Changed Evaluation Protocol to 2x2 grid
+- Removed View Tracks button from homepage
+- Added language improvements for accessibility
+- Integrated Luma for registration
+- Reordered hero CTAs
+
+---
+
+## Commit History (Recent)
+
+```
+93d137a Add project index documentation
+98baef4 Remove hardcoded registration numbers
+722c4ee Clean up '24+ projects shipped' quote styling
+5ade351 Make '24 projects shipped' links more apparent
+0b2ba57 Make 'What You'll Leave With' section 2x2 grid
+b3167fa Add hidden prize breakdown section (reveals 3/14/26)
+2cb5bdb Add prize structure planning document for 2026
+85c3249 Comprehensive QA fixes across content, code, a11y, SEO
+3e70b10 Fix 2025 stats: 120 builders, no cash prizes
+be7431b Update Code of Conduct layout and remove from nav
+```
 
 ---
 
