@@ -117,6 +117,12 @@ Mobile: 768px
 | Content | Location | Trigger |
 |---------|----------|---------|
 | Prize Breakdown | challenges.html | Auto-reveals March 14, 2026 via JS date check |
+| Sponsor Logos | partners.html | Reveals when `SPONSORS` object has entries |
+| Sponsor Challenges | challenges.html | Reveals when `SPONSOR_CHALLENGES` array has entries |
+| Judges/Speakers | schedule.html | Reveals when `JUDGES` array has entries |
+| Venue Details | schedule.html | Reveals when `VENUE` object has data |
+
+**To populate hidden sections:** Edit the data arrays/objects at the top of each page's `<script>` section.
 
 ### Accessibility
 
@@ -203,6 +209,11 @@ git push origin main && git push deploy main
 ## Recent Changes (Jan 2026)
 
 ### Latest Session
+- Added hidden sections for data-dependent content:
+  - Sponsor logos (partners.html)
+  - Sponsor challenges (challenges.html)
+  - Judges/speakers (schedule.html)
+  - Venue details (schedule.html)
 - Added project index documentation
 - Removed hardcoded registration numbers
 - Cleaned up "24+ projects shipped" quote styling
@@ -226,6 +237,8 @@ git push origin main && git push deploy main
 ## Commit History (Recent)
 
 ```
+e36a957 Add hidden sections that reveal when data is available
+f38df2b Update project index with accurate counts and recent commits
 93d137a Add project index documentation
 98baef4 Remove hardcoded registration numbers
 722c4ee Clean up '24+ projects shipped' quote styling
