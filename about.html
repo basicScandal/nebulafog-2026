@@ -456,66 +456,6 @@
         }
 
         /* ========================================
-           HERO COUNTDOWN TIMER
-           ======================================== */
-        .hero-countdown {
-            margin-top: 2rem;
-            padding: 1rem 2rem;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 159, 0.2);
-            border-radius: 12px;
-            display: inline-block;
-        }
-
-        .hero-countdown-label {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            color: var(--color-text-muted);
-            letter-spacing: 0.15em;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .hero-countdown-grid {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-
-        .hero-countdown-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 50px;
-        }
-
-        .hero-countdown-value {
-            font-family: var(--font-mono);
-            font-size: clamp(1.25rem, 4vw, 2rem);
-            font-weight: 700;
-            color: var(--color-primary);
-            text-shadow: 0 0 20px rgba(0, 255, 159, 0.5);
-            line-height: 1;
-        }
-
-        .hero-countdown-unit {
-            font-family: var(--font-mono);
-            font-size: 0.55rem;
-            color: var(--color-text-muted);
-            letter-spacing: 0.1em;
-            margin-top: 0.25rem;
-        }
-
-        .hero-countdown-separator {
-            font-family: var(--font-mono);
-            font-size: clamp(1.25rem, 4vw, 2rem);
-            color: var(--color-text-dim);
-            line-height: 1;
-        }
-
-        /* ========================================
            SECTION 2: ORIGIN (2025)
            ======================================== */
         .section-origin {
@@ -1147,31 +1087,6 @@
                 </div>
             </div>
 
-            <!-- Countdown Timer -->
-            <div class="hero-countdown">
-                <div class="hero-countdown-label">COUNTDOWN TO BREACH</div>
-                <div class="hero-countdown-grid">
-                    <div class="hero-countdown-item">
-                        <span class="hero-countdown-value" id="about-countdown-days">00</span>
-                        <span class="hero-countdown-unit">DAYS</span>
-                    </div>
-                    <span class="hero-countdown-separator">:</span>
-                    <div class="hero-countdown-item">
-                        <span class="hero-countdown-value" id="about-countdown-hours">00</span>
-                        <span class="hero-countdown-unit">HRS</span>
-                    </div>
-                    <span class="hero-countdown-separator">:</span>
-                    <div class="hero-countdown-item">
-                        <span class="hero-countdown-value" id="about-countdown-mins">00</span>
-                        <span class="hero-countdown-unit">MIN</span>
-                    </div>
-                    <span class="hero-countdown-separator">:</span>
-                    <div class="hero-countdown-item">
-                        <span class="hero-countdown-value" id="about-countdown-secs">00</span>
-                        <span class="hero-countdown-unit">SEC</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <div class="scroll-indicator">
@@ -2781,45 +2696,6 @@
         } else {
             setTimeout(initThreeJS, 1000);
         }
-
-        // ========================================
-        // COUNTDOWN TIMER
-        // ========================================
-        (function initCountdown() {
-            const targetDate = new Date('2026-03-14T00:00:00').getTime();
-            const daysEl = document.getElementById('about-countdown-days');
-            const hoursEl = document.getElementById('about-countdown-hours');
-            const minsEl = document.getElementById('about-countdown-mins');
-            const secsEl = document.getElementById('about-countdown-secs');
-
-            if (!daysEl) return;
-
-            function update() {
-                const now = Date.now();
-                const diff = targetDate - now;
-
-                if (diff <= 0) {
-                    daysEl.textContent = '00';
-                    hoursEl.textContent = '00';
-                    minsEl.textContent = '00';
-                    secsEl.textContent = '00';
-                    return;
-                }
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                daysEl.textContent = String(days).padStart(2, '0');
-                hoursEl.textContent = String(hours).padStart(2, '0');
-                minsEl.textContent = String(mins).padStart(2, '0');
-                secsEl.textContent = String(secs).padStart(2, '0');
-            }
-
-            update();
-            setInterval(update, 1000);
-        })();
 
         // ========================================
         // STICKY CTA BAR
