@@ -1707,8 +1707,12 @@
                 const canvas = document.getElementById('particles');
                 const ctx = canvas.getContext('2d');
                 let particles = [];
+                let matrixDrops = [];
                 let animationId;
                 const isMobile = window.matchMedia('(max-width: 768px)').matches;
+
+                // Matrix characters: Katakana + numbers + symbols
+                const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF<>{}[]/*-+';
 
                 function resize() {
                     canvas.width = window.innerWidth;
@@ -1726,19 +1730,51 @@
                     };
                 }
 
+                function createMatrixDrop() {
+                    const fontSize = isMobile ? 12 : 14;
+                    return {
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height - canvas.height,
+                        speed: (Math.random() * 2 + 1) * (isMobile ? 0.7 : 1),
+                        chars: [],
+                        length: Math.floor(Math.random() * 15) + 5,
+                        fontSize: fontSize,
+                        lastUpdate: 0,
+                        updateInterval: Math.random() * 100 + 50
+                    };
+                }
+
                 function initParticles() {
                     particles = [];
-                    // Fewer particles on mobile for performance
-                    const divisor = isMobile ? 25000 : 15000;
-                    const count = Math.floor((canvas.width * canvas.height) / divisor);
-                    for (let i = 0; i < count; i++) {
+                    matrixDrops = [];
+
+                    // Floating particles (fewer than before to make room for rain)
+                    const particleDivisor = isMobile ? 40000 : 25000;
+                    const particleCount = Math.floor((canvas.width * canvas.height) / particleDivisor);
+                    for (let i = 0; i < particleCount; i++) {
                         particles.push(createParticle());
+                    }
+
+                    // Matrix rain columns (subtle - fewer columns than about.html)
+                    const columnWidth = isMobile ? 40 : 30;
+                    const columns = Math.floor(canvas.width / columnWidth);
+                    const dropCount = isMobile ? Math.floor(columns * 0.15) : Math.floor(columns * 0.25);
+
+                    for (let i = 0; i < dropCount; i++) {
+                        const drop = createMatrixDrop();
+                        drop.x = Math.floor(Math.random() * columns) * columnWidth;
+                        // Initialize with random characters
+                        for (let j = 0; j < drop.length; j++) {
+                            drop.chars.push(matrixChars[Math.floor(Math.random() * matrixChars.length)]);
+                        }
+                        matrixDrops.push(drop);
                     }
                 }
 
-                function animate() {
+                function animate(timestamp) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+                    // Draw floating particles
                     particles.forEach(p => {
                         p.x += p.speedX;
                         p.y += p.speedY;
@@ -1754,6 +1790,47 @@
                         ctx.fill();
                     });
 
+                    // Draw Matrix rain
+                    matrixDrops.forEach(drop => {
+                        drop.y += drop.speed;
+
+                        // Randomly change characters periodically
+                        if (timestamp - drop.lastUpdate > drop.updateInterval) {
+                            const changeIndex = Math.floor(Math.random() * drop.chars.length);
+                            drop.chars[changeIndex] = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                            drop.lastUpdate = timestamp;
+                        }
+
+                        // Draw each character in the drop
+                        for (let i = 0; i < drop.chars.length; i++) {
+                            const charY = drop.y - (i * drop.fontSize);
+
+                            // Skip if off screen
+                            if (charY < -drop.fontSize || charY > canvas.height + drop.fontSize) continue;
+
+                            // First char is brightest, fade out towards tail
+                            const fadeRatio = 1 - (i / drop.length);
+                            const opacity = i === 0 ? 0.9 : fadeRatio * 0.4;
+
+                            // First char is white/bright green, rest are green
+                            if (i === 0) {
+                                ctx.fillStyle = `rgba(180, 255, 200, ${opacity})`;
+                            } else {
+                                ctx.fillStyle = `rgba(0, 255, 159, ${opacity})`;
+                            }
+
+                            ctx.font = `${drop.fontSize}px "JetBrains Mono", monospace`;
+                            ctx.fillText(drop.chars[i], drop.x, charY);
+                        }
+
+                        // Reset drop when it goes off screen
+                        if (drop.y - (drop.length * drop.fontSize) > canvas.height) {
+                            drop.y = -drop.length * drop.fontSize;
+                            drop.x = Math.floor(Math.random() * Math.floor(canvas.width / 30)) * 30;
+                            drop.speed = (Math.random() * 2 + 1) * (isMobile ? 0.7 : 1);
+                        }
+                    });
+
                     animationId = requestAnimationFrame(animate);
                 }
 
@@ -1762,7 +1839,7 @@
                     if (document.hidden) {
                         cancelAnimationFrame(animationId);
                     } else {
-                        animate();
+                        animationId = requestAnimationFrame(animate);
                     }
                 });
 
@@ -1773,7 +1850,7 @@
 
                 resize();
                 initParticles();
-                animate();
+                animationId = requestAnimationFrame(animate);
             }
         }
 
