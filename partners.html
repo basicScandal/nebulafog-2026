@@ -73,84 +73,6 @@
         }
 
         /* ========================================
-           FEATURE GRID
-           ======================================== */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-bottom: 6rem;
-        }
-
-        .feature-card {
-            padding: 2.5rem;
-            border: 1px solid var(--color-text-dim);
-            position: relative;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: border-color 0.4s var(--ease-out-expo);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 159, 0.02) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s var(--ease-out-expo);
-        }
-
-        .feature-card:hover {
-            border-color: var(--color-primary);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-index {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--color-text-dim);
-            line-height: 1;
-            margin-bottom: 1.5rem;
-            transition: color 0.4s var(--ease-out-expo);
-        }
-
-        .feature-card:hover .feature-index {
-            color: var(--color-primary);
-            text-shadow: 0 0 20px var(--color-primary);
-        }
-
-        .feature-title {
-            font-family: var(--font-display);
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--color-text);
-        }
-
-        .feature-tagline {
-            font-family: var(--font-mono);
-            color: var(--color-secondary);
-            font-size: 0.85rem;
-            font-style: italic;
-            margin-bottom: 0.75rem;
-        }
-
-        .feature-text {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-            line-height: 1.7;
-        }
-
-        /* Classification Colors */
-        .feature-card[data-classification="RED"] .feature-index { color: var(--color-track-red); }
-        .feature-card[data-classification="BLUE"] .feature-index { color: var(--color-track-blue); }
-        .feature-card[data-classification="CIPHER"] .feature-index { color: var(--color-track-cyan); }
-        .feature-card[data-classification="UNBOUND"] .feature-index { color: var(--color-track-purple); }
-
-        /* ========================================
            STATS SECTION
            ======================================== */
         .stats-section {
@@ -353,17 +275,6 @@
                 </p>
             </header>
 
-            <section class="features">
-                <article class="feature-card">
-                    <span class="feature-index" style="color: var(--color-text-dim);">—</span>
-                    <h2 class="feature-title">PARTNER LOGOS</h2>
-                    <p class="feature-text" style="text-align: center; padding: 3rem 0;">
-                        [ COMING SOON ]<br><br>
-                        Partner information will be displayed here.
-                    </p>
-                </article>
-            </section>
-
             <section class="cta-section">
                 <h2 class="cta-title">Power the Neural Network</h2>
                 <p class="cta-text">
@@ -425,7 +336,7 @@
                 requestAnimationFrame(animate);
             };
             animate();
-            document.querySelectorAll('a, button, .btn-primary, .feature-card').forEach(el => {
+            document.querySelectorAll('a, button, .btn-primary').forEach(el => {
                 el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
                 el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
             });
@@ -542,16 +453,6 @@
                 opacity: 1,
                 y: 0,
                 duration: 1,
-                ease: 'power3.out'
-            });
-
-            // Animate feature cards with stagger
-            gsap.to('.feature-card', {
-                opacity: 1,
-                y: 0,
-                duration: 0.8,
-                stagger: 0.15,
-                delay: 0.3,
                 ease: 'power3.out'
             });
 
