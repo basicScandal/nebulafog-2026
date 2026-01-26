@@ -1677,7 +1677,7 @@
                 });
 
                 morphSphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-                morphSphere.position.set(0, 0, -8);
+                morphSphere.position.set(12, 0, -8); // Offset right so visible beside text
                 scene.add(morphSphere);
 
                 // Add inner glow sphere
@@ -2077,8 +2077,8 @@
                         morphSphere.material.uniforms.color1.value.setHex(0xff0080);
                     }
 
-                    // Mouse reactivity - sphere follows mouse subtly
-                    morphSphere.position.x += (mouseX * 2 - morphSphere.position.x) * 0.01;
+                    // Mouse reactivity - sphere follows mouse subtly (offset to right side)
+                    morphSphere.position.x += (12 + mouseX * 2 - morphSphere.position.x) * 0.01;
                     morphSphere.position.y += (mouseY * 1.5 - morphSphere.position.y) * 0.01;
                 }
 
