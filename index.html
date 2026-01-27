@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-visual">
     <title>NEBULA:FOG 2026 | AI x Security Hackathon</title>
     <meta name="description"
         content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026.">
@@ -1399,7 +1399,14 @@
 
             .terminal-body {
                 padding: 1rem;
-                height: 200px;
+                min-height: 200px;
+                height: auto;
+            }
+
+            /* Prevent terminal resize when keyboard appears */
+            .agent-terminal {
+                position: relative;
+                transform: translateZ(0);
             }
 
             .terminal-output {
