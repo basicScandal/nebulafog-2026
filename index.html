@@ -1400,6 +1400,7 @@
             .terminal-body {
                 padding: 1rem;
                 height: 250px;
+                overflow: hidden;
             }
 
             /* Prevent terminal resize when keyboard appears */
@@ -1410,6 +1411,8 @@
 
             .terminal-output {
                 font-size: 0.75rem;
+                overflow-x: hidden;
+                word-break: break-word;
             }
 
             .terminal-input {
@@ -1517,7 +1520,7 @@
     <!-- Main Splash Content -->
     <main class="splash">
         <div class="splash-content" id="splash-content">
-            <div class="splash-brand">NEBULA:FOG 2026</div>
+            <div class="splash-brand">NEBULA:FOG</div>
             <h1 class="splash-title glitch-text" id="splash-title">
                 SINGULARITY:PROTOCOL
             </h1>
