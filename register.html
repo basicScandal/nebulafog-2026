@@ -517,6 +517,73 @@
         }
 
         /* ========================================
+           FAQ SECTION
+           ======================================== */
+        .faq-section {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: rgba(3, 3, 3, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-title {
+            font-size: 0.75rem;
+            color: var(--color-primary);
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .faq-grid {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .faq-item {
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: var(--color-accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .faq-label::before {
+            content: '>';
+            color: var(--color-primary);
+        }
+
+        .faq-answer {
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+            line-height: 1.6;
+            padding-left: 1rem;
+        }
+
+        .faq-answer a {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .faq-section {
+                padding: 1.5rem;
+            }
+        }
+
+        /* ========================================
            FOOTER - PAGE SPECIFIC
            ======================================== */
         .footer {
@@ -663,6 +730,67 @@
                     <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-bottom: 0.5rem;">DEMO FORMAT</p>
                     <p style="color: var(--color-text); font-size: 0.9rem;">3 minutes to present. 2 minutes Q&A. No fluff.</p>
                 </div>
+
+                <!-- FAQ Section -->
+                <section class="faq-section" aria-labelledby="faq-heading">
+                    <h2 class="faq-title" id="faq-heading">FREQUENTLY ASKED QUESTIONS</h2>
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <div class="faq-label">WHEN::SCHEDULE</div>
+                            <div class="faq-answer">
+                                8:30am check-in opens · 9:15am kickoff · 10:30am building begins · 4:30pm demos · 6:30pm awards · 8:00pm after party
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">WHERE::VENUE</div>
+                            <div class="faq-answer">
+                                San Francisco. Exact location sent to registered participants. WiFi and power provided.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">WHO::ELIGIBILITY</div>
+                            <div class="faq-answer">
+                                All skill levels welcome. All ages (minors must be accompanied by guardian). No prior AI/security experience required.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">SQUAD::TEAMS</div>
+                            <div class="faq-answer">
+                                2-4 operators per team recommended. Solo hackers welcome. Can form teams at the event.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">GEAR::BRING</div>
+                            <div class="faq-answer">
+                                Your laptop + chargers. Headphones recommended. We provide WiFi, power, food, and caffeine.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">BUILD::RULES</div>
+                            <div class="faq-answer">
+                                BUILD_NEW track: Start from scratch at 10:30am. SHOWCASE track: Pre-built projects welcome, separate judging. Open source libraries and APIs allowed.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">IP::OWNERSHIP</div>
+                            <div class="faq-answer">
+                                You own what you build. Period. No strings attached.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">PRIZES::AWARDS</div>
+                            <div class="faq-answer">
+                                $5,000+ prize pool. Track awards + cross-track awards + special recognition. Teams CAN win multiple categories.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-label">AFTER::PARTY</div>
+                            <div class="faq-answer">
+                                Starts 8pm. <a href="https://dub.sh/nf-afterparty" target="_blank" rel="noopener">Separate RSVP required</a>. Open to all hackathon participants. 21+ for drinks.
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </main>
