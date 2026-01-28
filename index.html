@@ -359,6 +359,8 @@
         .particles-canvas {
             position: fixed;
             inset: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
             will-change: transform;
@@ -1830,7 +1832,26 @@
                 const content = document.getElementById('splash-content');
                 const title = document.getElementById('splash-title');
                 const date = document.getElementById('splash-date');
+                const countdown = document.getElementById('countdown-section');
+                const heroCta = document.querySelector('.hero-cta-container');
+                const terminal = document.getElementById('agent-terminal');
 
+                // Returning visitors: show content instantly (better LCP)
+                const isReturningVisitor = sessionStorage.getItem('splashSeen');
+                if (isReturningVisitor) {
+                    // Show everything immediately - no animations, no delays
+                    gsap.set(content, { opacity: 1 });
+                    gsap.set(date, { opacity: 1 });
+                    if (countdown) gsap.set(countdown, { opacity: 1 });
+                    if (heroCta) gsap.set(heroCta, { opacity: 1 });
+                    if (terminal) {
+                        gsap.set(terminal, { opacity: 1, y: 0 });
+                        if (window.agentTerminal) window.agentTerminal.start();
+                    }
+                    return;
+                }
+
+                // First-time visitors: full animation sequence
                 // Set initial hidden state via JS (CSS defaults to visible for LCP)
                 gsap.set(content, { opacity: 0 });
 
@@ -1871,7 +1892,6 @@
                 });
 
                 // Animate countdown section
-                const countdown = document.getElementById('countdown-section');
                 if (countdown) {
                     gsap.to(countdown, {
                         opacity: 1,
@@ -1881,7 +1901,6 @@
                 }
 
                 // Animate hero CTA container
-                const heroCta = document.querySelector('.hero-cta-container');
                 if (heroCta) {
                     gsap.to(heroCta, {
                         opacity: 1,
@@ -1891,7 +1910,6 @@
                 }
 
                 // Animate terminal
-                const terminal = document.getElementById('agent-terminal');
                 if (terminal) {
                     gsap.to(terminal, {
                         opacity: 1,
