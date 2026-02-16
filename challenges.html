@@ -28,6 +28,9 @@
     <!-- Theme -->
     <meta name="theme-color" content="#00ff9f">
 
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data:; connect-src 'self' https://*.supabase.co https://www.google-analytics.com;">
+
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
@@ -1692,7 +1695,7 @@
                 <div class="cdb-form-row">
                     <div class="cdb-form-group">
                         <label class="cdb-form-label" for="cdb-ch-contact">Contact Handle <span class="required">*</span></label>
-                        <input type="text" class="cdb-form-input" id="cdb-ch-contact" placeholder="username#1234">
+                        <input type="text" class="cdb-form-input" id="cdb-ch-contact" placeholder="username#1234" maxlength="100">
                         <div class="cdb-form-error" id="cdb-ch-contact-error">Please enter your contact handle.</div>
                     </div>
                     <div class="cdb-form-group">
@@ -1707,7 +1710,7 @@
                 </div>
                 <div class="cdb-form-group">
                     <label class="cdb-form-label" for="cdb-ch-author">Your Name <span class="required">*</span></label>
-                    <input type="text" class="cdb-form-input" id="cdb-ch-author" placeholder="Display name">
+                    <input type="text" class="cdb-form-input" id="cdb-ch-author" placeholder="Display name" maxlength="50">
                     <div class="cdb-form-error" id="cdb-ch-author-error">Please enter your name.</div>
                 </div>
                 <button type="submit" class="cdb-btn cdb-btn-primary" id="cdb-ch-submit" style="width: 100%; margin-top: 0.5rem;">
@@ -1894,12 +1897,6 @@
                 'Python', 'JavaScript', 'Rust', 'Go'
             ];
 
-            function escapeHtml(str) {
-                const d = document.createElement('div');
-                d.textContent = str;
-                return d.innerHTML;
-            }
-
             // ChallengeAuth — handles Supabase magic-link authentication
             class ChallengeAuth {
                 constructor(client) {
@@ -1949,7 +1946,10 @@
                     let query = this.client.from('challenges').select('*', { count: 'exact' });
                     if (track) query = query.eq('track', track);
                     if (status) query = query.eq('team_status', status);
-                    if (search) query = query.ilike('title', '%' + search + '%');
+                    if (search) {
+                        const escaped = search.replace(/[%_\\]/g, '\\$&');
+                        query = query.ilike('title', '%' + escaped + '%');
+                    }
                     query = query.order('created_at', { ascending: false });
                     const from = (page - 1) * CDB_PAGE_SIZE;
                     query = query.range(from, from + CDB_PAGE_SIZE - 1);
@@ -2192,6 +2192,7 @@
                         if (formView) formView.style.display = 'none';
                         if (sentView) sentView.style.display = 'block';
                         if (sentEmail) sentEmail.textContent = email;
+                        this._startAuthCooldown();
                     } catch (err) {
                         if (errorEl) {
                             const msg = err.message || 'Something went wrong.';
@@ -2209,6 +2210,26 @@
                     } finally {
                         if (submitBtn) submitBtn.disabled = false;
                     }
+                }
+
+                // Auth submit cooldown (60s after successful magic link send)
+                _startAuthCooldown() {
+                    const btn = document.getElementById('cdb-auth-submit');
+                    if (!btn) return;
+                    btn.disabled = true;
+                    let remaining = 60;
+                    const origText = btn.textContent;
+                    btn.textContent = 'Resend in ' + remaining + 's';
+                    const interval = setInterval(() => {
+                        remaining--;
+                        if (remaining <= 0) {
+                            clearInterval(interval);
+                            btn.disabled = false;
+                            btn.textContent = origText;
+                        } else {
+                            btn.textContent = 'Resend in ' + remaining + 's';
+                        }
+                    }, 1000);
                 }
 
                 openChallengeModal(existing) {
@@ -2313,14 +2334,17 @@
                     validate(titleInput, 'cdb-ch-title-error', titleVal.length >= 5 && titleVal.length <= 100);
                     validate(descInput, 'cdb-ch-desc-error', descVal.length >= 20 && descVal.length <= 1000);
                     validate(track, 'cdb-ch-track-error', trackVal !== '');
-                    validate(null, 'cdb-ch-skills-error', skills.length >= 1 && skills.length <= 5);
-                    validate(author, 'cdb-ch-author-error', authorVal.length > 0);
+                    validate(author, 'cdb-ch-author-error', authorVal.length >= 1 && authorVal.length <= 50);
 
                     if (contactMethod === 'email') {
-                        validate(contact, 'cdb-ch-contact-error', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactVal));
+                        validate(contact, 'cdb-ch-contact-error', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactVal) && contactVal.length <= 100);
                     } else {
-                        validate(contact, 'cdb-ch-contact-error', contactVal.length > 0);
+                        validate(contact, 'cdb-ch-contact-error', contactVal.length >= 2 && contactVal.length <= 100);
                     }
+
+                    // Validate skills against allowed list
+                    const validSkills = skills.every(s => CDB_SKILLS.includes(s));
+                    validate(null, 'cdb-ch-skills-error', skills.length >= 1 && skills.length <= 5 && validSkills);
 
                     if (!valid) return;
                     if (submitBtn) submitBtn.disabled = true;
@@ -2627,7 +2651,9 @@
             var sbClient = null;
             try {
                 if (window.supabase) {
-                    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                        auth: { flowType: 'pkce' }
+                    });
                 }
             } catch (e) {
                 console.warn('Supabase init failed:', e);
