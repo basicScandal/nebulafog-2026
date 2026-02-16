@@ -411,6 +411,64 @@
             box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
         }
 
+        .cdb-btn-report {
+            border-color: var(--color-warning);
+            color: var(--color-warning);
+        }
+
+        .cdb-btn-report:hover {
+            background: rgba(255, 61, 0, 0.1);
+            box-shadow: 0 0 20px rgba(255, 61, 0, 0.2);
+        }
+
+        .cdb-card.cdb-flagged {
+            opacity: 0.55;
+            position: relative;
+        }
+
+        .cdb-flagged-badge {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background: rgba(255, 61, 0, 0.15);
+            border: 1px solid var(--color-warning);
+            color: var(--color-warning);
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.5rem;
+            text-transform: uppercase;
+            z-index: 1;
+        }
+
+        .cdb-report-reason-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .cdb-report-details {
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--color-text-dim);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            padding: 0.75rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .cdb-report-details:focus {
+            outline: none;
+            border-color: var(--color-warning);
+        }
+
+        .cdb-report-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
         .cdb-btn-sm {
             padding: 0.4rem 0.75rem;
             font-size: 0.7rem;
@@ -1737,6 +1795,33 @@
         </div>
     </div>
 
+    <!-- Report Modal -->
+    <div class="cdb-modal-overlay" id="cdb-report-modal" role="dialog" aria-labelledby="cdb-report-title" aria-modal="true">
+        <div class="cdb-modal" style="max-width: 420px;">
+            <button class="cdb-modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 class="cdb-modal-title" id="cdb-report-title">REPORT CHALLENGE</h3>
+            <div class="cdb-report-reason-group">
+                <label class="cdb-form-label" for="cdb-report-reason">Reason <span class="required">*</span></label>
+                <select class="cdb-form-select" id="cdb-report-reason">
+                    <option value="spam">Spam or scam</option>
+                    <option value="inappropriate">Inappropriate content</option>
+                    <option value="misleading">Misleading information</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="cdb-report-reason-group">
+                <label class="cdb-form-label" for="cdb-report-details">Details (optional)</label>
+                <textarea class="cdb-report-details" id="cdb-report-details" maxlength="500" placeholder="Provide additional context..."></textarea>
+            </div>
+            <div class="cdb-report-actions">
+                <button class="cdb-btn cdb-btn-sm" id="cdb-report-cancel">CANCEL</button>
+                <button class="cdb-btn cdb-btn-report cdb-btn-sm" id="cdb-report-submit">
+                    <i class="fas fa-flag"></i> SUBMIT REPORT
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast Container -->
     <div class="cdb-toast-container" id="cdb-toast-container"></div>
 
@@ -1897,6 +1982,13 @@
                 'Python', 'JavaScript', 'Rust', 'Go'
             ];
 
+            const CDB_BLOCKLIST = [
+                /n[i1]gg[e3]r/i, /f[a4]gg[o0]t/i, /ch[i1]nk/i, /sp[i1]c/i, /k[i1]k[e3]/i,
+                /buy now/i, /click here/i, /limited time offer/i, /100% free/i,
+                /send bitcoin/i, /gift card/i, /make money fast/i,
+                /\bporn\b/i, /\bxxx\b/i, /\bviagra\b/i
+            ];
+
             // ChallengeAuth — handles Supabase magic-link authentication
             class ChallengeAuth {
                 constructor(client) {
@@ -1989,6 +2081,7 @@
                     this.filters = { track: '', status: '', search: '' };
                     this.editingId = null;
                     this.deletingId = null;
+                    this.reportingId = null;
                     this.searchTimeout = null;
                     this.isArchived = new Date() >= CDB_EVENT_DATE;
                     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2087,6 +2180,12 @@
                     const deleteConfirm = document.getElementById('cdb-delete-confirm');
                     if (deleteCancel) deleteCancel.addEventListener('click', () => this.closeModal('cdb-delete-modal'));
                     if (deleteConfirm) deleteConfirm.addEventListener('click', () => this.handleDelete());
+
+                    // Report modal
+                    const reportCancel = document.getElementById('cdb-report-cancel');
+                    const reportSubmit = document.getElementById('cdb-report-submit');
+                    if (reportCancel) reportCancel.addEventListener('click', () => this.closeModal('cdb-report-modal'));
+                    if (reportSubmit) reportSubmit.addEventListener('click', () => this.handleReportSubmit());
 
                     // Modal close buttons & overlay clicks
                     document.querySelectorAll('.cdb-modal-overlay').forEach(overlay => {
@@ -2352,6 +2451,15 @@
                     validate(null, 'cdb-ch-skills-error', skills.length >= 1 && skills.length <= 5 && validSkills);
 
                     if (!valid) return;
+
+                    // Client-side keyword filter
+                    const combined = titleVal + ' ' + descVal;
+                    for (const pattern of CDB_BLOCKLIST) {
+                        if (pattern.test(combined)) {
+                            this.showToast('Content contains prohibited terms. Please revise.', 'error');
+                            return;
+                        }
+                    }
                     if (submitBtn) submitBtn.disabled = true;
 
                     const payload = {
@@ -2368,22 +2476,27 @@
                     };
 
                     try {
+                        var result;
                         if (this.editingId) {
                             delete payload.user_id;
-                            await this.db.updateChallenge(this.editingId, payload);
+                            result = await this.db.updateChallenge(this.editingId, payload);
                             this.showToast('Challenge updated!');
                         } else {
-                            await this.db.createChallenge(payload);
+                            result = await this.db.createChallenge(payload);
                             this.showToast('Challenge posted!');
                         }
                         this.closeModal('cdb-challenge-modal');
                         this.loadChallenges();
+                        // Fire-and-forget async LLM moderation
+                        if (result && result.id) this.triggerModeration(result.id);
                     } catch (err) {
                         const msg = err.message || 'Failed to save challenge.';
                         if (err.code === '42501' || msg.includes('401') || msg.includes('JWT')) {
                             this.closeModal('cdb-challenge-modal');
                             this.openModal('cdb-auth-modal');
                             this.showToast('Session expired. Please sign in again.', 'warning');
+                        } else if (msg.includes('prohibited terms')) {
+                            this.showToast('Content contains prohibited terms. Please revise.', 'error');
                         } else {
                             this.showToast(msg, 'error');
                         }
@@ -2571,6 +2684,26 @@
                     });
                     actions.appendChild(connectBtn);
 
+                    if (!isOwner && this.auth.user) {
+                        var reportBtn = document.createElement('button');
+                        reportBtn.className = 'cdb-btn cdb-btn-sm cdb-btn-report';
+                        reportBtn.title = 'Report this challenge';
+                        var reportIcon = document.createElement('i');
+                        reportIcon.className = 'fas fa-flag';
+                        reportBtn.appendChild(reportIcon);
+                        reportBtn.addEventListener('click', function() { self.openReportModal(ch.id); });
+                        actions.appendChild(reportBtn);
+                    }
+
+                    // Show "UNDER REVIEW" badge if flagged and viewed by owner
+                    if (isOwner && ch.moderation_status === 'flagged') {
+                        card.classList.add('cdb-flagged');
+                        var flagBadge = document.createElement('span');
+                        flagBadge.className = 'cdb-flagged-badge';
+                        flagBadge.textContent = 'UNDER REVIEW';
+                        card.appendChild(flagBadge);
+                    }
+
                     if (isOwner) {
                         var editBtn = document.createElement('button');
                         editBtn.className = 'cdb-btn cdb-btn-sm';
@@ -2606,6 +2739,60 @@
                             this.showToast('Discord: ' + handle, 'warning');
                         });
                     }
+                }
+
+                openReportModal(challengeId) {
+                    this.reportingId = challengeId;
+                    var reasonSelect = document.getElementById('cdb-report-reason');
+                    var detailsInput = document.getElementById('cdb-report-details');
+                    if (reasonSelect) reasonSelect.value = 'spam';
+                    if (detailsInput) detailsInput.value = '';
+                    this.openModal('cdb-report-modal');
+                }
+
+                async handleReportSubmit() {
+                    if (!this.reportingId || !this.auth.user) return;
+                    var submitBtn = document.getElementById('cdb-report-submit');
+                    if (submitBtn) submitBtn.disabled = true;
+                    var reason = document.getElementById('cdb-report-reason');
+                    var details = document.getElementById('cdb-report-details');
+                    var reasonVal = reason ? reason.value : 'other';
+                    var detailsVal = details ? details.value.trim() : '';
+
+                    try {
+                        var payload = {
+                            challenge_id: this.reportingId,
+                            reporter_user_id: this.auth.user.id,
+                            reason: reasonVal
+                        };
+                        if (detailsVal) payload.details = detailsVal.substring(0, 500);
+
+                        var { error } = await this.db.client.from('challenge_reports').insert(payload);
+                        if (error) {
+                            if (error.code === '23505') {
+                                this.showToast('You have already reported this challenge.', 'warning');
+                            } else {
+                                throw error;
+                            }
+                        } else {
+                            this.showToast('Report submitted. Thank you for helping keep the community safe.');
+                        }
+                        this.closeModal('cdb-report-modal');
+                    } catch (err) {
+                        this.showToast(err.message || 'Failed to submit report.', 'error');
+                    } finally {
+                        if (submitBtn) submitBtn.disabled = false;
+                        this.reportingId = null;
+                    }
+                }
+
+                triggerModeration(challengeId) {
+                    // Fire-and-forget: don't await, don't block UI
+                    fetch(SUPABASE_URL + '/functions/v1/moderate-challenge', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ challenge_id: challengeId })
+                    }).catch(function() { /* silent — graceful degradation */ });
                 }
 
                 openModal(id) {
