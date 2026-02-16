@@ -710,6 +710,17 @@
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .cdb-card-desc:hover {
+            color: var(--color-text);
+        }
+
+        .cdb-card-desc.expanded {
+            display: block;
+            -webkit-line-clamp: unset;
         }
 
         .cdb-card-skills {
@@ -2638,6 +2649,9 @@
                     var descEl = document.createElement('p');
                     descEl.className = 'cdb-card-desc';
                     descEl.textContent = ch.description;
+                    descEl.addEventListener('click', function() {
+                        descEl.classList.toggle('expanded');
+                    });
                     card.appendChild(descEl);
 
                     var skillsDiv = document.createElement('div');
