@@ -1912,6 +1912,7 @@
                         this.user = data?.session?.user || null;
                         this.client.auth.onAuthStateChange((event, session) => {
                             this.user = session?.user || null;
+                            this._authChangeFired = true;
                             if (this.onAuthChange) this.onAuthChange(this.user);
                         });
                     } catch (e) {
@@ -2674,8 +2675,11 @@
                     cdbUI.loadChallenges();
                 };
                 cdbAuth.init().then(function() {
-                    cdbUI.updateAuthUI(cdbAuth.user);
-                    cdbUI.loadChallenges();
+                    // Only load if onAuthStateChange hasn't already fired
+                    if (!cdbAuth._authChangeFired) {
+                        cdbUI.updateAuthUI(cdbAuth.user);
+                        cdbUI.loadChallenges();
+                    }
                 });
             } else {
                 // No Supabase — show error state, rest of page works
