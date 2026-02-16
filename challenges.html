@@ -45,6 +45,9 @@
     <!-- Shared Styles -->
     <link rel="stylesheet" href="styles/common.css">
 
+    <!-- Supabase -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <!-- GSAP -->
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -322,6 +325,708 @@
         }
 
         /* ========================================
+           CHALLENGE DATABASE
+           ======================================== */
+        .challenge-db-section {
+            margin-bottom: 4rem;
+        }
+
+        .cdb-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cdb-header-left h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .cdb-header-left p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+        }
+
+        .cdb-auth-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.8rem;
+        }
+
+        .cdb-user-email {
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+        }
+
+        .cdb-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.25rem;
+            background: transparent;
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+            min-height: 44px;
+        }
+
+        .cdb-btn:hover {
+            background: rgba(0, 255, 159, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 159, 0.2);
+        }
+
+        .cdb-btn-primary {
+            background: var(--color-primary);
+            color: var(--color-bg);
+        }
+
+        .cdb-btn-primary:hover {
+            background: #00cc7f;
+            box-shadow: 0 0 25px rgba(0, 255, 159, 0.4);
+        }
+
+        .cdb-btn-danger {
+            border-color: var(--color-error);
+            color: var(--color-error);
+        }
+
+        .cdb-btn-danger:hover {
+            background: rgba(255, 68, 68, 0.1);
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.2);
+        }
+
+        .cdb-btn-sm {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.7rem;
+            min-height: 36px;
+        }
+
+        .cdb-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Filter Bar */
+        .cdb-filters {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .cdb-search {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.6rem 1rem;
+            background: rgba(3, 3, 3, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .cdb-search::placeholder {
+            color: var(--color-text-dim);
+        }
+
+        .cdb-search:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(0, 255, 159, 0.1);
+        }
+
+        .cdb-filter-select {
+            padding: 0.6rem 2rem 0.6rem 0.75rem;
+            background: rgba(3, 3, 3, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            transition: border-color 0.3s ease;
+        }
+
+        .cdb-filter-select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .cdb-filter-toggle {
+            display: none;
+            width: 100%;
+            padding: 0.6rem;
+            background: rgba(3, 3, 3, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            min-height: 44px;
+        }
+
+        .cdb-filter-toggle i {
+            margin-left: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .cdb-filter-toggle.expanded i {
+            transform: rotate(180deg);
+        }
+
+        .cdb-filter-controls {
+            display: contents;
+        }
+
+        /* Archive Banner */
+        .cdb-archived {
+            padding: 1rem 1.5rem;
+            background: rgba(255, 61, 0, 0.1);
+            border: 1px solid rgba(255, 61, 0, 0.3);
+            color: var(--color-warning);
+            font-size: 0.85rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        /* States */
+        .cdb-loading,
+        .cdb-error,
+        .cdb-empty {
+            text-align: center;
+            padding: 3rem 1.5rem;
+        }
+
+        .cdb-loading {
+            color: var(--color-text-muted);
+        }
+
+        .cdb-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--color-text-dim);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: cdb-spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes cdb-spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .cdb-error {
+            color: var(--color-error);
+        }
+
+        .cdb-error i {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            display: block;
+        }
+
+        .cdb-empty {
+            color: var(--color-text-muted);
+        }
+
+        .cdb-empty i {
+            font-size: 2.5rem;
+            color: var(--color-text-dim);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Card Grid */
+        .cdb-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .cdb-card {
+            padding: 1.5rem;
+            background: rgba(10, 10, 10, 0.6);
+            border: 1px solid var(--color-text-dim);
+            border-left: 3px solid var(--color-text-dim);
+            transition: all 0.3s var(--ease-out-expo);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cdb-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cdb-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            background: rgba(10, 10, 10, 0.8);
+        }
+
+        .cdb-card[data-track="SHADOW"] { border-left-color: var(--color-track-red); }
+        .cdb-card[data-track="SENTINEL"] { border-left-color: var(--color-track-blue); }
+        .cdb-card[data-track="ZERO"] { border-left-color: var(--color-track-cyan); }
+        .cdb-card[data-track="ROGUE"] { border-left-color: var(--color-track-purple); }
+
+        .cdb-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cdb-track-badge {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            padding: 0.2rem 0.5rem;
+            border: 1px solid;
+        }
+
+        .cdb-track-badge[data-track="SHADOW"] { color: var(--color-track-red); border-color: var(--color-track-red); }
+        .cdb-track-badge[data-track="SENTINEL"] { color: var(--color-track-blue); border-color: var(--color-track-blue); }
+        .cdb-track-badge[data-track="ZERO"] { color: var(--color-track-cyan); border-color: var(--color-track-cyan); }
+        .cdb-track-badge[data-track="ROGUE"] { color: var(--color-track-purple); border-color: var(--color-track-purple); }
+
+        .cdb-team-status {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+        }
+
+        .cdb-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .cdb-status-dot.looking { background: var(--color-primary); box-shadow: 0 0 6px var(--color-primary); }
+        .cdb-status-dot.open { background: #ffaa00; box-shadow: 0 0 6px #ffaa00; }
+        .cdb-status-dot.full { background: var(--color-text-dim); }
+
+        .cdb-card-title {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .cdb-card-desc {
+            font-size: 0.85rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .cdb-card-skills {
+            display: flex;
+            gap: 0.35rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .cdb-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            gap: 0.5rem;
+        }
+
+        .cdb-card-meta {
+            font-size: 0.7rem;
+            color: var(--color-text-dim);
+        }
+
+        .cdb-card-meta .cdb-author {
+            color: var(--color-text-muted);
+        }
+
+        .cdb-card-meta .cdb-team-size {
+            margin-left: 0.5rem;
+        }
+
+        .cdb-card-actions {
+            display: flex;
+            gap: 0.35rem;
+        }
+
+        /* Pagination */
+        .cdb-pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+        }
+
+        .cdb-pagination-info {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+
+        /* Modals */
+        .cdb-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .cdb-modal-overlay.open {
+            display: flex;
+            opacity: 1;
+        }
+
+        .cdb-modal {
+            width: 90%;
+            max-width: 560px;
+            max-height: 85vh;
+            overflow-y: auto;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-text-dim);
+            padding: 2rem;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .cdb-modal-overlay.open .cdb-modal {
+            transform: translateY(0);
+        }
+
+        .cdb-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+        }
+
+        .cdb-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: var(--color-text-muted);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            min-width: 44px;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .cdb-modal-close:hover {
+            color: var(--color-text);
+        }
+
+        .cdb-modal-title {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            padding-right: 2rem;
+        }
+
+        /* Modal Form Groups */
+        .cdb-form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .cdb-form-label {
+            display: block;
+            color: var(--color-text-muted);
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .cdb-form-label .required {
+            color: var(--color-secondary);
+        }
+
+        .cdb-form-input,
+        .cdb-form-select,
+        .cdb-form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(3, 3, 3, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .cdb-form-input::placeholder,
+        .cdb-form-textarea::placeholder {
+            color: var(--color-text-dim);
+        }
+
+        .cdb-form-input:focus,
+        .cdb-form-select:focus,
+        .cdb-form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(0, 255, 159, 0.1);
+        }
+
+        .cdb-form-input.error,
+        .cdb-form-select.error,
+        .cdb-form-textarea.error {
+            border-color: var(--color-error);
+        }
+
+        .cdb-form-select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .cdb-form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .cdb-form-error {
+            color: var(--color-error);
+            font-size: 0.75rem;
+            margin-top: 0.35rem;
+            display: none;
+        }
+
+        .cdb-form-error.show {
+            display: block;
+        }
+
+        .cdb-char-count {
+            font-size: 0.7rem;
+            color: var(--color-text-dim);
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        .cdb-char-count.warn { color: var(--color-warning); }
+        .cdb-char-count.over { color: var(--color-error); }
+
+        /* Skill Chip Picker */
+        .cdb-skill-picker {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+
+        .cdb-skill-chip {
+            padding: 0.3rem 0.6rem;
+            background: transparent;
+            border: 1px solid var(--color-text-dim);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+        }
+
+        .cdb-skill-chip:hover {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+
+        .cdb-skill-chip.selected {
+            background: rgba(255, 0, 128, 0.15);
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+
+        .cdb-skill-chip:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Contact Method Toggle */
+        .cdb-toggle-group {
+            display: flex;
+        }
+
+        .cdb-toggle-btn {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            background: rgba(3, 3, 3, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+        }
+
+        .cdb-toggle-btn:first-child {
+            border-right: none;
+        }
+
+        .cdb-toggle-btn.active {
+            background: rgba(0, 255, 159, 0.1);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .cdb-form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Auth Modal */
+        .cdb-auth-status {
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .cdb-auth-status i {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .cdb-auth-status p {
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .cdb-auth-status .email-sent {
+            color: var(--color-primary);
+            font-weight: 500;
+        }
+
+        .cdb-auth-error {
+            padding: 0.75rem 1rem;
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: var(--color-error);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .cdb-auth-error.show {
+            display: block;
+        }
+
+        .cdb-auth-error a {
+            color: var(--color-primary);
+            text-decoration: underline;
+        }
+
+        /* Delete Modal */
+        .cdb-delete-warning {
+            padding: 1rem;
+            background: rgba(255, 68, 68, 0.05);
+            border-left: 3px solid var(--color-error);
+            color: var(--color-text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .cdb-delete-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+
+        /* Toast */
+        .cdb-toast-container {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .cdb-toast {
+            padding: 0.75rem 1.25rem;
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-text-dim);
+            border-left: 3px solid var(--color-primary);
+            color: var(--color-text);
+            font-size: 0.85rem;
+            min-width: 250px;
+            max-width: 400px;
+            animation: cdb-toast-in 0.3s var(--ease-out-expo);
+        }
+
+        .cdb-toast.error { border-left-color: var(--color-error); }
+        .cdb-toast.warning { border-left-color: var(--color-warning); }
+
+        @keyframes cdb-toast-in {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes cdb-toast-out {
+            from { opacity: 1; transform: translateX(0); }
+            to { opacity: 0; transform: translateX(20px); }
+        }
+
+        /* ========================================
            RESPONSIVE - PAGE SPECIFIC
            ======================================== */
         @media (max-width: 768px) {
@@ -340,6 +1045,68 @@
 
             .footer-links a {
                 font-size: 0.6rem;
+            }
+
+            /* Challenge DB - Mobile */
+            .cdb-header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .cdb-header-right {
+                display: flex;
+                justify-content: center;
+            }
+
+            .cdb-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cdb-filter-toggle {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .cdb-filter-controls {
+                display: none;
+                width: 100%;
+            }
+
+            .cdb-filter-controls.expanded {
+                display: contents;
+            }
+
+            .cdb-search {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .cdb-filter-select {
+                width: 100%;
+            }
+
+            .cdb-modal {
+                width: 100%;
+                max-width: 100%;
+                max-height: 95vh;
+                border-radius: 0;
+            }
+
+            .cdb-form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .cdb-toast-container {
+                bottom: calc(5rem + env(safe-area-inset-bottom));
+                right: 1rem;
+                left: 1rem;
+            }
+
+            .cdb-toast {
+                min-width: 0;
+                max-width: 100%;
             }
         }
     </style>
@@ -385,10 +1152,10 @@
                 <p style="color: var(--color-text-dim); font-size: 0.8rem; margin-top: 1rem;">
                     New to hackathons? <a href="about.html#first-time" style="color: var(--color-primary);">We've got you covered</a>.
                 </p>
-                <button onclick="alert('Challenge Database launching soon! For now, check out the example projects below each track.')" class="btn-secondary" style="cursor: pointer;">
+                <a href="#challenge-db" class="btn-secondary" style="cursor: pointer;">
                     <i class="fas fa-database"></i>
-                    <span>Challenge Database (Coming Soon)</span>
-                </button>
+                    <span>Challenge Database</span>
+                </a>
             </header>
 
             <section class="protocols">
@@ -487,6 +1254,85 @@
                         </div>
                     </div>
                 </article>
+            </section>
+
+            <!-- Challenge Database -->
+            <section id="challenge-db" class="challenge-db-section" style="opacity: 0; transform: translateY(40px);">
+                <div class="cdb-header">
+                    <div class="cdb-header-left">
+                        <h2>CHALLENGE DATABASE</h2>
+                        <p>Post ideas. Find teammates. Ship together on March 14.</p>
+                    </div>
+                    <div class="cdb-header-right">
+                        <div id="cdb-auth-logged-out">
+                            <button class="cdb-btn cdb-btn-primary" id="cdb-post-btn">
+                                <i class="fas fa-plus"></i> POST CHALLENGE
+                            </button>
+                        </div>
+                        <div id="cdb-auth-logged-in" style="display: none;">
+                            <div class="cdb-auth-bar">
+                                <span class="cdb-user-email" id="cdb-user-email"></span>
+                                <button class="cdb-btn cdb-btn-primary" id="cdb-post-btn-auth">
+                                    <i class="fas fa-plus"></i> POST
+                                </button>
+                                <button class="cdb-btn cdb-btn-sm" id="cdb-signout-btn">SIGN OUT</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cdb-archived-banner" class="cdb-archived" style="display: none;">
+                    <i class="fas fa-archive"></i> The Challenge Database is now archived. Thanks to everyone who participated!
+                </div>
+
+                <div class="cdb-filters">
+                    <button class="cdb-filter-toggle" id="cdb-filter-toggle">
+                        FILTERS <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="cdb-filter-controls" id="cdb-filter-controls">
+                        <input type="search" class="cdb-search" id="cdb-search" placeholder="Search challenges..." aria-label="Search challenges">
+                        <select class="cdb-filter-select" id="cdb-filter-track" aria-label="Filter by track">
+                            <option value="">All Tracks</option>
+                            <option value="SHADOW">SHADOW::VECTOR</option>
+                            <option value="SENTINEL">SENTINEL::MESH</option>
+                            <option value="ZERO">ZERO::PROOF</option>
+                            <option value="ROGUE">ROGUE::AGENT</option>
+                        </select>
+                        <select class="cdb-filter-select" id="cdb-filter-status" aria-label="Filter by team status">
+                            <option value="">All Status</option>
+                            <option value="looking">Looking for team</option>
+                            <option value="open">Open to members</option>
+                            <option value="full">Team full</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="cdb-loading" class="cdb-loading" style="display: none;">
+                    <div class="cdb-spinner"></div>
+                    <p>Loading challenges...</p>
+                </div>
+
+                <div id="cdb-error" class="cdb-error" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Challenge Database temporarily unavailable. The rest of the page still works.</p>
+                </div>
+
+                <div id="cdb-empty" class="cdb-empty" style="display: none;">
+                    <i class="fas fa-rocket"></i>
+                    <p>No challenges posted yet. Be the first!</p>
+                </div>
+
+                <div class="cdb-grid" id="cdb-grid"></div>
+
+                <div class="cdb-pagination" id="cdb-pagination" style="display: none;">
+                    <button class="cdb-btn cdb-btn-sm" id="cdb-prev-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> PREV
+                    </button>
+                    <span class="cdb-pagination-info" id="cdb-page-info">Page 1</span>
+                    <button class="cdb-btn cdb-btn-sm" id="cdb-next-btn">
+                        NEXT <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
             </section>
 
             <!-- Participation Paths -->
@@ -763,6 +1609,134 @@
         </div>
     </footer>
 
+    <!-- Auth Modal -->
+    <div class="cdb-modal-overlay" id="cdb-auth-modal" role="dialog" aria-labelledby="cdb-auth-title" aria-modal="true">
+        <div class="cdb-modal">
+            <button class="cdb-modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 class="cdb-modal-title" id="cdb-auth-title">AUTHENTICATE</h3>
+            <div id="cdb-auth-form-view">
+                <p style="color: var(--color-text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; line-height: 1.6;">
+                    Enter the email you registered with. We'll send a magic link — no password needed.
+                </p>
+                <div class="cdb-auth-error" id="cdb-auth-error"></div>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label">Email <span class="required">*</span></label>
+                    <input type="email" class="cdb-form-input" id="cdb-auth-email" placeholder="your@email.com" autocomplete="email">
+                    <div class="cdb-form-error" id="cdb-auth-email-error">Please enter a valid email address.</div>
+                </div>
+                <button class="cdb-btn cdb-btn-primary" id="cdb-auth-submit" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i> SEND MAGIC LINK
+                </button>
+            </div>
+            <div id="cdb-auth-sent-view" style="display: none;">
+                <div class="cdb-auth-status">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <p>Magic link sent to <span class="email-sent" id="cdb-auth-sent-email"></span></p>
+                    <p style="margin-top: 0.5rem; font-size: 0.8rem;">Check your inbox and click the link to sign in.</p>
+                    <button class="cdb-btn cdb-btn-sm" id="cdb-auth-resend" style="margin-top: 1.5rem;">RESEND LINK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Challenge Modal -->
+    <div class="cdb-modal-overlay" id="cdb-challenge-modal" role="dialog" aria-labelledby="cdb-challenge-title" aria-modal="true">
+        <div class="cdb-modal">
+            <button class="cdb-modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 class="cdb-modal-title" id="cdb-challenge-title">POST CHALLENGE</h3>
+            <form id="cdb-challenge-form" novalidate>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label" for="cdb-ch-title">Title <span class="required">*</span></label>
+                    <input type="text" class="cdb-form-input" id="cdb-ch-title" placeholder="Your challenge idea" maxlength="100">
+                    <div class="cdb-form-error" id="cdb-ch-title-error">Title must be 5-100 characters.</div>
+                </div>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label" for="cdb-ch-desc">Description <span class="required">*</span></label>
+                    <textarea class="cdb-form-textarea" id="cdb-ch-desc" placeholder="Describe your challenge idea, approach, and what you're looking for..." maxlength="1000"></textarea>
+                    <div class="cdb-char-count" id="cdb-ch-desc-count">0 / 1000</div>
+                    <div class="cdb-form-error" id="cdb-ch-desc-error">Description must be 20-1000 characters.</div>
+                </div>
+                <div class="cdb-form-row">
+                    <div class="cdb-form-group">
+                        <label class="cdb-form-label" for="cdb-ch-track">Track <span class="required">*</span></label>
+                        <select class="cdb-form-select" id="cdb-ch-track">
+                            <option value="">Select track...</option>
+                            <option value="SHADOW">SHADOW::VECTOR</option>
+                            <option value="SENTINEL">SENTINEL::MESH</option>
+                            <option value="ZERO">ZERO::PROOF</option>
+                            <option value="ROGUE">ROGUE::AGENT</option>
+                        </select>
+                        <div class="cdb-form-error" id="cdb-ch-track-error">Please select a track.</div>
+                    </div>
+                    <div class="cdb-form-group">
+                        <label class="cdb-form-label" for="cdb-ch-team-status">Team Status <span class="required">*</span></label>
+                        <select class="cdb-form-select" id="cdb-ch-team-status">
+                            <option value="looking">Looking for team</option>
+                            <option value="open">Open to members</option>
+                            <option value="full">Team full</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label">Skills <span class="required">*</span> <span style="color: var(--color-text-dim); text-transform: none; letter-spacing: normal; font-weight: 400;">(1-5)</span></label>
+                    <div class="cdb-skill-picker" id="cdb-ch-skills"></div>
+                    <div class="cdb-form-error" id="cdb-ch-skills-error">Select 1-5 skills.</div>
+                </div>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label">Contact Method <span class="required">*</span></label>
+                    <div class="cdb-toggle-group" id="cdb-ch-contact-method">
+                        <button type="button" class="cdb-toggle-btn active" data-value="discord"><i class="fab fa-discord"></i>&nbsp; Discord</button>
+                        <button type="button" class="cdb-toggle-btn" data-value="email"><i class="fas fa-envelope"></i>&nbsp; Email</button>
+                    </div>
+                </div>
+                <div class="cdb-form-row">
+                    <div class="cdb-form-group">
+                        <label class="cdb-form-label" for="cdb-ch-contact">Contact Handle <span class="required">*</span></label>
+                        <input type="text" class="cdb-form-input" id="cdb-ch-contact" placeholder="username#1234">
+                        <div class="cdb-form-error" id="cdb-ch-contact-error">Please enter your contact handle.</div>
+                    </div>
+                    <div class="cdb-form-group">
+                        <label class="cdb-form-label" for="cdb-ch-team-size">Team Size <span class="required">*</span></label>
+                        <select class="cdb-form-select" id="cdb-ch-team-size">
+                            <option value="1">1 (Solo)</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="cdb-form-group">
+                    <label class="cdb-form-label" for="cdb-ch-author">Your Name <span class="required">*</span></label>
+                    <input type="text" class="cdb-form-input" id="cdb-ch-author" placeholder="Display name">
+                    <div class="cdb-form-error" id="cdb-ch-author-error">Please enter your name.</div>
+                </div>
+                <button type="submit" class="cdb-btn cdb-btn-primary" id="cdb-ch-submit" style="width: 100%; margin-top: 0.5rem;">
+                    <i class="fas fa-paper-plane"></i> <span id="cdb-ch-submit-text">POST CHALLENGE</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="cdb-modal-overlay" id="cdb-delete-modal" role="dialog" aria-labelledby="cdb-delete-title" aria-modal="true">
+        <div class="cdb-modal" style="max-width: 420px;">
+            <button class="cdb-modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            <h3 class="cdb-modal-title" id="cdb-delete-title">DELETE CHALLENGE</h3>
+            <div class="cdb-delete-warning">
+                <p>This action cannot be undone. Your challenge will be permanently removed from the database.</p>
+            </div>
+            <div class="cdb-delete-actions">
+                <button class="cdb-btn cdb-btn-sm" id="cdb-delete-cancel">CANCEL</button>
+                <button class="cdb-btn cdb-btn-danger cdb-btn-sm" id="cdb-delete-confirm">
+                    <i class="fas fa-trash"></i> DELETE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="cdb-toast-container" id="cdb-toast-container"></div>
+
     <!-- Mobile Navigation -->
     <nav class="mobile-nav" aria-label="Mobile navigation">
         <ul class="mobile-nav-links">
@@ -904,6 +1878,796 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // ============================================
+            // CHALLENGE DATABASE
+            // ============================================
+            const SUPABASE_URL = 'https://aqaqjaapzvcwrtnujnei.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxYXFqYWFwenZjd3J0bnVqbmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyMjE2NTksImV4cCI6MjA4Njc5NzY1OX0.gUq_DAwaScpmj57VfBSmnuHXlB4k6AOqiQCxZ9jH6Qs';
+            const CDB_PAGE_SIZE = 9;
+            const CDB_EVENT_DATE = new Date('2026-03-14T00:00:00');
+            const CDB_SKILLS = [
+                'Prompt Injection', 'Agent Exploitation', 'Trust Manipulation', 'Adversarial AI',
+                'Red Teaming', 'Detection Systems', 'Self-Healing', 'Architecture Hardening',
+                'Monitoring', 'Zero-Knowledge Proofs', 'Trust Anchors', 'Privacy Engineering',
+                'Encrypted Inference', 'Novel Research', 'AI Security Tooling', 'Agent Alignment',
+                'LLM Security', 'Cryptography', 'Web Security', 'Machine Learning',
+                'Python', 'JavaScript', 'Rust', 'Go'
+            ];
+
+            function escapeHtml(str) {
+                const d = document.createElement('div');
+                d.textContent = str;
+                return d.innerHTML;
+            }
+
+            // ChallengeAuth — handles Supabase magic-link authentication
+            class ChallengeAuth {
+                constructor(client) {
+                    this.client = client;
+                    this.user = null;
+                    this.onAuthChange = null;
+                }
+
+                async init() {
+                    if (!this.client) return;
+                    try {
+                        const { data } = await this.client.auth.getSession();
+                        this.user = data?.session?.user || null;
+                        this.client.auth.onAuthStateChange((event, session) => {
+                            this.user = session?.user || null;
+                            if (this.onAuthChange) this.onAuthChange(this.user);
+                        });
+                    } catch (e) {
+                        console.warn('ChallengeAuth init error:', e);
+                    }
+                }
+
+                async sendMagicLink(email) {
+                    if (!this.client) throw new Error('Auth unavailable');
+                    const { error } = await this.client.auth.signInWithOtp({
+                        email,
+                        options: { emailRedirectTo: window.location.origin + '/challenges.html' }
+                    });
+                    if (error) throw error;
+                }
+
+                async signOut() {
+                    if (!this.client) return;
+                    await this.client.auth.signOut();
+                    this.user = null;
+                }
+            }
+
+            // ChallengeDB — Supabase CRUD for challenges table
+            class ChallengeDB {
+                constructor(client) {
+                    this.client = client;
+                }
+
+                async fetchChallenges({ track, status, search, page }) {
+                    if (!this.client) throw new Error('Database unavailable');
+                    let query = this.client.from('challenges').select('*', { count: 'exact' });
+                    if (track) query = query.eq('track', track);
+                    if (status) query = query.eq('team_status', status);
+                    if (search) query = query.ilike('title', '%' + search + '%');
+                    query = query.order('created_at', { ascending: false });
+                    const from = (page - 1) * CDB_PAGE_SIZE;
+                    query = query.range(from, from + CDB_PAGE_SIZE - 1);
+                    const { data, count, error } = await query;
+                    if (error) throw error;
+                    return { data: data || [], total: count || 0 };
+                }
+
+                async createChallenge(payload) {
+                    if (!this.client) throw new Error('Database unavailable');
+                    const { data, error } = await this.client.from('challenges').insert(payload).select().single();
+                    if (error) throw error;
+                    return data;
+                }
+
+                async updateChallenge(id, updates) {
+                    if (!this.client) throw new Error('Database unavailable');
+                    const { data, error } = await this.client.from('challenges').update(updates).eq('id', id).select().single();
+                    if (error) throw error;
+                    return data;
+                }
+
+                async deleteChallenge(id) {
+                    if (!this.client) throw new Error('Database unavailable');
+                    const { error } = await this.client.from('challenges').delete().eq('id', id);
+                    if (error) throw error;
+                }
+            }
+
+            // ChallengeUI — renders cards, filters, modals, toasts
+            class ChallengeUI {
+                constructor(db, auth) {
+                    this.db = db;
+                    this.auth = auth;
+                    this.page = 1;
+                    this.total = 0;
+                    this.filters = { track: '', status: '', search: '' };
+                    this.editingId = null;
+                    this.deletingId = null;
+                    this.searchTimeout = null;
+                    this.isArchived = new Date() >= CDB_EVENT_DATE;
+                    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                    this.bindEvents();
+                    this.populateSkillPicker();
+                    if (this.isArchived) {
+                        const banner = document.getElementById('cdb-archived-banner');
+                        if (banner) banner.style.display = 'block';
+                    }
+                }
+
+                bindEvents() {
+                    // Post buttons
+                    const postBtn = document.getElementById('cdb-post-btn');
+                    const postBtnAuth = document.getElementById('cdb-post-btn-auth');
+                    if (postBtn) postBtn.addEventListener('click', () => this.handlePostClick());
+                    if (postBtnAuth) postBtnAuth.addEventListener('click', () => this.openChallengeModal());
+
+                    // Sign out
+                    const signout = document.getElementById('cdb-signout-btn');
+                    if (signout) signout.addEventListener('click', () => this.handleSignOut());
+
+                    // Filters
+                    const search = document.getElementById('cdb-search');
+                    const trackFilter = document.getElementById('cdb-filter-track');
+                    const statusFilter = document.getElementById('cdb-filter-status');
+                    if (search) search.addEventListener('input', () => {
+                        clearTimeout(this.searchTimeout);
+                        this.searchTimeout = setTimeout(() => {
+                            this.filters.search = search.value.trim();
+                            this.page = 1;
+                            this.loadChallenges();
+                        }, 300);
+                    });
+                    if (trackFilter) trackFilter.addEventListener('change', () => {
+                        this.filters.track = trackFilter.value;
+                        this.page = 1;
+                        this.loadChallenges();
+                    });
+                    if (statusFilter) statusFilter.addEventListener('change', () => {
+                        this.filters.status = statusFilter.value;
+                        this.page = 1;
+                        this.loadChallenges();
+                    });
+
+                    // Mobile filter toggle
+                    const filterToggle = document.getElementById('cdb-filter-toggle');
+                    const filterControls = document.getElementById('cdb-filter-controls');
+                    if (filterToggle) filterToggle.addEventListener('click', () => {
+                        filterToggle.classList.toggle('expanded');
+                        filterControls.classList.toggle('expanded');
+                    });
+
+                    // Pagination
+                    const prevBtn = document.getElementById('cdb-prev-btn');
+                    const nextBtn = document.getElementById('cdb-next-btn');
+                    if (prevBtn) prevBtn.addEventListener('click', () => { if (this.page > 1) { this.page--; this.loadChallenges(); } });
+                    if (nextBtn) nextBtn.addEventListener('click', () => {
+                        if (this.page * CDB_PAGE_SIZE < this.total) { this.page++; this.loadChallenges(); }
+                    });
+
+                    // Auth modal
+                    const authSubmit = document.getElementById('cdb-auth-submit');
+                    if (authSubmit) authSubmit.addEventListener('click', () => this.handleAuthSubmit());
+                    const authEmail = document.getElementById('cdb-auth-email');
+                    if (authEmail) authEmail.addEventListener('keydown', (e) => { if (e.key === 'Enter') this.handleAuthSubmit(); });
+                    const authResend = document.getElementById('cdb-auth-resend');
+                    if (authResend) authResend.addEventListener('click', () => this.handleAuthSubmit());
+
+                    // Challenge form
+                    const chForm = document.getElementById('cdb-challenge-form');
+                    if (chForm) chForm.addEventListener('submit', (e) => { e.preventDefault(); this.handleChallengeSubmit(); });
+
+                    // Contact method toggle
+                    const contactGroup = document.getElementById('cdb-ch-contact-method');
+                    if (contactGroup) contactGroup.addEventListener('click', (e) => {
+                        const btn = e.target.closest('.cdb-toggle-btn');
+                        if (!btn) return;
+                        contactGroup.querySelectorAll('.cdb-toggle-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        const input = document.getElementById('cdb-ch-contact');
+                        if (input) input.placeholder = btn.dataset.value === 'discord' ? 'username#1234' : 'your@email.com';
+                    });
+
+                    // Char count for description
+                    const descInput = document.getElementById('cdb-ch-desc');
+                    const descCount = document.getElementById('cdb-ch-desc-count');
+                    if (descInput && descCount) descInput.addEventListener('input', () => {
+                        const len = descInput.value.length;
+                        descCount.textContent = len + ' / 1000';
+                        descCount.className = 'cdb-char-count' + (len > 1000 ? ' over' : len > 900 ? ' warn' : '');
+                    });
+
+                    // Delete modal
+                    const deleteCancel = document.getElementById('cdb-delete-cancel');
+                    const deleteConfirm = document.getElementById('cdb-delete-confirm');
+                    if (deleteCancel) deleteCancel.addEventListener('click', () => this.closeModal('cdb-delete-modal'));
+                    if (deleteConfirm) deleteConfirm.addEventListener('click', () => this.handleDelete());
+
+                    // Modal close buttons & overlay clicks
+                    document.querySelectorAll('.cdb-modal-overlay').forEach(overlay => {
+                        const closeBtn = overlay.querySelector('.cdb-modal-close');
+                        if (closeBtn) closeBtn.addEventListener('click', () => this.closeModal(overlay.id));
+                        overlay.addEventListener('click', (e) => { if (e.target === overlay) this.closeModal(overlay.id); });
+                    });
+
+                    // Escape key closes modals
+                    document.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            document.querySelectorAll('.cdb-modal-overlay.open').forEach(m => this.closeModal(m.id));
+                        }
+                    });
+                }
+
+                populateSkillPicker() {
+                    const picker = document.getElementById('cdb-ch-skills');
+                    if (!picker) return;
+                    CDB_SKILLS.forEach(skill => {
+                        const chip = document.createElement('button');
+                        chip.type = 'button';
+                        chip.className = 'cdb-skill-chip';
+                        chip.textContent = skill;
+                        chip.dataset.skill = skill;
+                        chip.addEventListener('click', () => {
+                            if (chip.classList.contains('selected')) {
+                                chip.classList.remove('selected');
+                            } else {
+                                const selected = picker.querySelectorAll('.selected');
+                                if (selected.length < 5) chip.classList.add('selected');
+                            }
+                            const count = picker.querySelectorAll('.selected').length;
+                            picker.querySelectorAll('.cdb-skill-chip:not(.selected)').forEach(c => { c.disabled = count >= 5; });
+                        });
+                        picker.appendChild(chip);
+                    });
+                }
+
+                updateAuthUI(user) {
+                    const loggedOut = document.getElementById('cdb-auth-logged-out');
+                    const loggedIn = document.getElementById('cdb-auth-logged-in');
+                    const emailSpan = document.getElementById('cdb-user-email');
+                    if (!loggedOut || !loggedIn) return;
+                    if (user) {
+                        loggedOut.style.display = 'none';
+                        loggedIn.style.display = 'block';
+                        if (emailSpan) emailSpan.textContent = user.email;
+                    } else {
+                        loggedOut.style.display = 'block';
+                        loggedIn.style.display = 'none';
+                    }
+                    // Hide post buttons if archived
+                    if (this.isArchived) {
+                        const btn1 = document.getElementById('cdb-post-btn');
+                        const btn2 = document.getElementById('cdb-post-btn-auth');
+                        if (btn1) btn1.style.display = 'none';
+                        if (btn2) btn2.style.display = 'none';
+                    }
+                }
+
+                handlePostClick() {
+                    if (this.isArchived) return;
+                    if (this.auth.user) {
+                        this.openChallengeModal();
+                    } else {
+                        this.openModal('cdb-auth-modal');
+                    }
+                }
+
+                async handleSignOut() {
+                    await this.auth.signOut();
+                    this.updateAuthUI(null);
+                    this.showToast('Signed out successfully.');
+                    this.loadChallenges();
+                }
+
+                async handleAuthSubmit() {
+                    const emailInput = document.getElementById('cdb-auth-email');
+                    const errorEl = document.getElementById('cdb-auth-error');
+                    const emailError = document.getElementById('cdb-auth-email-error');
+                    const submitBtn = document.getElementById('cdb-auth-submit');
+                    const email = emailInput ? emailInput.value.trim() : '';
+
+                    // Clear errors
+                    if (emailInput) emailInput.classList.remove('error');
+                    if (emailError) emailError.classList.remove('show');
+                    if (errorEl) { errorEl.classList.remove('show'); errorEl.textContent = ''; }
+
+                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        if (emailInput) emailInput.classList.add('error');
+                        if (emailError) emailError.classList.add('show');
+                        return;
+                    }
+
+                    if (submitBtn) submitBtn.disabled = true;
+                    try {
+                        await this.auth.sendMagicLink(email);
+                        // Show sent view
+                        const formView = document.getElementById('cdb-auth-form-view');
+                        const sentView = document.getElementById('cdb-auth-sent-view');
+                        const sentEmail = document.getElementById('cdb-auth-sent-email');
+                        if (formView) formView.style.display = 'none';
+                        if (sentView) sentView.style.display = 'block';
+                        if (sentEmail) sentEmail.textContent = email;
+                    } catch (err) {
+                        if (errorEl) {
+                            const msg = err.message || 'Something went wrong.';
+                            if (msg.toLowerCase().includes('not allowed') || msg.toLowerCase().includes('not registered')) {
+                                errorEl.textContent = 'This email is not registered.';
+                                const link = document.createElement('a');
+                                link.href = 'register.html';
+                                link.textContent = ' Register first';
+                                errorEl.appendChild(link);
+                            } else {
+                                errorEl.textContent = msg;
+                            }
+                            errorEl.classList.add('show');
+                        }
+                    } finally {
+                        if (submitBtn) submitBtn.disabled = false;
+                    }
+                }
+
+                openChallengeModal(existing) {
+                    if (this.isArchived) return;
+                    this.editingId = existing ? existing.id : null;
+                    const title = document.getElementById('cdb-challenge-title');
+                    const submitText = document.getElementById('cdb-ch-submit-text');
+                    if (title) title.textContent = existing ? 'EDIT CHALLENGE' : 'POST CHALLENGE';
+                    if (submitText) submitText.textContent = existing ? 'UPDATE CHALLENGE' : 'POST CHALLENGE';
+
+                    // Reset validation
+                    const form = document.getElementById('cdb-challenge-form');
+                    if (form) {
+                        form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+                        form.querySelectorAll('.cdb-form-error').forEach(el => el.classList.remove('show'));
+                    }
+
+                    // Fill form fields
+                    const titleInput = document.getElementById('cdb-ch-title');
+                    const descInput = document.getElementById('cdb-ch-desc');
+                    const track = document.getElementById('cdb-ch-track');
+                    const teamStatus = document.getElementById('cdb-ch-team-status');
+                    const teamSize = document.getElementById('cdb-ch-team-size');
+                    const contact = document.getElementById('cdb-ch-contact');
+                    const author = document.getElementById('cdb-ch-author');
+                    const descCount = document.getElementById('cdb-ch-desc-count');
+
+                    if (titleInput) titleInput.value = existing ? existing.title : '';
+                    if (descInput) descInput.value = existing ? existing.description : '';
+                    if (descCount) {
+                        const len = existing ? existing.description.length : 0;
+                        descCount.textContent = len + ' / 1000';
+                        descCount.className = 'cdb-char-count';
+                    }
+                    if (track) track.value = existing ? existing.track : '';
+                    if (teamStatus) teamStatus.value = existing ? existing.team_status : 'looking';
+                    if (teamSize) teamSize.value = existing ? String(existing.team_size) : '2';
+                    if (contact) contact.value = existing ? existing.contact_handle : '';
+                    if (author) author.value = existing ? existing.author_name : '';
+
+                    // Contact method
+                    const method = existing ? existing.contact_method : 'discord';
+                    document.querySelectorAll('#cdb-ch-contact-method .cdb-toggle-btn').forEach(btn => {
+                        btn.classList.toggle('active', btn.dataset.value === method);
+                    });
+                    if (contact) contact.placeholder = method === 'discord' ? 'username#1234' : 'your@email.com';
+
+                    // Skills
+                    const picker = document.getElementById('cdb-ch-skills');
+                    if (picker) {
+                        picker.querySelectorAll('.cdb-skill-chip').forEach(chip => {
+                            chip.classList.remove('selected');
+                            chip.disabled = false;
+                        });
+                        if (existing && existing.skills) {
+                            existing.skills.forEach(s => {
+                                const chip = picker.querySelector('[data-skill="' + s + '"]');
+                                if (chip) chip.classList.add('selected');
+                            });
+                            if (existing.skills.length >= 5) {
+                                picker.querySelectorAll('.cdb-skill-chip:not(.selected)').forEach(c => { c.disabled = true; });
+                            }
+                        }
+                    }
+
+                    this.openModal('cdb-challenge-modal');
+                }
+
+                async handleChallengeSubmit() {
+                    const titleInput = document.getElementById('cdb-ch-title');
+                    const descInput = document.getElementById('cdb-ch-desc');
+                    const track = document.getElementById('cdb-ch-track');
+                    const teamStatus = document.getElementById('cdb-ch-team-status');
+                    const teamSize = document.getElementById('cdb-ch-team-size');
+                    const contact = document.getElementById('cdb-ch-contact');
+                    const author = document.getElementById('cdb-ch-author');
+                    const submitBtn = document.getElementById('cdb-ch-submit');
+                    const picker = document.getElementById('cdb-ch-skills');
+                    const activeToggle = document.querySelector('#cdb-ch-contact-method .cdb-toggle-btn.active');
+                    const contactMethod = activeToggle ? activeToggle.dataset.value : 'discord';
+
+                    let valid = true;
+                    const validate = (input, errorId, condition) => {
+                        const err = document.getElementById(errorId);
+                        if (!condition) {
+                            if (input) input.classList.add('error');
+                            if (err) err.classList.add('show');
+                            valid = false;
+                        } else {
+                            if (input) input.classList.remove('error');
+                            if (err) err.classList.remove('show');
+                        }
+                    };
+
+                    const titleVal = titleInput ? titleInput.value.trim() : '';
+                    const descVal = descInput ? descInput.value.trim() : '';
+                    const trackVal = track ? track.value : '';
+                    const contactVal = contact ? contact.value.trim() : '';
+                    const authorVal = author ? author.value.trim() : '';
+                    const skills = Array.from(picker ? picker.querySelectorAll('.selected') : []).map(c => c.dataset.skill);
+
+                    validate(titleInput, 'cdb-ch-title-error', titleVal.length >= 5 && titleVal.length <= 100);
+                    validate(descInput, 'cdb-ch-desc-error', descVal.length >= 20 && descVal.length <= 1000);
+                    validate(track, 'cdb-ch-track-error', trackVal !== '');
+                    validate(null, 'cdb-ch-skills-error', skills.length >= 1 && skills.length <= 5);
+                    validate(author, 'cdb-ch-author-error', authorVal.length > 0);
+
+                    if (contactMethod === 'email') {
+                        validate(contact, 'cdb-ch-contact-error', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactVal));
+                    } else {
+                        validate(contact, 'cdb-ch-contact-error', contactVal.length > 0);
+                    }
+
+                    if (!valid) return;
+                    if (submitBtn) submitBtn.disabled = true;
+
+                    const payload = {
+                        title: titleVal,
+                        description: descVal,
+                        track: trackVal,
+                        skills: skills,
+                        contact_method: contactMethod,
+                        contact_handle: contactVal,
+                        team_status: teamStatus ? teamStatus.value : 'looking',
+                        team_size: parseInt(teamSize ? teamSize.value : '2', 10),
+                        author_name: authorVal,
+                        user_id: this.auth.user ? this.auth.user.id : null
+                    };
+
+                    try {
+                        if (this.editingId) {
+                            delete payload.user_id;
+                            await this.db.updateChallenge(this.editingId, payload);
+                            this.showToast('Challenge updated!');
+                        } else {
+                            await this.db.createChallenge(payload);
+                            this.showToast('Challenge posted!');
+                        }
+                        this.closeModal('cdb-challenge-modal');
+                        this.loadChallenges();
+                    } catch (err) {
+                        const msg = err.message || 'Failed to save challenge.';
+                        if (err.code === '42501' || msg.includes('401') || msg.includes('JWT')) {
+                            this.closeModal('cdb-challenge-modal');
+                            this.openModal('cdb-auth-modal');
+                            this.showToast('Session expired. Please sign in again.', 'warning');
+                        } else {
+                            this.showToast(msg, 'error');
+                        }
+                    } finally {
+                        if (submitBtn) submitBtn.disabled = false;
+                    }
+                }
+
+                openDeleteModal(id) {
+                    this.deletingId = id;
+                    this.openModal('cdb-delete-modal');
+                }
+
+                async handleDelete() {
+                    if (!this.deletingId) return;
+                    const confirmBtn = document.getElementById('cdb-delete-confirm');
+                    if (confirmBtn) confirmBtn.disabled = true;
+                    try {
+                        await this.db.deleteChallenge(this.deletingId);
+                        this.showToast('Challenge deleted.');
+                        this.closeModal('cdb-delete-modal');
+                        this.loadChallenges();
+                    } catch (err) {
+                        this.showToast(err.message || 'Failed to delete.', 'error');
+                    } finally {
+                        if (confirmBtn) confirmBtn.disabled = false;
+                        this.deletingId = null;
+                    }
+                }
+
+                async loadChallenges() {
+                    const grid = document.getElementById('cdb-grid');
+                    const loading = document.getElementById('cdb-loading');
+                    const errorEl = document.getElementById('cdb-error');
+                    const empty = document.getElementById('cdb-empty');
+                    const pagination = document.getElementById('cdb-pagination');
+                    if (!grid) return;
+
+                    // Clear and show loading
+                    while (grid.firstChild) grid.removeChild(grid.firstChild);
+                    if (loading) loading.style.display = 'block';
+                    if (errorEl) errorEl.style.display = 'none';
+                    if (empty) empty.style.display = 'none';
+                    if (pagination) pagination.style.display = 'none';
+
+                    try {
+                        const { data, total } = await this.db.fetchChallenges({
+                            track: this.filters.track,
+                            status: this.filters.status,
+                            search: this.filters.search,
+                            page: this.page
+                        });
+                        this.total = total;
+                        if (loading) loading.style.display = 'none';
+
+                        if (data.length === 0) {
+                            if (empty) {
+                                empty.style.display = 'block';
+                                var emptyP = empty.querySelector('p');
+                                if (emptyP) {
+                                    if (this.filters.track || this.filters.status || this.filters.search) {
+                                        emptyP.textContent = 'No challenges match your filters.';
+                                    } else {
+                                        emptyP.textContent = 'No challenges posted yet. Be the first!';
+                                    }
+                                }
+                            }
+                            return;
+                        }
+
+                        data.forEach((ch, i) => {
+                            var card = this.createCardElement(ch);
+                            grid.appendChild(card);
+                            if (this.reducedMotion) {
+                                card.classList.add('revealed');
+                            } else {
+                                setTimeout(function() { card.classList.add('revealed'); }, 80 * i);
+                            }
+                        });
+
+                        // Pagination
+                        if (total > CDB_PAGE_SIZE) {
+                            if (pagination) pagination.style.display = 'flex';
+                            var totalPages = Math.ceil(total / CDB_PAGE_SIZE);
+                            var pageInfo = document.getElementById('cdb-page-info');
+                            var prevBtnPg = document.getElementById('cdb-prev-btn');
+                            var nextBtnPg = document.getElementById('cdb-next-btn');
+                            if (pageInfo) pageInfo.textContent = 'Page ' + this.page + ' of ' + totalPages;
+                            if (prevBtnPg) prevBtnPg.disabled = this.page <= 1;
+                            if (nextBtnPg) nextBtnPg.disabled = this.page >= totalPages;
+                        }
+                    } catch (err) {
+                        if (loading) loading.style.display = 'none';
+                        if (errorEl) errorEl.style.display = 'block';
+                        console.error('ChallengeDB fetch error:', err);
+                    }
+                }
+
+                createCardElement(ch) {
+                    var card = document.createElement('div');
+                    card.className = 'cdb-card';
+                    card.dataset.track = ch.track;
+
+                    var trackLabels = { SHADOW: 'SHADOW::VECTOR', SENTINEL: 'SENTINEL::MESH', ZERO: 'ZERO::PROOF', ROGUE: 'ROGUE::AGENT' };
+                    var statusLabels = { looking: 'Looking', open: 'Open', full: 'Full' };
+                    var isOwner = this.auth.user && this.auth.user.id === ch.user_id;
+
+                    // Build card using DOM methods for safety
+                    var head = document.createElement('div');
+                    head.className = 'cdb-card-head';
+
+                    var badge = document.createElement('span');
+                    badge.className = 'cdb-track-badge';
+                    badge.dataset.track = ch.track;
+                    badge.textContent = trackLabels[ch.track] || ch.track;
+                    head.appendChild(badge);
+
+                    var statusDiv = document.createElement('div');
+                    statusDiv.className = 'cdb-team-status';
+                    var dot = document.createElement('span');
+                    dot.className = 'cdb-status-dot ' + ch.team_status;
+                    statusDiv.appendChild(dot);
+                    statusDiv.appendChild(document.createTextNode(' ' + (statusLabels[ch.team_status] || ch.team_status)));
+                    head.appendChild(statusDiv);
+
+                    card.appendChild(head);
+
+                    var titleEl = document.createElement('h4');
+                    titleEl.className = 'cdb-card-title';
+                    titleEl.textContent = ch.title;
+                    card.appendChild(titleEl);
+
+                    var descEl = document.createElement('p');
+                    descEl.className = 'cdb-card-desc';
+                    descEl.textContent = ch.description;
+                    card.appendChild(descEl);
+
+                    var skillsDiv = document.createElement('div');
+                    skillsDiv.className = 'cdb-card-skills';
+                    (ch.skills || []).forEach(function(s) {
+                        var tag = document.createElement('span');
+                        tag.className = 'skill-tag';
+                        tag.textContent = s;
+                        skillsDiv.appendChild(tag);
+                    });
+                    card.appendChild(skillsDiv);
+
+                    var footer = document.createElement('div');
+                    footer.className = 'cdb-card-footer';
+
+                    var meta = document.createElement('div');
+                    meta.className = 'cdb-card-meta';
+                    var authorSpan = document.createElement('span');
+                    authorSpan.className = 'cdb-author';
+                    authorSpan.textContent = ch.author_name;
+                    meta.appendChild(authorSpan);
+                    var sizeSpan = document.createElement('span');
+                    sizeSpan.className = 'cdb-team-size';
+                    var usersIcon = document.createElement('i');
+                    usersIcon.className = 'fas fa-users';
+                    sizeSpan.appendChild(document.createTextNode(' '));
+                    sizeSpan.appendChild(usersIcon);
+                    sizeSpan.appendChild(document.createTextNode(' ' + ch.team_size));
+                    meta.appendChild(sizeSpan);
+                    footer.appendChild(meta);
+
+                    var actions = document.createElement('div');
+                    actions.className = 'cdb-card-actions';
+
+                    var connectBtn = document.createElement('button');
+                    connectBtn.className = 'cdb-btn cdb-btn-sm';
+                    var connectIcon = document.createElement('i');
+                    connectIcon.className = ch.contact_method === 'discord' ? 'fab fa-discord' : 'fas fa-envelope';
+                    connectBtn.appendChild(connectIcon);
+                    connectBtn.appendChild(document.createTextNode(' CONNECT'));
+                    var self = this;
+                    connectBtn.addEventListener('click', function() {
+                        self.handleConnect(ch.contact_method, ch.contact_handle);
+                    });
+                    actions.appendChild(connectBtn);
+
+                    if (isOwner) {
+                        var editBtn = document.createElement('button');
+                        editBtn.className = 'cdb-btn cdb-btn-sm';
+                        var editIcon = document.createElement('i');
+                        editIcon.className = 'fas fa-edit';
+                        editBtn.appendChild(editIcon);
+                        editBtn.addEventListener('click', function() { self.openChallengeModal(ch); });
+                        actions.appendChild(editBtn);
+
+                        var delBtn = document.createElement('button');
+                        delBtn.className = 'cdb-btn cdb-btn-sm cdb-btn-danger';
+                        var delIcon = document.createElement('i');
+                        delIcon.className = 'fas fa-trash';
+                        delBtn.appendChild(delIcon);
+                        delBtn.addEventListener('click', function() { self.openDeleteModal(ch.id); });
+                        actions.appendChild(delBtn);
+                    }
+
+                    footer.appendChild(actions);
+                    card.appendChild(footer);
+
+                    return card;
+                }
+
+                handleConnect(method, handle) {
+                    if (method === 'email') {
+                        window.location.href = 'mailto:' + encodeURIComponent(handle);
+                        this.showToast('Opening email client...');
+                    } else {
+                        navigator.clipboard.writeText(handle).then(() => {
+                            this.showToast('Copied Discord handle: ' + handle);
+                        }).catch(() => {
+                            this.showToast('Discord: ' + handle, 'warning');
+                        });
+                    }
+                }
+
+                openModal(id) {
+                    var modal = document.getElementById(id);
+                    if (!modal) return;
+                    if (id === 'cdb-auth-modal') {
+                        var errEl = document.getElementById('cdb-auth-error');
+                        if (errEl) { errEl.classList.remove('show'); errEl.textContent = ''; }
+                        var emailErrEl = document.getElementById('cdb-auth-email-error');
+                        if (emailErrEl) emailErrEl.classList.remove('show');
+                        var emailInput = document.getElementById('cdb-auth-email');
+                        if (emailInput) { emailInput.value = ''; emailInput.classList.remove('error'); }
+                        var formView = document.getElementById('cdb-auth-form-view');
+                        var sentView = document.getElementById('cdb-auth-sent-view');
+                        if (formView) formView.style.display = 'block';
+                        if (sentView) sentView.style.display = 'none';
+                    }
+                    modal.classList.add('open');
+                    document.body.style.overflow = 'hidden';
+                    setTimeout(function() {
+                        var focusTarget = modal.querySelector('input, select, textarea');
+                        if (focusTarget) focusTarget.focus();
+                    }, 100);
+                }
+
+                closeModal(id) {
+                    var modal = document.getElementById(id);
+                    if (!modal) return;
+                    modal.classList.remove('open');
+                    document.body.style.overflow = '';
+                    if (id === 'cdb-auth-modal') {
+                        var formView = document.getElementById('cdb-auth-form-view');
+                        var sentView = document.getElementById('cdb-auth-sent-view');
+                        if (formView) formView.style.display = 'block';
+                        if (sentView) sentView.style.display = 'none';
+                    }
+                }
+
+                showToast(msg, type) {
+                    var container = document.getElementById('cdb-toast-container');
+                    if (!container) return;
+                    var toast = document.createElement('div');
+                    toast.className = 'cdb-toast' + (type ? ' ' + type : '');
+                    toast.textContent = msg;
+                    container.appendChild(toast);
+                    setTimeout(function() {
+                        toast.style.animation = 'cdb-toast-out 0.3s forwards';
+                        setTimeout(function() { toast.remove(); }, 300);
+                    }, 3000);
+                }
+            }
+
+            // Initialize Challenge DB
+            var sbClient = null;
+            try {
+                if (window.supabase) {
+                    sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                }
+            } catch (e) {
+                console.warn('Supabase init failed:', e);
+            }
+
+            var cdbAuth = new ChallengeAuth(sbClient);
+            var cdbDB = new ChallengeDB(sbClient);
+            var cdbUI = new ChallengeUI(cdbDB, cdbAuth);
+
+            if (sbClient) {
+                cdbAuth.onAuthChange = function(user) {
+                    cdbUI.updateAuthUI(user);
+                    cdbUI.loadChallenges();
+                };
+                cdbAuth.init().then(function() {
+                    cdbUI.updateAuthUI(cdbAuth.user);
+                    cdbUI.loadChallenges();
+                });
+            } else {
+                // No Supabase — show error state, rest of page works
+                var errorEl = document.getElementById('cdb-error');
+                var loadingEl = document.getElementById('cdb-loading');
+                if (errorEl) errorEl.style.display = 'block';
+                if (loadingEl) loadingEl.style.display = 'none';
+            }
+
+            // Animate challenge-db section
+            if (typeof gsap !== 'undefined') {
+                gsap.to('#challenge-db', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    delay: 0.5,
+                    ease: 'power3.out'
+                });
+            } else {
+                var cdbSection = document.getElementById('challenge-db');
+                if (cdbSection) { cdbSection.style.opacity = '1'; cdbSection.style.transform = 'none'; }
+            }
+
             // ============================================
             // SPONSOR CHALLENGES - Populate when confirmed
             // ============================================
