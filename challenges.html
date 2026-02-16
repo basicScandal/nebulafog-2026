@@ -2194,18 +2194,23 @@
                         if (sentEmail) sentEmail.textContent = email;
                         this._startAuthCooldown();
                     } catch (err) {
-                        if (errorEl) {
-                            const msg = err.message || 'Something went wrong.';
-                            if (msg.toLowerCase().includes('not allowed') || msg.toLowerCase().includes('not registered')) {
-                                errorEl.textContent = 'This email is not registered.';
-                                const link = document.createElement('a');
-                                link.href = 'register.html';
-                                link.textContent = ' Register first';
-                                errorEl.appendChild(link);
-                            } else {
-                                errorEl.textContent = msg;
+                        const msg = (err.message || '').toLowerCase();
+                        if (msg.includes('rate') || msg.includes('limit')) {
+                            // Rate limit — show specific message
+                            if (errorEl) {
+                                errorEl.textContent = 'Too many attempts. Please try again later.';
+                                errorEl.classList.add('show');
                             }
-                            errorEl.classList.add('show');
+                        } else {
+                            // All other errors (including unregistered email) — show generic success
+                            // This prevents email enumeration attacks
+                            const formView = document.getElementById('cdb-auth-form-view');
+                            const sentView = document.getElementById('cdb-auth-sent-view');
+                            const sentEmail = document.getElementById('cdb-auth-sent-email');
+                            if (formView) formView.style.display = 'none';
+                            if (sentView) sentView.style.display = 'block';
+                            if (sentEmail) sentEmail.textContent = email;
+                            this._startAuthCooldown();
                         }
                     } finally {
                         if (submitBtn) submitBtn.disabled = false;
