@@ -2569,7 +2569,7 @@
                         var editBtn = document.createElement('button');
                         editBtn.className = 'cdb-btn cdb-btn-sm';
                         var editIcon = document.createElement('i');
-                        editIcon.className = 'fas fa-edit';
+                        editIcon.className = 'fa-solid fa-pen-to-square';
                         editBtn.appendChild(editIcon);
                         editBtn.addEventListener('click', function() { self.openChallengeModal(ch); });
                         actions.appendChild(editBtn);
@@ -2577,7 +2577,7 @@
                         var delBtn = document.createElement('button');
                         delBtn.className = 'cdb-btn cdb-btn-sm cdb-btn-danger';
                         var delIcon = document.createElement('i');
-                        delIcon.className = 'fas fa-trash';
+                        delIcon.className = 'fa-solid fa-trash-can';
                         delBtn.appendChild(delIcon);
                         delBtn.addEventListener('click', function() { self.openDeleteModal(ch.id); });
                         actions.appendChild(delBtn);
