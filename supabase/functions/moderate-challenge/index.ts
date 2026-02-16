@@ -91,10 +91,11 @@ Deno.serve(async (req: Request) => {
         body: JSON.stringify({
           model: "claude-haiku-4-5-20251001",
           max_tokens: 100,
+          system: MODERATION_PROMPT,
           messages: [
             {
               role: "user",
-              content: `${MODERATION_PROMPT}\n\n---\nTitle: ${challenge.title}\nDescription: ${challenge.description}`,
+              content: `Title: ${challenge.title}\nDescription: ${challenge.description}`,
             },
           ],
         }),
