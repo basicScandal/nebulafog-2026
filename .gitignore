@@ -41,5 +41,8 @@ npm-debug.log*
 # Claude
 .claude/
 
+# Overstory
+.overstory/
+
 # Python virtual environment
 .venv/
