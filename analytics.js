@@ -1,29 +1,27 @@
 // NEBULA:FOG 2026 - Custom Analytics Events
-// Works with Plausible (already loaded on all pages)
-// Tracks: CTA clicks, outbound links, scroll depth, terminal usage
+// Works with PostHog (initialized via posthog-init.js)
+// Tracks: CTA clicks, outbound links, scroll depth, nav, track interest, terminal
 
 (function () {
     'use strict';
 
-    // Ensure plausible exists (graceful degradation)
-    var track = window.plausible || function () {};
+    // Ensure posthog exists (graceful degradation)
+    var ph = window.posthog || { capture: function () {} };
 
     var pageName = location.pathname.replace('.html', '').replace(/^\//, '') || 'index';
 
     // ─── Registration CTA Tracking ───────────────────────────
-    // Track clicks on all internal register links
     document.querySelectorAll('a[href="register.html"], a[href="/register.html"]').forEach(function (link) {
         link.addEventListener('click', function (e) {
             var section = e.target.closest('[data-section]');
-            track('Register_CTA', { props: {
+            ph.capture('register_cta_click', {
                 page: pageName,
                 section: section ? section.dataset.section : 'unknown'
-            }});
+            });
         });
     });
 
     // ─── Outbound Link Tracking ──────────────────────────────
-    // Track clicks on Luma registration, afterparty, and other external links
     document.querySelectorAll('a[target="_blank"], a[href*="luma.com"], a[href*="dub.sh"]').forEach(function (link) {
         link.addEventListener('click', function () {
             var href = link.getAttribute('href') || '';
@@ -32,11 +30,11 @@
             else if (href.indexOf('nf-afterparty') !== -1) category = 'afterparty';
             else if (href.indexOf('dub.sh') !== -1) category = 'shortlink';
 
-            track('Outbound_Click', { props: {
+            ph.capture('outbound_click', {
                 page: pageName,
                 category: category,
                 url: href.substring(0, 120)
-            }});
+            });
         });
     });
 
@@ -55,11 +53,11 @@
             var m = milestones[i];
             if (pct >= m && !depthsTracked[m]) {
                 depthsTracked[m] = true;
-                track('Scroll_Depth', { props: {
-                    depth: String(m),
+                ph.capture('scroll_depth', {
+                    depth: m,
                     page: pageName,
-                    seconds: String(Math.round((Date.now() - pageStart) / 1000))
-                }});
+                    seconds: Math.round((Date.now() - pageStart) / 1000)
+                });
             }
         }
         ticking = false;
@@ -73,22 +71,20 @@
     }, { passive: true });
 
     // ─── Navigation Tracking ────────────────────────────────
-    // Track which nav links users click (HUD, mobile, footer)
     document.querySelectorAll('.hud-link, .mobile-nav a, .footer-links a').forEach(function (link) {
         link.addEventListener('click', function () {
             var dest = (link.getAttribute('href') || '').replace('.html', '').replace('/', '') || 'index';
             var nav = link.closest('.hud-nav') ? 'hud' :
                       link.closest('.mobile-nav') ? 'mobile' : 'footer';
-            track('Nav_Click', { props: {
+            ph.capture('nav_click', {
                 page: pageName,
                 destination: dest,
                 nav_type: nav
-            }});
+            });
         });
     });
 
     // ─── Track Interest Tracking ──────────────────────────────
-    // Track which challenge tracks users hover over or click
     document.querySelectorAll('.protocol-card').forEach(function (card) {
         var title = card.querySelector('.protocol-title');
         var trackName = title ? title.textContent.trim() : 'unknown';
@@ -96,12 +92,12 @@
 
         card.addEventListener('mouseenter', function () {
             hoverTimer = setTimeout(function () {
-                track('Track_Interest', { props: {
+                ph.capture('track_interest', {
                     track: trackName,
                     page: pageName,
                     action: 'hover'
-                }});
-            }, 2000); // Only fire after 2s of genuine interest
+                });
+            }, 2000);
         });
 
         card.addEventListener('mouseleave', function () {
@@ -110,25 +106,23 @@
 
         card.addEventListener('click', function () {
             clearTimeout(hoverTimer);
-            track('Track_Interest', { props: {
+            ph.capture('track_interest', {
                 track: trackName,
                 page: pageName,
                 action: 'click'
-            }});
+            });
         });
     });
 
     // ─── Sticky CTA: show on scroll + track clicks ─────────
     var stickyCta = document.getElementById('sticky-register-cta');
     if (stickyCta) {
-        // Set days-left badge
         var badge = document.getElementById('sticky-days-left');
         if (badge) {
             var daysLeft = Math.ceil((new Date('2026-03-14T08:30:00-07:00') - new Date()) / 86400000);
             if (daysLeft > 0) badge.textContent = daysLeft + 'D LEFT';
         }
 
-        // Show after scrolling 400px
         var visible = false;
         window.addEventListener('scroll', function () {
             var show = window.scrollY > 400;
@@ -138,9 +132,8 @@
             }
         }, { passive: true });
 
-        // Track click
         stickyCta.addEventListener('click', function () {
-            track('Sticky_CTA_Click', { props: { page: pageName } });
+            ph.capture('sticky_cta_click', { page: pageName });
         });
     }
 })();
