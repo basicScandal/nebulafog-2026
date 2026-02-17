@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Admin | NEBULA:FOG 2026</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#00ff9f">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://*.supabase.co;">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+
+    <!-- Supabase -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        /* ========================================
+           ADMIN DASHBOARD STYLES
+           ======================================== */
+        body {
+            cursor: default;
+        }
+
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--color-text-dim);
+            background: var(--color-bg-elevated);
+        }
+
+        .admin-header-title {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            letter-spacing: 0.1em;
+        }
+
+        .admin-header-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .admin-header-links a,
+        .admin-header-links button {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .admin-header-links a:hover,
+        .admin-header-links button:hover {
+            color: var(--color-primary);
+        }
+
+        /* Auth Gate */
+        .admin-auth-gate {
+            max-width: 420px;
+            margin: 8rem auto;
+            padding: 2.5rem;
+            border: 1px solid var(--color-text-dim);
+            background: var(--color-bg-elevated);
+            text-align: center;
+        }
+
+        .admin-auth-gate h2 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--color-primary);
+        }
+
+        .admin-auth-gate p {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .admin-auth-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(3, 3, 3, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--color-text);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-auth-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .admin-auth-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--color-primary);
+            border: none;
+            color: var(--color-bg);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            min-height: 44px;
+        }
+
+        .admin-auth-btn:hover {
+            opacity: 0.9;
+        }
+
+        .admin-auth-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .admin-auth-error {
+            color: var(--color-error);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .admin-auth-success {
+            color: var(--color-primary);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        /* Access Denied */
+        .admin-denied {
+            max-width: 420px;
+            margin: 8rem auto;
+            padding: 2.5rem;
+            border: 1px solid var(--color-secondary);
+            background: var(--color-bg-elevated);
+            text-align: center;
+            display: none;
+        }
+
+        .admin-denied h2 {
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            color: var(--color-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-denied p {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .admin-denied button {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: 1px solid var(--color-secondary);
+            color: var(--color-secondary);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            cursor: pointer;
+            min-height: 44px;
+        }
+
+        /* Dashboard */
+        .admin-dashboard {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+        }
+
+        /* Stats Row */
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .admin-stat-card {
+            padding: 1.25rem;
+            border: 1px solid var(--color-text-dim);
+            background: var(--color-bg-elevated);
+            text-align: center;
+        }
+
+        .admin-stat-value {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .admin-stat-value.flagged { color: var(--color-warning); }
+        .admin-stat-value.rejected { color: var(--color-secondary); }
+        .admin-stat-value.reports { color: var(--color-accent); }
+
+        .admin-stat-label {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.25rem;
+        }
+
+        /* Section Headers */
+        .admin-section-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--color-text-dim);
+        }
+
+        .admin-section-title .badge {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--color-warning);
+        }
+
+        /* Filter Tabs */
+        .admin-filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .admin-filter-tab {
+            padding: 0.4rem 0.85rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 36px;
+        }
+
+        .admin-filter-tab:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: var(--color-text);
+        }
+
+        .admin-filter-tab.active {
+            background: rgba(0, 255, 159, 0.15);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Challenge Cards */
+        .admin-card {
+            padding: 1.25rem;
+            border: 1px solid var(--color-text-dim);
+            border-left: 3px solid var(--color-text-dim);
+            background: var(--color-bg-elevated);
+            margin-bottom: 1rem;
+        }
+
+        .admin-card[data-track="SHADOW"] { border-left-color: var(--color-track-red); }
+        .admin-card[data-track="SENTINEL"] { border-left-color: var(--color-track-blue); }
+        .admin-card[data-track="ZERO"] { border-left-color: var(--color-track-cyan); }
+        .admin-card[data-track="ROGUE"] { border-left-color: var(--color-track-purple); }
+
+        .admin-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            gap: 1rem;
+        }
+
+        .admin-card-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .admin-card-meta {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .admin-card-desc {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .admin-status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+        }
+
+        .admin-status-badge.approved {
+            color: var(--color-primary);
+            border: 1px solid var(--color-primary);
+        }
+
+        .admin-status-badge.flagged {
+            color: var(--color-warning);
+            border: 1px solid var(--color-warning);
+            background: rgba(255, 61, 0, 0.1);
+        }
+
+        .admin-status-badge.rejected {
+            color: var(--color-secondary);
+            border: 1px solid var(--color-secondary);
+            background: rgba(255, 0, 128, 0.1);
+        }
+
+        .admin-mod-reason {
+            font-size: 0.75rem;
+            color: var(--color-warning);
+            padding: 0.5rem 0.75rem;
+            background: rgba(255, 61, 0, 0.05);
+            border-left: 2px solid var(--color-warning);
+            margin-bottom: 0.75rem;
+        }
+
+        /* Reports inline */
+        .admin-reports {
+            margin-bottom: 0.75rem;
+        }
+
+        .admin-reports-title {
+            font-size: 0.75rem;
+            color: var(--color-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-report-item {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            padding: 0.4rem 0.6rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 0.35rem;
+            line-height: 1.5;
+        }
+
+        .admin-report-reason {
+            color: var(--color-accent);
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.65rem;
+        }
+
+        /* Action Buttons */
+        .admin-actions {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .admin-btn {
+            padding: 0.4rem 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            cursor: pointer;
+            border: 1px solid;
+            background: transparent;
+            transition: all 0.2s ease;
+            min-height: 36px;
+        }
+
+        .admin-btn-approve {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .admin-btn-approve:hover {
+            background: rgba(0, 255, 159, 0.15);
+        }
+
+        .admin-btn-reject {
+            border-color: var(--color-secondary);
+            color: var(--color-secondary);
+        }
+
+        .admin-btn-reject:hover {
+            background: rgba(255, 0, 128, 0.15);
+        }
+
+        .admin-btn-delete {
+            border-color: var(--color-error);
+            color: var(--color-error);
+        }
+
+        .admin-btn-delete:hover {
+            background: rgba(255, 68, 68, 0.15);
+        }
+
+        /* Toast */
+        .admin-toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem 1.25rem;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            border: 1px solid;
+            background: var(--color-bg-elevated);
+            z-index: 1000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .admin-toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .admin-toast.success {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .admin-toast.error {
+            border-color: var(--color-error);
+            color: var(--color-error);
+        }
+
+        /* Empty state */
+        .admin-empty {
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* Loading */
+        .admin-loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--color-text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .admin-header {
+                padding: 1rem;
+            }
+
+            .admin-header-title {
+                font-size: 0.9rem;
+            }
+
+            .admin-dashboard {
+                padding: 1rem;
+            }
+
+            .admin-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .admin-card-header {
+                flex-direction: column;
+            }
+
+            .admin-actions {
+                width: 100%;
+            }
+
+            .admin-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .admin-filter-tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .admin-filter-tabs::-webkit-scrollbar {
+                display: none;
+            }
+
+            .admin-filter-tab {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="admin-header">
+        <span class="admin-header-title">NEBULA:FOG ADMIN</span>
+        <div class="admin-header-links">
+            <a href="/">Back to Site</a>
+            <button id="admin-signout" style="display: none;">Sign Out</button>
+        </div>
+    </header>
+
+    <!-- Auth Gate -->
+    <div class="admin-auth-gate" id="admin-auth-gate">
+        <h2>ADMIN ACCESS</h2>
+        <p>Enter your admin email to receive a magic link.</p>
+        <div class="admin-auth-error" id="admin-auth-error"></div>
+        <div class="admin-auth-success" id="admin-auth-success"></div>
+        <input type="email" class="admin-auth-input" id="admin-email" placeholder="admin@nebulafog.ai" autocomplete="email">
+        <button class="admin-auth-btn" id="admin-auth-btn">SEND MAGIC LINK</button>
+    </div>
+
+    <!-- Access Denied -->
+    <div class="admin-denied" id="admin-denied">
+        <h2><i class="fas fa-shield-halved"></i> ACCESS DENIED</h2>
+        <p>Your account does not have admin privileges.</p>
+        <button id="admin-denied-signout">SIGN OUT</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="admin-dashboard" id="admin-dashboard">
+        <!-- Stats -->
+        <div class="admin-stats">
+            <div class="admin-stat-card">
+                <div class="admin-stat-value" id="stat-total">-</div>
+                <div class="admin-stat-label">Total Challenges</div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-value flagged" id="stat-flagged">-</div>
+                <div class="admin-stat-label">Flagged</div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-value rejected" id="stat-rejected">-</div>
+                <div class="admin-stat-label">Rejected</div>
+            </div>
+            <div class="admin-stat-card">
+                <div class="admin-stat-value reports" id="stat-reports">-</div>
+                <div class="admin-stat-label">Reports</div>
+            </div>
+        </div>
+
+        <!-- Flagged Section -->
+        <div id="admin-flagged-section">
+            <h2 class="admin-section-title">
+                <i class="fas fa-flag"></i> Flagged Challenges <span class="badge" id="flagged-count"></span>
+            </h2>
+            <div id="admin-flagged-list"></div>
+        </div>
+
+        <!-- All Challenges Section -->
+        <div style="margin-top: 2.5rem;">
+            <h2 class="admin-section-title">
+                <i class="fas fa-list"></i> All Challenges
+            </h2>
+            <div class="admin-filter-tabs" id="admin-filter-tabs">
+                <button class="admin-filter-tab active" data-filter="">All</button>
+                <button class="admin-filter-tab" data-filter="approved">Approved</button>
+                <button class="admin-filter-tab" data-filter="flagged">Flagged</button>
+                <button class="admin-filter-tab" data-filter="rejected">Rejected</button>
+            </div>
+            <div id="admin-all-list"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="admin-toast" id="admin-toast"></div>
+
+    <script>
+        // ============================================
+        // ADMIN DASHBOARD
+        // ============================================
+        const SUPABASE_URL = 'https://aqaqjaapzvcwrtnujnei.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxYXFqYWFwenZjd3J0bnVqbmVpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyMjE2NTksImV4cCI6MjA4Njc5NzY1OX0.gUq_DAwaScpmj57VfBSmnuHXlB4k6AOqiQCxZ9jH6Qs';
+        const ADMIN_EMAILS = ['rob@nebulafog.ai'];
+
+        class AdminDashboard {
+            constructor() {
+                this.client = null;
+                this.user = null;
+                this.statusFilter = '';
+            }
+
+            async init() {
+                if (!window.supabase) {
+                    console.error('Supabase not loaded');
+                    return;
+                }
+
+                this.client = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+                    auth: { flowType: 'pkce' }
+                });
+
+                // Listen for auth changes
+                this.client.auth.onAuthStateChange((event, session) => {
+                    if (session?.user) {
+                        this.user = session.user;
+                        this.checkAdmin();
+                    } else {
+                        this.user = null;
+                        this.showAuthGate();
+                    }
+                });
+
+                // Check existing session
+                const { data: { session } } = await this.client.auth.getSession();
+                if (session?.user) {
+                    this.user = session.user;
+                    this.checkAdmin();
+                }
+
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                // Auth form
+                const authBtn = document.getElementById('admin-auth-btn');
+                const emailInput = document.getElementById('admin-email');
+                if (authBtn) authBtn.addEventListener('click', () => this.sendMagicLink());
+                if (emailInput) emailInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') this.sendMagicLink();
+                });
+
+                // Sign out buttons
+                document.getElementById('admin-signout')?.addEventListener('click', () => this.signOut());
+                document.getElementById('admin-denied-signout')?.addEventListener('click', () => this.signOut());
+
+                // Filter tabs
+                document.querySelectorAll('.admin-filter-tab').forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        document.querySelectorAll('.admin-filter-tab').forEach(t => t.classList.remove('active'));
+                        tab.classList.add('active');
+                        this.statusFilter = tab.dataset.filter;
+                        this.loadAllChallenges();
+                    });
+                });
+            }
+
+            async sendMagicLink() {
+                const emailInput = document.getElementById('admin-email');
+                const authBtn = document.getElementById('admin-auth-btn');
+                const errorEl = document.getElementById('admin-auth-error');
+                const successEl = document.getElementById('admin-auth-success');
+                const email = emailInput?.value.trim();
+
+                if (!email) {
+                    errorEl.textContent = 'Please enter your email.';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                errorEl.style.display = 'none';
+                successEl.style.display = 'none';
+                authBtn.disabled = true;
+                authBtn.textContent = 'SENDING...';
+
+                try {
+                    const { error } = await this.client.auth.signInWithOtp({
+                        email,
+                        options: { emailRedirectTo: window.location.origin + '/admin.html' }
+                    });
+                    if (error) throw error;
+
+                    successEl.textContent = 'Magic link sent! Check your email.';
+                    successEl.style.display = 'block';
+                    authBtn.textContent = 'LINK SENT';
+                } catch (err) {
+                    errorEl.textContent = err.message || 'Failed to send magic link.';
+                    errorEl.style.display = 'block';
+                    authBtn.disabled = false;
+                    authBtn.textContent = 'SEND MAGIC LINK';
+                }
+            }
+
+            checkAdmin() {
+                if (!this.user) return this.showAuthGate();
+                if (!ADMIN_EMAILS.includes(this.user.email)) {
+                    this.showDenied();
+                    return;
+                }
+                this.showDashboard();
+            }
+
+            showAuthGate() {
+                document.getElementById('admin-auth-gate').style.display = 'block';
+                document.getElementById('admin-denied').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'none';
+                document.getElementById('admin-signout').style.display = 'none';
+            }
+
+            showDenied() {
+                document.getElementById('admin-auth-gate').style.display = 'none';
+                document.getElementById('admin-denied').style.display = 'block';
+                document.getElementById('admin-dashboard').style.display = 'none';
+                document.getElementById('admin-signout').style.display = 'inline';
+            }
+
+            showDashboard() {
+                document.getElementById('admin-auth-gate').style.display = 'none';
+                document.getElementById('admin-denied').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'block';
+                document.getElementById('admin-signout').style.display = 'inline';
+                this.loadStats();
+                this.loadFlagged();
+                this.loadAllChallenges();
+            }
+
+            async signOut() {
+                await this.client.auth.signOut();
+                this.user = null;
+                this.showAuthGate();
+                // Reset form
+                const emailInput = document.getElementById('admin-email');
+                const authBtn = document.getElementById('admin-auth-btn');
+                if (emailInput) emailInput.value = '';
+                if (authBtn) { authBtn.disabled = false; authBtn.textContent = 'SEND MAGIC LINK'; }
+                document.getElementById('admin-auth-error').style.display = 'none';
+                document.getElementById('admin-auth-success').style.display = 'none';
+            }
+
+            // --- Data Loading ---
+
+            async loadStats() {
+                try {
+                    const [totalRes, flaggedRes, rejectedRes, reportsRes] = await Promise.all([
+                        this.client.from('challenges').select('id', { count: 'exact', head: true }),
+                        this.client.from('challenges').select('id', { count: 'exact', head: true }).eq('moderation_status', 'flagged'),
+                        this.client.from('challenges').select('id', { count: 'exact', head: true }).eq('moderation_status', 'rejected'),
+                        this.client.from('challenge_reports').select('id', { count: 'exact', head: true })
+                    ]);
+                    document.getElementById('stat-total').textContent = totalRes.count ?? 0;
+                    document.getElementById('stat-flagged').textContent = flaggedRes.count ?? 0;
+                    document.getElementById('stat-rejected').textContent = rejectedRes.count ?? 0;
+                    document.getElementById('stat-reports').textContent = reportsRes.count ?? 0;
+                } catch (err) {
+                    console.error('Failed to load stats:', err);
+                }
+            }
+
+            async loadFlagged() {
+                const container = document.getElementById('admin-flagged-list');
+                const countEl = document.getElementById('flagged-count');
+                container.textContent = '';
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'admin-loading';
+                loadingMsg.textContent = 'Loading flagged challenges...';
+                container.appendChild(loadingMsg);
+
+                try {
+                    const { data: challenges, error } = await this.client
+                        .from('challenges')
+                        .select('*')
+                        .eq('moderation_status', 'flagged')
+                        .order('created_at', { ascending: false });
+
+                    if (error) throw error;
+
+                    countEl.textContent = challenges.length ? '(' + challenges.length + ')' : '';
+
+                    if (!challenges.length) {
+                        container.textContent = '';
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'admin-empty';
+                        emptyDiv.textContent = 'No flagged challenges';
+                        container.appendChild(emptyDiv);
+                        return;
+                    }
+
+                    // Fetch reports for flagged challenges
+                    const ids = challenges.map(c => c.id);
+                    const { data: reports } = await this.client
+                        .from('challenge_reports')
+                        .select('*')
+                        .in('challenge_id', ids)
+                        .order('created_at', { ascending: false });
+
+                    const reportsByChallenge = {};
+                    (reports || []).forEach(r => {
+                        if (!reportsByChallenge[r.challenge_id]) reportsByChallenge[r.challenge_id] = [];
+                        reportsByChallenge[r.challenge_id].push(r);
+                    });
+
+                    container.textContent = '';
+                    challenges.forEach(ch => {
+                        container.appendChild(this.createChallengeCard(ch, reportsByChallenge[ch.id] || []));
+                    });
+                } catch (err) {
+                    container.textContent = '';
+                    const errDiv = document.createElement('div');
+                    errDiv.className = 'admin-empty';
+                    errDiv.style.color = 'var(--color-error)';
+                    errDiv.textContent = 'Failed to load flagged challenges.';
+                    container.appendChild(errDiv);
+                    console.error(err);
+                }
+            }
+
+            async loadAllChallenges() {
+                const container = document.getElementById('admin-all-list');
+                container.textContent = '';
+                const loadingMsg = document.createElement('div');
+                loadingMsg.className = 'admin-loading';
+                loadingMsg.textContent = 'Loading challenges...';
+                container.appendChild(loadingMsg);
+
+                try {
+                    let query = this.client
+                        .from('challenges')
+                        .select('*')
+                        .order('created_at', { ascending: false });
+
+                    if (this.statusFilter) {
+                        query = query.eq('moderation_status', this.statusFilter);
+                    }
+
+                    const { data: challenges, error } = await query;
+                    if (error) throw error;
+
+                    container.textContent = '';
+
+                    if (!challenges.length) {
+                        const emptyDiv = document.createElement('div');
+                        emptyDiv.className = 'admin-empty';
+                        emptyDiv.textContent = 'No challenges found.';
+                        container.appendChild(emptyDiv);
+                        return;
+                    }
+
+                    challenges.forEach(ch => {
+                        container.appendChild(this.createChallengeCard(ch, [], false));
+                    });
+                } catch (err) {
+                    container.textContent = '';
+                    const errDiv = document.createElement('div');
+                    errDiv.className = 'admin-empty';
+                    errDiv.style.color = 'var(--color-error)';
+                    errDiv.textContent = 'Failed to load challenges.';
+                    container.appendChild(errDiv);
+                    console.error(err);
+                }
+            }
+
+            createChallengeCard(ch, reports = [], showReports = true) {
+                const statusClass = ch.moderation_status || 'approved';
+                const track = ch.track || '';
+
+                const card = document.createElement('div');
+                card.className = 'admin-card';
+                card.dataset.track = track;
+                card.dataset.id = ch.id;
+
+                // Header row
+                const header = document.createElement('div');
+                header.className = 'admin-card-header';
+
+                const headerLeft = document.createElement('div');
+                const title = document.createElement('div');
+                title.className = 'admin-card-title';
+                title.textContent = ch.title;
+                headerLeft.appendChild(title);
+
+                const meta = document.createElement('div');
+                meta.className = 'admin-card-meta';
+                meta.textContent = (track ? track + ' \u2022 ' : '') + 'by ' + (ch.author_name || 'Anonymous') + ' \u2022 ' + new Date(ch.created_at).toLocaleDateString();
+                headerLeft.appendChild(meta);
+
+                const badge = document.createElement('span');
+                badge.className = 'admin-status-badge ' + statusClass;
+                badge.textContent = statusClass.toUpperCase();
+
+                header.appendChild(headerLeft);
+                header.appendChild(badge);
+                card.appendChild(header);
+
+                // Description
+                if (ch.description) {
+                    const desc = document.createElement('div');
+                    desc.className = 'admin-card-desc';
+                    desc.textContent = ch.description;
+                    card.appendChild(desc);
+                }
+
+                // Moderation reason
+                if (ch.moderation_reason) {
+                    const modReason = document.createElement('div');
+                    modReason.className = 'admin-mod-reason';
+                    modReason.textContent = ch.moderation_reason;
+                    card.appendChild(modReason);
+                }
+
+                // Reports
+                if (showReports && reports.length) {
+                    const reportsSection = document.createElement('div');
+                    reportsSection.className = 'admin-reports';
+
+                    const reportsTitle = document.createElement('div');
+                    reportsTitle.className = 'admin-reports-title';
+                    reportsTitle.textContent = reports.length + ' Report' + (reports.length > 1 ? 's' : '');
+                    reportsSection.appendChild(reportsTitle);
+
+                    reports.forEach(r => {
+                        const item = document.createElement('div');
+                        item.className = 'admin-report-item';
+                        const reason = document.createElement('span');
+                        reason.className = 'admin-report-reason';
+                        reason.textContent = r.reason;
+                        item.appendChild(reason);
+                        if (r.details) {
+                            item.appendChild(document.createTextNode(' \u2014 ' + r.details));
+                        }
+                        reportsSection.appendChild(item);
+                    });
+
+                    card.appendChild(reportsSection);
+                }
+
+                // Actions
+                const actions = document.createElement('div');
+                actions.className = 'admin-actions';
+
+                if (statusClass !== 'approved') {
+                    const approveBtn = document.createElement('button');
+                    approveBtn.className = 'admin-btn admin-btn-approve';
+                    approveBtn.textContent = 'Approve';
+                    approveBtn.addEventListener('click', () => this.handleApprove(ch.id));
+                    actions.appendChild(approveBtn);
+                }
+
+                if (statusClass !== 'rejected') {
+                    const rejectBtn = document.createElement('button');
+                    rejectBtn.className = 'admin-btn admin-btn-reject';
+                    rejectBtn.textContent = 'Reject';
+                    rejectBtn.addEventListener('click', () => this.handleReject(ch.id));
+                    actions.appendChild(rejectBtn);
+                }
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'admin-btn admin-btn-delete';
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.addEventListener('click', () => this.handleDelete(ch.id));
+                actions.appendChild(deleteBtn);
+
+                card.appendChild(actions);
+
+                return card;
+            }
+
+            // --- Actions ---
+
+            async handleApprove(id) {
+                try {
+                    const { error } = await this.client
+                        .from('challenges')
+                        .update({ moderation_status: 'approved', moderation_reason: null })
+                        .eq('id', id);
+                    if (error) throw error;
+                    this.showToast('Challenge approved', 'success');
+                    this.reload();
+                } catch (err) {
+                    this.showToast('Failed to approve: ' + err.message, 'error');
+                }
+            }
+
+            async handleReject(id) {
+                const reason = prompt('Rejection reason (optional):');
+                if (reason === null) return; // cancelled
+
+                try {
+                    const { error } = await this.client
+                        .from('challenges')
+                        .update({
+                            moderation_status: 'rejected',
+                            moderation_reason: reason || 'Rejected by admin'
+                        })
+                        .eq('id', id);
+                    if (error) throw error;
+                    this.showToast('Challenge rejected', 'success');
+                    this.reload();
+                } catch (err) {
+                    this.showToast('Failed to reject: ' + err.message, 'error');
+                }
+            }
+
+            async handleDelete(id) {
+                if (!confirm('Permanently delete this challenge? This cannot be undone.')) return;
+
+                try {
+                    const { error } = await this.client
+                        .from('challenges')
+                        .delete()
+                        .eq('id', id);
+                    if (error) throw error;
+                    this.showToast('Challenge deleted', 'success');
+                    this.reload();
+                } catch (err) {
+                    this.showToast('Failed to delete: ' + err.message, 'error');
+                }
+            }
+
+            reload() {
+                this.loadStats();
+                this.loadFlagged();
+                this.loadAllChallenges();
+            }
+
+            // --- Utilities ---
+
+            showToast(msg, type) {
+                const toast = document.getElementById('admin-toast');
+                toast.textContent = msg;
+                toast.className = 'admin-toast ' + type;
+                requestAnimationFrame(() => toast.classList.add('show'));
+                clearTimeout(this._toastTimer);
+                this._toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForSupabase = () => {
+                if (window.supabase) {
+                    new AdminDashboard().init();
+                } else {
+                    setTimeout(waitForSupabase, 50);
+                }
+            };
+            waitForSupabase();
+        });
+    </script>
+</body>
+
+</html>

@@ -534,6 +534,69 @@
             border-color: var(--color-primary);
         }
 
+        /* Track Filter Chips */
+        .cdb-track-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .cdb-chip {
+            padding: 0.4rem 0.85rem;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--color-text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.05em;
+        }
+
+        .cdb-chip:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: var(--color-text);
+            transform: translateY(-1px);
+        }
+
+        .cdb-chip-active {
+            background: rgba(0, 255, 159, 0.15);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            box-shadow: 0 0 8px rgba(0, 255, 159, 0.2);
+        }
+
+        .cdb-chip-active[data-track="SHADOW"] {
+            background: rgba(255, 68, 68, 0.15);
+            border-color: var(--color-track-red);
+            color: var(--color-track-red);
+            box-shadow: 0 0 8px rgba(255, 68, 68, 0.2);
+        }
+
+        .cdb-chip-active[data-track="SENTINEL"] {
+            background: rgba(68, 136, 255, 0.15);
+            border-color: var(--color-track-blue);
+            color: var(--color-track-blue);
+            box-shadow: 0 0 8px rgba(68, 136, 255, 0.2);
+        }
+
+        .cdb-chip-active[data-track="ZERO"] {
+            background: rgba(0, 255, 255, 0.15);
+            border-color: var(--color-track-cyan);
+            color: var(--color-track-cyan);
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.2);
+        }
+
+        .cdb-chip-active[data-track="ROGUE"] {
+            background: rgba(170, 68, 255, 0.15);
+            border-color: var(--color-track-purple);
+            color: var(--color-track-purple);
+            box-shadow: 0 0 8px rgba(170, 68, 255, 0.2);
+        }
+
         .cdb-filter-toggle {
             display: none;
             width: 100%;
@@ -1159,6 +1222,23 @@
                 width: 100%;
             }
 
+            .cdb-track-chips {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                width: 100%;
+            }
+
+            .cdb-track-chips::-webkit-scrollbar {
+                display: none;
+            }
+
+            .cdb-chip {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
             .cdb-modal {
                 width: 100%;
                 max-width: 100%;
@@ -1363,13 +1443,13 @@
                     </button>
                     <div class="cdb-filter-controls" id="cdb-filter-controls">
                         <input type="search" class="cdb-search" id="cdb-search" placeholder="Search challenges..." aria-label="Search challenges">
-                        <select class="cdb-filter-select" id="cdb-filter-track" aria-label="Filter by track">
-                            <option value="">All Tracks</option>
-                            <option value="SHADOW">SHADOW::VECTOR</option>
-                            <option value="SENTINEL">SENTINEL::MESH</option>
-                            <option value="ZERO">ZERO::PROOF</option>
-                            <option value="ROGUE">ROGUE::AGENT</option>
-                        </select>
+                        <div class="cdb-track-chips" id="cdb-track-chips" role="group" aria-label="Filter by track">
+                            <button class="cdb-chip cdb-chip-active" data-track="" aria-pressed="true">ALL</button>
+                            <button class="cdb-chip" data-track="SHADOW" aria-pressed="false">SHADOW</button>
+                            <button class="cdb-chip" data-track="SENTINEL" aria-pressed="false">SENTINEL</button>
+                            <button class="cdb-chip" data-track="ZERO" aria-pressed="false">ZERO</button>
+                            <button class="cdb-chip" data-track="ROGUE" aria-pressed="false">ROGUE</button>
+                        </div>
                         <select class="cdb-filter-select" id="cdb-filter-status" aria-label="Filter by team status">
                             <option value="">All Status</option>
                             <option value="looking">Looking for team</option>
@@ -2117,7 +2197,6 @@
 
                     // Filters
                     const search = document.getElementById('cdb-search');
-                    const trackFilter = document.getElementById('cdb-filter-track');
                     const statusFilter = document.getElementById('cdb-filter-status');
                     if (search) search.addEventListener('input', () => {
                         clearTimeout(this.searchTimeout);
@@ -2127,10 +2206,16 @@
                             this.loadChallenges();
                         }, 300);
                     });
-                    if (trackFilter) trackFilter.addEventListener('change', () => {
-                        this.filters.track = trackFilter.value;
-                        this.page = 1;
-                        this.loadChallenges();
+                    const trackChips = document.querySelectorAll('.cdb-chip');
+                    trackChips.forEach(chip => {
+                        chip.addEventListener('click', () => {
+                            trackChips.forEach(c => { c.classList.remove('cdb-chip-active'); c.setAttribute('aria-pressed', 'false'); });
+                            chip.classList.add('cdb-chip-active');
+                            chip.setAttribute('aria-pressed', 'true');
+                            this.filters.track = chip.dataset.track;
+                            this.page = 1;
+                            this.loadChallenges();
+                        });
                     });
                     if (statusFilter) statusFilter.addEventListener('change', () => {
                         this.filters.status = statusFilter.value;
