@@ -72,6 +72,52 @@
         }
     }, { passive: true });
 
+    // ─── Navigation Tracking ────────────────────────────────
+    // Track which nav links users click (HUD, mobile, footer)
+    document.querySelectorAll('.hud-link, .mobile-nav a, .footer-links a').forEach(function (link) {
+        link.addEventListener('click', function () {
+            var dest = (link.getAttribute('href') || '').replace('.html', '').replace('/', '') || 'index';
+            var nav = link.closest('.hud-nav') ? 'hud' :
+                      link.closest('.mobile-nav') ? 'mobile' : 'footer';
+            track('Nav_Click', { props: {
+                page: pageName,
+                destination: dest,
+                nav_type: nav
+            }});
+        });
+    });
+
+    // ─── Track Interest Tracking ──────────────────────────────
+    // Track which challenge tracks users hover over or click
+    document.querySelectorAll('.protocol-card').forEach(function (card) {
+        var title = card.querySelector('.protocol-title');
+        var trackName = title ? title.textContent.trim() : 'unknown';
+        var hoverTimer;
+
+        card.addEventListener('mouseenter', function () {
+            hoverTimer = setTimeout(function () {
+                track('Track_Interest', { props: {
+                    track: trackName,
+                    page: pageName,
+                    action: 'hover'
+                }});
+            }, 2000); // Only fire after 2s of genuine interest
+        });
+
+        card.addEventListener('mouseleave', function () {
+            clearTimeout(hoverTimer);
+        });
+
+        card.addEventListener('click', function () {
+            clearTimeout(hoverTimer);
+            track('Track_Interest', { props: {
+                track: trackName,
+                page: pageName,
+                action: 'click'
+            }});
+        });
+    });
+
     // ─── Sticky CTA: show on scroll + track clicks ─────────
     var stickyCta = document.getElementById('sticky-register-cta');
     if (stickyCta) {
