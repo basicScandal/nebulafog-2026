@@ -63,7 +63,7 @@ Deno.serve(async (req: Request) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "NEBULA:FOG <notifications@nebulafog.ai>",
+        from: "NEBULA:FOG <onboarding@resend.dev>",
         to: [NOTIFY_EMAIL],
         subject,
         html,
