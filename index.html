@@ -70,6 +70,21 @@
     }
     </script>
 
+    <!-- Structured Data - Organization Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "NEBULA:FOG",
+        "url": "https://nebulafog.ai",
+        "logo": "https://nebulafog.ai/images/og-image.png",
+        "description": "AI x Security hackathon community in San Francisco.",
+        "sameAs": [
+            "https://www.youtube.com/@NEBULAFOG"
+        ]
+    }
+    </script>
+
     <!-- Canonical -->
     <link rel="canonical" href="https://nebulafog.ai/">
 
@@ -937,6 +952,77 @@
             text-shadow: 0 0 10px var(--color-secondary);
         }
 
+        .capacity-bar {
+            width: 100%;
+            max-width: 300px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin: 0.75rem auto 0;
+            overflow: hidden;
+        }
+
+        .capacity-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+            transition: width 1.5s var(--ease-out-expo);
+            box-shadow: 0 0 8px var(--color-secondary);
+        }
+
+        /* ─── Sticky Register CTA ─────────────────── */
+        .sticky-register {
+            position: fixed;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--color-primary), #00cc7f);
+            color: var(--color-bg);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            border-radius: 4px;
+            box-shadow: 0 4px 20px rgba(0, 255, 159, 0.3);
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease;
+            pointer-events: none;
+        }
+
+        .sticky-register.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .sticky-register:hover {
+            box-shadow: 0 4px 30px rgba(0, 255, 159, 0.5);
+        }
+
+        .sticky-register .cta-badge {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .sticky-register {
+                bottom: 5rem;
+                right: 1rem;
+                left: 1rem;
+                justify-content: center;
+                font-size: 0.8rem;
+            }
+        }
+
         /* ========================================
            AGENTIC TERMINAL
            ======================================== */
@@ -1517,6 +1603,11 @@
     <div class="grid-bg"></div>
     <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
 
+    <!-- Sticky Register CTA (appears on scroll) -->
+    <a href="register.html" class="sticky-register" id="sticky-register-cta">
+        REGISTER NOW <span class="cta-badge" id="sticky-days-left"></span>
+    </a>
+
     <!-- Breach Sequence Overlay -->
     <div class="breach-overlay" id="breach-overlay">
         <div class="breach-terminal" id="breach-terminal">
@@ -1596,7 +1687,10 @@
                 </div>
                 <div class="attendee-cap">
                     <span class="cap-icon"><i class="fas fa-users"></i></span>
-                    <span class="cap-text">LIMITED TO <span class="cap-number">100</span> OPERATIVES</span>
+                    <span class="cap-text">CAPACITY: <span class="cap-number" id="cap-filled">73</span> / <span class="cap-number">100</span> OPERATIVES</span>
+                </div>
+                <div class="capacity-bar">
+                    <div class="capacity-fill" id="capacity-fill" style="width: 73%"></div>
                 </div>
             </div>
 
@@ -2603,6 +2697,11 @@
 
                 if (!query) return;
 
+                // Track terminal command usage
+                if (window.plausible) {
+                    window.plausible('Terminal_Command', { props: { command: query.substring(0, 50) } });
+                }
+
                 // Echo user input
                 await this.addLine({ type: 'user', text: query }, true);
 
@@ -2728,6 +2827,8 @@
 
             const breach = new BreachSequence();
             breach.start();
+
+
         });
     </script>
 
@@ -2768,6 +2869,7 @@
             });
         })();
     </script>
+<script defer src="/analytics.js"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3dca859b2622453e93f3f92fc322cb93"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 

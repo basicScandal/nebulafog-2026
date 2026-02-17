@@ -313,6 +313,61 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ========================================
+   STICKY REGISTER CTA
+   ======================================== */
+.sticky-register {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, var(--color-primary), #00cc7f);
+    color: var(--color-bg);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0, 255, 159, 0.3);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease, box-shadow 0.2s ease;
+    pointer-events: none;
+}
+
+.sticky-register.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.sticky-register:hover {
+    box-shadow: 0 4px 30px rgba(0, 255, 159, 0.5);
+}
+
+.sticky-register .cta-badge {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .sticky-register {
+        bottom: 5rem;
+        right: 1rem;
+        left: 1rem;
+        justify-content: center;
+        font-size: 0.8rem;
+    }
+}
+
+/* ========================================
    ACCESSIBILITY
    ======================================== */
 @media (prefers-reduced-motion: reduce) {
