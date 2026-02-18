@@ -1023,6 +1023,75 @@
             }
         }
 
+        /* Lightbox */
+        .lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: rgba(0, 0, 0, 0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: zoom-out;
+        }
+
+        .lightbox-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-overlay img {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border: 1px solid var(--color-text-dim);
+            transform: scale(0.9);
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+
+        .lightbox-overlay.active img {
+            transform: scale(1);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: var(--color-text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            z-index: 1;
+        }
+
+        .lightbox-close:hover {
+            color: var(--color-primary);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-muted);
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 1rem;
+            transition: color 0.2s ease;
+            user-select: none;
+        }
+
+        .lightbox-nav:hover {
+            color: var(--color-primary);
+        }
+
+        .lightbox-prev { left: 1rem; }
+        .lightbox-next { right: 1rem; }
+
+        .photo-item { cursor: zoom-in; }
+
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after {
@@ -2920,6 +2989,56 @@
                 setTimeout(() => {
                     window.location.href = href;
                 }, 300);
+            });
+        })();
+    </script>
+    <!-- Photo Lightbox -->
+    <div class="lightbox-overlay" id="lightbox">
+        <span class="lightbox-close"><i class="fas fa-times"></i></span>
+        <span class="lightbox-nav lightbox-prev"><i class="fas fa-chevron-left"></i></span>
+        <span class="lightbox-nav lightbox-next"><i class="fas fa-chevron-right"></i></span>
+        <img src="" alt="" id="lightbox-img">
+    </div>
+    <script>
+        (function() {
+            const overlay = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            const photos = Array.from(document.querySelectorAll('#hackathon-gallery .photo-item img'));
+            let current = 0;
+
+            function open(index) {
+                current = index;
+                lbImg.src = photos[current].src;
+                lbImg.alt = photos[current].alt;
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function close() {
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            function navigate(dir) {
+                current = (current + dir + photos.length) % photos.length;
+                lbImg.src = photos[current].src;
+                lbImg.alt = photos[current].alt;
+            }
+
+            photos.forEach((img, i) => {
+                img.closest('.photo-item').addEventListener('click', () => open(i));
+            });
+
+            overlay.querySelector('.lightbox-close').addEventListener('click', close);
+            overlay.querySelector('.lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); navigate(-1); });
+            overlay.querySelector('.lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); navigate(1); });
+            overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+
+            document.addEventListener('keydown', (e) => {
+                if (!overlay.classList.contains('active')) return;
+                if (e.key === 'Escape') close();
+                if (e.key === 'ArrowLeft') navigate(-1);
+                if (e.key === 'ArrowRight') navigate(1);
             });
         })();
     </script>
