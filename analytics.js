@@ -119,7 +119,7 @@
     if (stickyCta) {
         var badge = document.getElementById('sticky-days-left');
         if (badge) {
-            var daysLeft = Math.ceil((new Date('2026-03-14T08:30:00-07:00') - new Date()) / 86400000);
+            var daysLeft = Math.ceil((new Date('2026-03-10T00:00:00-08:00') - new Date()) / 86400000);
             if (daysLeft > 0) badge.textContent = daysLeft + 'D LEFT';
         }
 
