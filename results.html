@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>PRIME Results | NEBULA:FOG 2026 AI Security Hackathon</title>
+    <meta name="description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PRIME Results | NEBULA:FOG 2026 AI Security Hackathon">
+    <meta property="og:description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
+    <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://nebulafog.ai/results.html">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PRIME Results | NEBULA:FOG 2026 AI Security Hackathon">
+    <meta name="twitter:description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
+    <meta name="twitter:image" content="https://nebulafog.ai/images/og-image.png">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://nebulafog.ai/results.html">
+
+    <!-- Structured Data - BreadcrumbList -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "NEBULA:FOG 2026", "item": "https://nebulafog.ai/" },
+            { "@type": "ListItem", "position": 2, "name": "PRIME Results" }
+        ]
+    }
+    </script>
+
+    <!-- Theme -->
+    <meta name="theme-color" content="#00ff9f">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+    <!-- Analytics -->
+    <script src="/posthog-init.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="styles/common.css">
+
+    <!-- GSAP -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        /* ========================================
+           PAGE-SPECIFIC OVERRIDES
+           ======================================== */
+
+        /* Container */
+        .container { max-width: 1000px; }
+
+        /* Page header */
+        .page-tag { margin-bottom: 2rem; }
+        .page-title { font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 1.5rem; }
+        .page-subtitle { font-size: 1rem; color: var(--color-text-muted); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+        /* Track colors */
+        .track-rogue { --track-color: #aa44ff; }
+        .track-sentinel { --track-color: #4488ff; }
+        .track-shadow { --track-color: #ff4444; }
+
+        /* ========================================
+           STATS SECTION
+           ======================================== */
+        .stats-section { padding: 3rem; border: 1px solid var(--color-text-dim); margin-bottom: 4rem; opacity: 0; transform: translateY(40px); }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center; }
+        .stat-value { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--color-primary); text-shadow: 0 0 30px var(--color-primary); display: block; }
+        .stat-label { font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-top: 0.5rem; }
+
+        /* ========================================
+           LEADERBOARD
+           ======================================== */
+        .leaderboard { margin-bottom: 4rem; }
+        .leaderboard-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text); }
+        .leaderboard table { width: 100%; border-collapse: collapse; }
+        .leaderboard th { font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em; text-transform: uppercase; text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-text-dim); }
+        .leaderboard th:last-child { text-align: right; }
+        .leaderboard td { padding: 0.75rem 1rem; border-bottom: 1px solid rgba(51,51,51,0.5); font-size: 0.9rem; }
+        .leaderboard tr { opacity: 0; transform: translateY(10px); transition: background 0.3s ease; }
+        .leaderboard tbody tr:hover { background: rgba(255,255,255,0.03); }
+        .leaderboard td:first-child { font-weight: 700; color: var(--color-text-muted); width: 3rem; }
+        .leaderboard td:last-child { text-align: right; font-family: var(--font-mono); font-weight: 700; }
+        .leaderboard tr[data-track="rogue"] { border-left: 3px solid #aa44ff; }
+        .leaderboard tr[data-track="sentinel"] { border-left: 3px solid #4488ff; }
+        .leaderboard tr[data-track="shadow"] { border-left: 3px solid #ff4444; }
+
+        /* ========================================
+           TRACK BADGES
+           ======================================== */
+        .track-badge { font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 2px; letter-spacing: 0.1em; font-family: var(--font-mono); font-weight: 500; }
+        .track-badge.rogue { background: rgba(170,68,255,0.15); color: #aa44ff; border: 1px solid rgba(170,68,255,0.3); }
+        .track-badge.sentinel { background: rgba(68,136,255,0.15); color: #4488ff; border: 1px solid rgba(68,136,255,0.3); }
+        .track-badge.shadow { background: rgba(255,68,68,0.15); color: #ff4444; border: 1px solid rgba(255,68,68,0.3); }
+
+        /* ========================================
+           SCORE COLORS
+           ======================================== */
+        .score-high { color: var(--color-primary); text-shadow: 0 0 10px rgba(0,255,159,0.5); }
+        .score-mid { color: var(--color-text); }
+        .score-low { color: var(--color-warning); }
+
+        /* ========================================
+           TEAM CARDS
+           ======================================== */
+        .team-cards { margin-bottom: 4rem; }
+        .team-cards-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text); }
+        .team-card { border: 1px solid var(--color-text-dim); margin-bottom: 1rem; opacity: 0; transform: translateY(20px); transition: border-color 0.4s ease; }
+        .team-card:hover { border-color: rgba(255,255,255,0.15); }
+        .team-card-header { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; cursor: pointer; user-select: none; }
+        .team-card-header::after { content: '+'; margin-left: auto; font-family: var(--font-mono); font-size: 1.25rem; color: var(--color-text-muted); transition: transform 0.3s ease; }
+        .team-card.expanded .team-card-header::after { content: '\2212'; }
+        .team-rank { font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); min-width: 1.5rem; }
+        .team-name { font-family: var(--font-display); font-weight: 600; font-size: 0.95rem; }
+        .team-score { font-family: var(--font-mono); font-weight: 700; font-size: 1rem; }
+        .team-details { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+        .team-card.expanded .team-details { max-height: 800px; }
+        .team-details-inner { padding: 0 1.25rem 1.25rem; }
+
+        /* ========================================
+           CRITERIA BARS
+           ======================================== */
+        .criteria-bars { margin-bottom: 1.25rem; }
+        .criteria-bar { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .criteria-label { font-size: 0.75rem; color: var(--color-text-muted); min-width: 140px; }
+        .criteria-track { flex: 1; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden; }
+        .criteria-fill { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
+        .criteria-score { font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-muted); min-width: 2rem; text-align: right; }
+
+        /* ========================================
+           STRENGTHS / WEAKNESSES
+           ======================================== */
+        .team-strengths, .team-weaknesses { margin-bottom: 1rem; }
+        .team-strengths h4, .team-weaknesses h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+        .team-strengths h4 { color: var(--color-primary); }
+        .team-weaknesses h4 { color: var(--color-secondary); }
+        .team-strengths li, .team-weaknesses li { font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.6; padding-left: 1rem; position: relative; margin-bottom: 0.25rem; list-style: none; }
+        .team-strengths li::before { content: '>'; position: absolute; left: 0; color: var(--color-primary); }
+        .team-weaknesses li::before { content: '>'; position: absolute; left: 0; color: var(--color-secondary); }
+        .team-reasoning { font-size: 0.8rem; color: var(--color-text-muted); font-style: italic; line-height: 1.6; border-left: 2px solid var(--color-text-dim); padding-left: 1rem; }
+
+        /* ========================================
+           DELIBERATION
+           ======================================== */
+        .deliberation { margin-bottom: 4rem; }
+        .deliberation-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text); }
+        .terminal-block { background: rgba(0,0,0,0.5); border: 1px solid rgba(0,255,159,0.2); border-left: 3px solid var(--color-primary); padding: 2rem; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.8; color: var(--color-text-muted); opacity: 0; transform: translateY(30px); }
+        .terminal-block p { margin-bottom: 1.5rem; }
+        .terminal-block p:last-child { margin-bottom: 0; }
+        .terminal-cursor { display: inline-block; width: 8px; height: 1em; background: var(--color-primary); animation: blink 1s step-end infinite; vertical-align: text-bottom; margin-left: 4px; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* ========================================
+           NOTABLE THEMES
+           ======================================== */
+        .themes { margin-bottom: 4rem; }
+        .themes-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text); }
+        .themes-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        .theme-card { padding: 1.5rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(20px); transition: border-color 0.4s ease; }
+        .theme-card:hover { border-color: rgba(0,255,159,0.3); }
+        .theme-icon { font-size: 1.25rem; color: var(--color-primary); margin-bottom: 0.75rem; }
+        .theme-text { font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.7; }
+
+        /* ========================================
+           WINNER PODIUM
+           ======================================== */
+        .podium { margin-bottom: 4rem; text-align: center; }
+        .podium-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 2rem; color: var(--color-text); }
+        .podium-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; align-items: end; }
+        .podium-card { padding: 2rem 1.5rem; border: 1px solid var(--color-text-dim); opacity: 0; transform: translateY(30px); position: relative; overflow: hidden; }
+        .podium-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+        .podium-card.gold { order: 2; padding: 2.5rem 1.5rem; }
+        .podium-card.gold::before { background: linear-gradient(90deg, #ffd700, #ffaa00); box-shadow: 0 0 20px rgba(255,215,0,0.4); }
+        .podium-card.silver { order: 1; }
+        .podium-card.silver::before { background: linear-gradient(90deg, #c0c0c0, #a0a0a0); }
+        .podium-card.bronze { order: 3; }
+        .podium-card.bronze::before { background: linear-gradient(90deg, #cd7f32, #a0622e); }
+        .podium-medal { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .podium-card.gold .podium-medal { filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); }
+        .podium-team { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .podium-card.gold .podium-team { font-size: 1.3rem; }
+        .podium-score { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--color-primary); text-shadow: 0 0 15px rgba(0,255,159,0.5); margin-bottom: 0.5rem; }
+        .podium-card.gold .podium-score { font-size: 2rem; }
+        .podium-desc { font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.6; }
+        .podium-video { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; padding: 0.4rem 1rem; border: 1px solid var(--color-text-dim); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; text-decoration: none; transition: all 0.3s ease; }
+        .podium-video:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        /* ========================================
+           PULL QUOTES
+           ======================================== */
+        .pull-quotes { margin-bottom: 4rem; }
+        .pull-quotes-title { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--color-text); }
+        .pull-quote { padding: 1.5rem 2rem; border-left: 3px solid var(--color-secondary); margin-bottom: 1rem; opacity: 0; transform: translateY(20px); }
+        .pull-quote p { font-family: var(--font-mono); font-size: 0.9rem; color: var(--color-text); line-height: 1.7; font-style: italic; }
+        .pull-quote cite { display: block; margin-top: 0.5rem; font-size: 0.7rem; color: var(--color-text-muted); font-style: normal; letter-spacing: 0.1em; text-transform: uppercase; }
+
+        /* ========================================
+           BRIDGE / 2026 SECTION
+           ======================================== */
+        .bridge { margin-bottom: 4rem; padding: 3rem; border: 1px solid var(--color-text-dim); background: linear-gradient(135deg, rgba(0,255,159,0.02) 0%, rgba(170,68,255,0.02) 50%, rgba(255,0,128,0.02) 100%); text-align: center; opacity: 0; transform: translateY(30px); }
+        .bridge-tag { font-size: 0.7rem; color: var(--color-primary); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; font-family: var(--font-mono); }
+        .bridge-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 1.5rem; }
+        .bridge-comparison { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin-bottom: 2rem; }
+        .bridge-col { text-align: center; }
+        .bridge-col-label { font-size: 0.7rem; color: var(--color-text-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+        .bridge-col-value { font-family: var(--font-mono); font-size: clamp(1.5rem, 3vw, 2.5rem); font-weight: 700; }
+        .bridge-col-value.old { color: var(--color-text-muted); }
+        .bridge-col-value.new { color: var(--color-primary); text-shadow: 0 0 20px rgba(0,255,159,0.4); }
+        .bridge-arrow { font-size: 1.5rem; color: var(--color-primary); }
+        .bridge-text { font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.8; max-width: 600px; margin: 0 auto 2rem; }
+
+        /* ========================================
+           REGISTER CTA
+           ======================================== */
+        .register-cta { text-align: center; padding: 4rem 3rem; background: linear-gradient(135deg, rgba(0,255,159,0.05) 0%, rgba(255,0,128,0.05) 100%); border: 1px solid rgba(0,255,159,0.2); margin-bottom: 4rem; opacity: 0; transform: translateY(30px); }
+        .register-cta-title { font-family: var(--font-display); font-size: clamp(1.25rem, 3vw, 1.75rem); font-weight: 700; margin-bottom: 0.75rem; }
+        .register-cta-text { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6; }
+        .register-cta .btn-register { display: inline-block; padding: 1rem 3rem; background: var(--color-primary); color: var(--color-bg); font-family: var(--font-mono); font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 0 30px rgba(0,255,159,0.3); }
+        .register-cta .btn-register:hover { box-shadow: 0 0 50px rgba(0,255,159,0.6); transform: translateY(-2px); }
+        .register-cta .btn-secondary { display: inline-block; margin-top: 1rem; padding: 0.5rem 1.5rem; border: 1px solid var(--color-text-dim); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; }
+        .register-cta .btn-secondary:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+
+        /* ========================================
+           YOUTUBE CTA (now secondary)
+           ======================================== */
+        .yt-cta { text-align: center; padding: 2rem; border: 1px solid var(--color-text-dim); margin-bottom: 4rem; opacity: 0; transform: translateY(30px); }
+        .yt-cta-title { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .yt-cta-text { color: var(--color-text-muted); font-size: 0.8rem; margin-bottom: 1rem; }
+        .yt-cta a { display: inline-block; padding: 0.5rem 1.5rem; border: 1px solid var(--color-text-dim); color: var(--color-text-muted); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: all 0.3s ease; }
+        .yt-cta a:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+        /* ========================================
+           FOOTER - PAGE SPECIFIC
+           ======================================== */
+        .footer { padding-top: 3rem; padding-inline: 5vw; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 1.5rem; text-align: center; }
+        .footer-links { font-size: 0.75rem; flex-wrap: wrap; }
+        .footer-copyright { font-size: 0.7rem; }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .leaderboard { overflow-x: auto; }
+            .themes-grid { grid-template-columns: 1fr; }
+            .team-card-header { flex-wrap: wrap; gap: 0.5rem; }
+            .criteria-label { min-width: 100px; font-size: 0.65rem; }
+            .podium-grid { grid-template-columns: 1fr; }
+            .podium-card.gold { order: 0; }
+            .podium-card.silver { order: 1; }
+            .podium-card.bronze { order: 2; }
+            .bridge-comparison { grid-template-columns: 1fr; gap: 1rem; }
+            .bridge-arrow { transform: rotate(90deg); }
+            .footer-links { gap: 0.75rem 1rem; }
+            .footer-links a { font-size: 0.6rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sticky Register CTA -->
+    <a href="register.html" class="sticky-register" id="sticky-register-cta">
+        REGISTER NOW <span class="cta-badge" id="sticky-days-left"></span>
+    </a>
+
+    <!-- Cursor -->
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-ring"></div>
+
+    <!-- Visual Effects -->
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
+
+    <!-- Navigation -->
+    <nav class="hud-nav" role="navigation" aria-label="System Interface">
+        <div class="hud-status">
+            <div class="status-dot"></div>
+            <span>SYS_CONNECTED</span>
+            <span style="margin-left: 10px; opacity: 0.7;">PROTOCOL_VIEW</span>
+        </div>
+        <ul class="hud-links">
+            <li><a href="index.html" class="hud-link">HOME</a></li>
+            <li><a href="about.html" class="hud-link">MISSION</a></li>
+            <li><a href="challenges.html" class="hud-link">CHALLENGES</a></li>
+            <li><a href="schedule.html" class="hud-link">SCHEDULE</a></li>
+            <li><a href="register.html" class="hud-link">REGISTER</a></li>
+            <li><a href="partners.html" class="hud-link">PARTNERS</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <header class="page-header">
+                <span class="page-tag">PRIME RESULTS // 2025</span>
+                <h1 class="page-title">ARBITER SCOREBOARD</h1>
+                <p class="page-subtitle">We fed 15 demo videos to an AI judge with the personality of Simon Cowell at a hacker convention. It watched every frame, read every transcript, and scored each team with zero mercy and zero politics. These are the unfiltered results.</p>
+            </header>
+
+            <!-- Stats -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-item"><span class="stat-value">15</span><span class="stat-label">PRIME DEMOS</span></div>
+                    <div class="stat-item"><span class="stat-value">100</span><span class="stat-label">BUILDERS IN 2026</span></div>
+                    <div class="stat-item"><span class="stat-value">4</span><span class="stat-label">TRACKS IN 2026</span></div>
+                    <div class="stat-item"><span class="stat-value">$5K+</span><span class="stat-label">IN PRIZES</span></div>
+                </div>
+            </section>
+
+            <!-- Winner Podium -->
+            <section class="podium">
+                <h2 class="podium-title">// TOP 3</h2>
+                <div class="podium-grid">
+                    <div class="podium-card silver">
+                        <div class="podium-medal">&#9733;</div>
+                        <div class="podium-team">Nebula Fog Subprime</div>
+                        <div class="podium-score">8.8</div>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <p class="podium-desc">Complete end-to-end attack chain from AI-generated phishing to credential harvesting. The only team that understood the offensive assignment.</p>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener" class="podium-video"><i class="fas fa-play"></i> Watch Demo</a>
+                    </div>
+                    <div class="podium-card gold">
+                        <div class="podium-medal">&#9733;</div>
+                        <div class="podium-team">Plan AI</div>
+                        <div class="podium-score">9.1</div>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <p class="podium-desc">Multi-source research aggregation pulling real results from Coursera, Stack Overflow, and academic sites. Revolutionary concept: building something that actually works.</p>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener" class="podium-video"><i class="fas fa-play"></i> Watch Demo</a>
+                    </div>
+                    <div class="podium-card bronze">
+                        <div class="podium-medal">&#9733;</div>
+                        <div class="podium-team">AI Vulnerability Triage</div>
+                        <div class="podium-score">8.5</div>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <p class="podium-desc">Solid engineering with Checkov integration for automated Terraform security scanning. Clean Python architecture with proper type hints and modular design.</p>
+                        <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener" class="podium-video"><i class="fas fa-play"></i> Watch Demo</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard -->
+            <section class="leaderboard">
+                <h2 class="leaderboard-title">// FINAL RANKINGS</h2>
+                <table>
+                    <thead>
+                        <tr><th>RK</th><th>TEAM</th><th>TRACK</th><th>SCORE</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr data-track="rogue"><td>1</td><td>Plan AI</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-high">9.1</td></tr>
+                        <tr data-track="rogue"><td>2</td><td>Nebula Fog Subprime</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-high">8.8</td></tr>
+                        <tr data-track="sentinel"><td>3</td><td>AI Vulnerability Triage</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-high">8.5</td></tr>
+                        <tr data-track="sentinel"><td>4</td><td>Nebula Investigations</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-high">8.4</td></tr>
+                        <tr data-track="rogue"><td>5</td><td>Fake Content Generation</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-high">8.4</td></tr>
+                        <tr data-track="sentinel"><td>6</td><td>NextGen SAST</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-high">8.1</td></tr>
+                        <tr data-track="rogue"><td>7</td><td>Source Code Review Agent</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-high">8.1</td></tr>
+                        <tr data-track="rogue"><td>8</td><td>Walmart 2</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-high">8.1</td></tr>
+                        <tr data-track="sentinel"><td>9</td><td>Advanced Security Tool</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-mid">7.8</td></tr>
+                        <tr data-track="shadow"><td>10</td><td>Private Computer Use</td><td><span class="track-badge shadow">SHADOW::VECTOR</span></td><td class="score-mid">7.7</td></tr>
+                        <tr data-track="sentinel"><td>11</td><td>AI Cloud Security Analysis</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-mid">7.3</td></tr>
+                        <tr data-track="shadow"><td>12</td><td>Privacy Impact Analyzer</td><td><span class="track-badge shadow">SHADOW::VECTOR</span></td><td class="score-mid">7.0</td></tr>
+                        <tr data-track="sentinel"><td>13</td><td>LAMP Monitoring Platform</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-mid">6.5</td></tr>
+                        <tr data-track="sentinel"><td>14</td><td>Web App Security Testing</td><td><span class="track-badge sentinel">SENTINEL::MESH</span></td><td class="score-mid">6.4</td></tr>
+                        <tr data-track="rogue"><td>15</td><td>Revenge AI</td><td><span class="track-badge rogue">ROGUE::AGENT</span></td><td class="score-low">5.5</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Team Detail Cards -->
+            <section class="team-cards">
+                <h2 class="team-cards-title">// TEAM BREAKDOWNS</h2>
+
+                <!-- 1. Plan AI -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#1</span>
+                        <span class="team-name">Plan AI</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-high">9.1</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:90%;background:#aa44ff"></div></div><span class="criteria-score">9.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Demonstrated fully functional web application with real-time multi-source research aggregation</li>
+                                <li>Clean, production-ready UI running on localhost:5173 with proper dark theme</li>
+                                <li>Concrete evidence of complex query handling with comprehensive response generation</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Limited visibility into architecture or novel security considerations specific to ROGUE::AGENT</li>
+                                <li>No demonstration of adversarial capabilities or defensive measures</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Plan AI earned top placement through demonstrable execution quality. The transcript shows actual system behavior with timestamped messages and real search results from named sources."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Nebula Fog Subprime -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#2</span>
+                        <span class="team-name">Nebula Fog Subprime</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-high">8.8</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Complete end-to-end attack chain from AI-generated content through phishing to credential harvesting</li>
+                                <li>Realistic multi-stage attack using ChatGPT for content generation, Gmail for delivery</li>
+                                <li>Perfect track alignment showing actual offensive capabilities</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Short demo duration (238s) suggests limited depth beyond core attack flow</li>
+                                <li>No evidence of defensive countermeasures or detection evasion techniques</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Nebula Fog Subprime delivers exactly what ROGUE::AGENT should showcase: a working offensive capability."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. AI Vulnerability Triage -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#3</span>
+                        <span class="team-name">AI Vulnerability Triage</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-high">8.5</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Well-structured Python codebase with clear separation between classes</li>
+                                <li>Comprehensive Terraform infrastructure coverage including compute, network, firewall</li>
+                                <li>Integration with Checkov for automated security scanning</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Limited demonstration of actual vulnerability findings in the 182s demo</li>
+                                <li>No visible output showing how the LLM processes Checkov results</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Solid engineering fundamentals with proper Python class design, type hints, and modular architecture."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Nebula Investigations -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#4</span>
+                        <span class="team-name">Nebula Investigations</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-high">8.4</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Sophisticated document analysis pipeline extracting structured data from corporate ownership charts</li>
+                                <li>Neo4j graph database integration for relationship mapping across jurisdictions</li>
+                                <li>Real-world applicable use case analyzing shell company structures</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>510s duration suggests possible presentation inefficiencies</li>
+                                <li>Limited evidence of automated decision-making beyond data extraction</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Tackles a genuinely difficult problem: extracting structured relationship data from visual organizational charts in PDFs."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Fake Content Generation -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#5</span>
+                        <span class="team-name">Fake Content Generation</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-high">8.4</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#aa44ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Functional content generation producing complete academic paper structure</li>
+                                <li>Appropriate track placement demonstrating misinformation capabilities</li>
+                                <li>Clean execution with simple command-line interface</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Limited sophistication beyond basic LLM prompting for text generation</li>
+                                <li>No demonstration of distribution mechanisms or detection evasion</li>
+                                <li>Generated content seems arbitrary without clear offensive purpose</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Does exactly what the name suggests: generates fake academic content with proper structure. A component, not a complete capability."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. NextGen SAST -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#6</span>
+                        <span class="team-name">NextGen SAST</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-high">8.1</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Comprehensive secure SDLC integration architecture combining threat modeling, SAST/SCA, DAST</li>
+                                <li>Concrete vulnerability identification in Google Gruyere demonstrating privilege escalation</li>
+                                <li>Multi-tool integration with LLM orchestration</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>779s duration is the longest in the competition</li>
+                                <li>Architecture diagram shows planned components but limited implementation evidence</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Ambitious vision of LLM-enhanced security scanning across the entire SDLC."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. Source Code Review Agent -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#7</span>
+                        <span class="team-name">Source Code Review Agent</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-high">8.1</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#aa44ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#aa44ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Functional Flask application integrating Bandit with OpenAI API</li>
+                                <li>Security-conscious implementation using Flask-Talisman</li>
+                                <li>Clear code structure with proper environment variable handling</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Identified security vulnerability in own implementation (unsafe-inline in CSP)</li>
+                                <li>Questionable ROGUE::AGENT track placement — this is a defensive tool</li>
+                                <li>Limited novel AI-enhanced analysis beyond wrapping existing Bandit output</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Competent engineering with Flask, Bandit integration, and OpenAI API usage. Track misalignment is deeply ironic."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. Walmart 2 -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#8</span>
+                        <span class="team-name">Walmart 2</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-high">8.1</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#aa44ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#aa44ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#aa44ff"></div></div><span class="criteria-score">8.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Automated Terraform generation for complex Active Directory infrastructure</li>
+                                <li>Comprehensive infrastructure requirements including redundant Domain Controllers</li>
+                                <li>Specific AWS configuration with region and key pair management</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Code parsing error visible in demo indicates implementation problems</li>
+                                <li>Another defensive tool misplaced in ROGUE::AGENT track</li>
+                                <li>Hardcoded credentials in requirements shows poor security practices</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Legitimate infrastructure automation but visible errors and hardcoded 'securePassword' are embarrassing for a security hackathon."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. Advanced Security Tool -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#9</span>
+                        <span class="team-name">Advanced Security Tool</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-mid">7.8</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#4488ff"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#4488ff"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Well-articulated problem statement addressing security context for thousands of applications</li>
+                                <li>Comprehensive MCP architecture integrating CI/CD, source code, docs, and AWS</li>
+                                <li>Multi-app ecosystem comparison capability</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>759s duration with heavy reliance on slides suggests more concept than implementation</li>
+                                <li>Limited evidence of actual system output beyond diagrams</li>
+                                <li>No demonstration of novel LLM insights beyond data aggregation</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Compelling vision of aggregating security context across thousands of apps, but 759 seconds of mostly slides suggests more pitch deck than prototype."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. Private Computer Use -->
+                <div class="team-card track-shadow">
+                    <div class="team-card-header">
+                        <span class="team-rank">#10</span>
+                        <span class="team-name">Private Computer Use</span>
+                        <span class="track-badge shadow">SHADOW::VECTOR</span>
+                        <span class="team-score score-mid">7.7</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#ff4444"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#ff4444"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#ff4444"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Attack Effectiveness</span><div class="criteria-track"><div class="criteria-fill" style="width:0%;background:#ff4444"></div></div><span class="criteria-score">0.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Novel privacy layer architecture intercepting screen access to redact PII</li>
+                                <li>Concrete demonstration of masking personal information with placeholder tokens</li>
+                                <li>Relevant use case addressing real privacy concerns with AI agents</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Limited technical depth shown in 362s demo</li>
+                                <li>No evidence of sophisticated PII detection beyond basic pattern matching</li>
+                                <li>Unclear how system handles complex UI elements or dynamic content</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Addresses a legitimate concern: AI agents with screen access can leak sensitive personal information."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. AI Cloud Security Analysis -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#11</span>
+                        <span class="team-name">AI Cloud Security Analysis</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-mid">7.3</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#4488ff"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#4488ff"></div></div><span class="criteria-score">6.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Natural language interface for AWS security investigation</li>
+                                <li>Integration with AWS Security Hub for compliance framework findings</li>
+                                <li>Async Python architecture with proper error handling</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Shortest demo duration (188s) suggests limited functionality</li>
+                                <li>Only VS Code screenshots visible — no actual query execution shown</li>
+                                <li>Unclear what novel analysis the LLM provides beyond querying AWS APIs</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Promises natural language AWS security investigation. 188-second demo showing only code without execution results is concerning."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. Privacy Impact Analyzer -->
+                <div class="team-card track-shadow">
+                    <div class="team-card-header">
+                        <span class="team-rank">#12</span>
+                        <span class="team-name">Privacy Impact Analyzer</span>
+                        <span class="track-badge shadow">SHADOW::VECTOR</span>
+                        <span class="team-score score-mid">7.0</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#ff4444"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#ff4444"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:80%;background:#ff4444"></div></div><span class="criteria-score">8.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Attack Effectiveness</span><div class="criteria-track"><div class="criteria-fill" style="width:0%;background:#ff4444"></div></div><span class="criteria-score">0.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Clean Python implementation with proper class structure</li>
+                                <li>Support for multiple document formats with markdown output</li>
+                                <li>MD5 content hashing for unique filename generation</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Generic document conversion utility with no demonstrated privacy analysis</li>
+                                <li>No evidence of actual PII detection or risk evaluation</li>
+                                <li>Tool name promises privacy analysis but demo shows only format conversion</li>
+                            </ul></div>
+                            <p class="team-reasoning">"A misnomer. The demo shows a DocumentConverter class — basic file format conversion with no privacy analysis."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. LAMP Monitoring Platform -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#13</span>
+                        <span class="team-name">LAMP Monitoring Platform</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-mid">6.5</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#4488ff"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:50%;background:#4488ff"></div></div><span class="criteria-score">5.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:50%;background:#4488ff"></div></div><span class="criteria-score">5.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Clear value proposition for LLM agent monitoring across deployment environments</li>
+                                <li>Comprehensive objectives covering visibility, compliance, data exposure</li>
+                                <li>Professional presentation with branded slides</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Architecture slide marks 'Threat Response' as Future Implementation</li>
+                                <li>441s spent primarily on slides rather than working demonstration</li>
+                                <li>No evidence of actual functional components beyond presentation</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Compelling vision but the architecture slide's 'Future Implementation' label is a red flag — this is a pitch for funding, not a prototype."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. Web App Security Testing -->
+                <div class="team-card track-sentinel">
+                    <div class="team-card-header">
+                        <span class="team-rank">#14</span>
+                        <span class="team-name">Web App Security Testing</span>
+                        <span class="track-badge sentinel">SENTINEL::MESH</span>
+                        <span class="team-score score-mid">6.4</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#4488ff"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:70%;background:#4488ff"></div></div><span class="criteria-score">7.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:50%;background:#4488ff"></div></div><span class="criteria-score">5.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Defense Robustness</span><div class="criteria-track"><div class="criteria-fill" style="width:40%;background:#4488ff"></div></div><span class="criteria-score">4.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Multi-agent collaboration architecture with three Expert agents</li>
+                                <li>Image analysis integration for understanding page state</li>
+                                <li>Attempt at sophisticated navigation decision-making through agent consensus</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Curl command targeting wrong port indicates configuration errors</li>
+                                <li>Agent discussion shows confusion about basic navigation decisions</li>
+                                <li>305s demo showing mostly terminal logs without successful test execution</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Agents spent 305 seconds debating whether to click Dashboard or Login — a decision that shouldn't require three AI experts."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15. Revenge AI -->
+                <div class="team-card track-rogue">
+                    <div class="team-card-header">
+                        <span class="team-rank">#15</span>
+                        <span class="team-name">Revenge AI</span>
+                        <span class="track-badge rogue">ROGUE::AGENT</span>
+                        <span class="team-score score-low">5.5</span>
+                    </div>
+                    <div class="team-details">
+                        <div class="team-details-inner">
+                            <div class="criteria-bars">
+                                <div class="criteria-bar"><span class="criteria-label">Technical Execution</span><div class="criteria-track"><div class="criteria-fill" style="width:60%;background:#aa44ff"></div></div><span class="criteria-score">6.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Innovation</span><div class="criteria-track"><div class="criteria-fill" style="width:40%;background:#aa44ff"></div></div><span class="criteria-score">4.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Demo Quality</span><div class="criteria-track"><div class="criteria-fill" style="width:50%;background:#aa44ff"></div></div><span class="criteria-score">5.0</span></div>
+                                <div class="criteria-bar"><span class="criteria-label">Originality Factor</span><div class="criteria-track"><div class="criteria-fill" style="width:40%;background:#aa44ff"></div></div><span class="criteria-score">4.0</span></div>
+                            </div>
+                            <div class="team-strengths"><h4>Strengths</h4><ul>
+                                <li>Clear UI with three distinct tabs for analysis functions</li>
+                                <li>File upload functionality accepting executables up to 200MB</li>
+                                <li>PE metadata extraction showing entropy scores</li>
+                            </ul></div>
+                            <div class="team-weaknesses"><h4>Weaknesses</h4><ul>
+                                <li>Entropy score 'close to 0' indicates minimal actual analysis</li>
+                                <li>Process details appear to be placeholder or dummy data</li>
+                                <li>255s demo showing only static UI without demonstrating any capabilities</li>
+                                <li>No evidence of AI/LLM integration despite hackathon focus</li>
+                            </ul></div>
+                            <p class="team-reasoning">"Presents a reverse engineering tool interface but provides minimal evidence of actual functionality. This is a UI mockup, not a working tool."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Deliberation Narrative -->
+            <section class="deliberation">
+                <h2 class="deliberation-title">// ARBITER DELIBERATION</h2>
+                <div class="terminal-block">
+                    <p>NEBULA:FOG 2026 revealed a field split between teams who shipped working code and teams who shipped PowerPoint fever dreams. Plan AI took the crown by actually demonstrating their research aggregation system pulling real results from Coursera and Stack Overflow &mdash; revolutionary, I know, building something that works. Nebula Fog Subprime earned respect as the only ROGUE::AGENT entry that understood the assignment: they showed a complete attack chain from AI-generated phishing content to credential harvesting, not a defensive tool wearing a fake mustache.</p>
+                    <p>The SENTINEL::MESH track suffered from chronic slideware syndrome. Advanced Security Tool burned 759 seconds on hand-drawn diagrams while LAMP Monitoring Platform explicitly labeled core features as &lsquo;Future Implementation&rsquo; &mdash; that&rsquo;s not a demo, that&rsquo;s a Kickstarter campaign. Meanwhile, half the ROGUE::AGENT entries completely misunderstood their track: Source Code Review Agent and Walmart 2 built defensive infrastructure tools and somehow thought they belonged in the offensive category. The judges aren&rsquo;t here to fix your reading comprehension.</p>
+                    <p>The technical execution gap was brutal. At the top, teams like AI Vulnerability Triage and Nebula Investigations showed proper software engineering with clean Python classes, type hints, and working integrations. At the bottom, Revenge AI displayed a UI with an entropy score &lsquo;close to 0&rsquo; that perfectly described their actual functionality. Web App Security Testing&rsquo;s agents spent 305 seconds debating whether to click Dashboard or Login &mdash; a decision that apparently requires three AI experts and still ends in failure. The delta between &lsquo;shipped working code&rsquo; and &lsquo;shipped aspirational architecture diagrams&rsquo; determined everything. Welcome to hackathons: execution is the only currency that matters.<span class="terminal-cursor"></span></p>
+                </div>
+            </section>
+
+            <!-- Notable Themes -->
+            <section class="themes">
+                <h2 class="themes-title">// NOTABLE THEMES</h2>
+                <div class="themes-grid">
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-shuffle"></i></div>
+                        <p class="theme-text">Track misalignment epidemic: Multiple ROGUE::AGENT entries submitted defensive security tools in the offensive track, suggesting fundamental misunderstanding of competition categories.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-chart-bar"></i></div>
+                        <p class="theme-text">Presentation-to-implementation ratio crisis: Longest demos relied heavily on slides while shortest showed only code without execution &mdash; inverse correlation between length and functionality.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-cloud"></i></div>
+                        <p class="theme-text">Infrastructure-as-Code dominance: Four SENTINEL::MESH teams focused on cloud infrastructure security with Terraform and AWS as primary targets, reflecting the real-world shift toward IaC.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-robot"></i></div>
+                        <p class="theme-text">Multi-agent architecture experimentation: Several teams attempted agent collaboration patterns with wildly varying success rates.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-user-shield"></i></div>
+                        <p class="theme-text">Privacy/PII handling as emerging concern: Two SHADOW::VECTOR entries addressed personal data protection with vastly different execution quality.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-check-square"></i></div>
+                        <p class="theme-text">LLM integration as checkbox feature: Many teams showed LLM API calls without demonstrating novel intelligence &mdash; simply wrapping existing tools in ChatGPT queries.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-link"></i></div>
+                        <p class="theme-text">Complete attack chain gap: Only Nebula Fog Subprime showed end-to-end offensive capability; other ROGUE::AGENT entries demonstrated isolated components without integration.</p>
+                    </div>
+                    <div class="theme-card">
+                        <div class="theme-icon"><i class="fas fa-file-alt"></i></div>
+                        <p class="theme-text">Document processing as practical application: Success correlated directly to sophistication of extraction logic beyond basic format conversion.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pull Quotes -->
+            <section class="pull-quotes">
+                <h2 class="pull-quotes-title">// THE ARBITER SAID IT BEST</h2>
+                <div class="pull-quote">
+                    <p>&ldquo;Teams who shipped working code vs teams who shipped PowerPoint fever dreams.&rdquo;</p>
+                    <cite>&mdash; Arbiter, on the field split</cite>
+                </div>
+                <div class="pull-quote">
+                    <p>&ldquo;Not a defensive tool wearing a fake mustache.&rdquo;</p>
+                    <cite>&mdash; Arbiter, on Nebula Fog Subprime&rsquo;s attack chain</cite>
+                </div>
+                <div class="pull-quote">
+                    <p>&ldquo;That&rsquo;s not a demo, that&rsquo;s a Kickstarter campaign.&rdquo;</p>
+                    <cite>&mdash; Arbiter, on LAMP Monitoring Platform</cite>
+                </div>
+                <div class="pull-quote">
+                    <p>&ldquo;Execution is the only currency that matters.&rdquo;</p>
+                    <cite>&mdash; Arbiter, final verdict</cite>
+                </div>
+            </section>
+
+            <!-- Bridge: PRIME → 2026 -->
+            <section class="bridge">
+                <div class="bridge-tag">PRIME was the warmup</div>
+                <h2 class="bridge-title">The Main Event Is Coming</h2>
+                <div class="bridge-comparison">
+                    <div class="bridge-col">
+                        <div class="bridge-col-label">PRIME 2025</div>
+                        <div class="bridge-col-value old">15 teams</div>
+                        <div class="bridge-col-label" style="margin-top:0.5rem">3 tracks</div>
+                    </div>
+                    <div class="bridge-arrow">&rarr;</div>
+                    <div class="bridge-col">
+                        <div class="bridge-col-label">NEBULA:FOG 2026</div>
+                        <div class="bridge-col-value new">100 builders</div>
+                        <div class="bridge-col-label" style="margin-top:0.5rem">4 tracks &middot; $5K+ prizes</div>
+                    </div>
+                </div>
+                <p class="bridge-text">PRIME proved the format works. Now we&rsquo;re scaling it. Four tracks including the new ZERO::PROOF cipher track. Every team demos. The Arbiter will be watching. No participation trophies.</p>
+            </section>
+
+            <!-- Register CTA -->
+            <section class="register-cta">
+                <h2 class="register-cta-title">Think you can beat Plan AI&rsquo;s 9.1?</h2>
+                <p class="register-cta-text">March 14, 2026 &middot; San Francisco &middot; Prove it.</p>
+                <a href="register.html" class="btn-register">Register Now</a>
+                <br>
+                <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener" class="btn-secondary"><i class="fas fa-play"></i> Watch PRIME Demos on YouTube</a>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
+            <p class="footer-text">AI x Security</p>
+            <nav class="footer-links">
+                <a href="about.html">MISSION</a>
+                <a href="challenges.html">CHALLENGES</a>
+                <a href="schedule.html">SCHEDULE</a>
+                <a href="register.html">REGISTER</a>
+                <a href="partners.html">PARTNERS</a>
+            </nav>
+            <p class="footer-copyright">&copy; 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>MISSION</span></a></li>
+            <li><a href="challenges.html"><i class="fas fa-trophy"></i><span>CHALLENGES</span></a></li>
+            <li><a href="schedule.html"><i class="fas fa-calendar-alt"></i><span>SCHEDULE</span></a></li>
+            <li><a href="register.html"><i class="fas fa-user-plus"></i><span>REGISTER</span></a></li>
+            <li><a href="partners.html"><i class="fas fa-handshake"></i><span>PARTNERS</span></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // CURSOR SYSTEM
+        (function() {
+            if (window.matchMedia('(max-width: 768px)').matches) return;
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            if (!cursorDot || !cursorRing) return;
+            let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, ringX = 0, ringY = 0;
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            const animate = () => {
+                dotX += (mouseX - dotX) * 0.5; dotY += (mouseY - dotY) * 0.5;
+                ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+                cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px';
+                cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+                requestAnimationFrame(animate);
+            };
+            animate();
+            document.querySelectorAll('a, button, .team-card-header, .theme-card, .yt-cta a').forEach(el => {
+                el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+            });
+            document.addEventListener('mousedown', () => cursorRing.classList.add('clicking'));
+            document.addEventListener('mouseup', () => cursorRing.classList.remove('clicking'));
+        })();
+
+        // PARTICLES SYSTEM
+        (function() {
+            if (window.matchMedia('(max-width: 768px)').matches) return;
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) { initParticles2D(canvas); return; }
+            const vsSource = `attribute vec4 aPosition; void main() { gl_Position = aPosition; }`;
+            const fsSource = `precision mediump float;
+                uniform vec2 uResolution; uniform float uTime; uniform vec2 uMouse; uniform float uScroll;
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                float snoise(vec2 v) {
+                    const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                    vec2 i = floor(v + dot(v, C.yy)); vec2 x0 = v - i + dot(i, C.xx);
+                    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                    vec4 x12 = x0.xyxy + C.xxzz; x12.xy -= i1; i = mod289(i);
+                    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+                    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                    m = m*m; m = m*m;
+                    vec3 x = 2.0 * fract(p * C.www) - 1.0; vec3 h = abs(x) - 0.5;
+                    vec3 ox = floor(x + 0.5); vec3 a0 = x - ox;
+                    m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+                    vec3 g; g.x = a0.x * x0.x + h.x * x0.y; g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                    return 130.0 * dot(m, g);
+                }
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / uResolution; vec2 p = uv * 2.0 - 1.0;
+                    p.x *= uResolution.x / uResolution.y;
+                    vec2 mouse = uMouse * 2.0 - 1.0; mouse.x *= uResolution.x / uResolution.y;
+                    float mouseDist = length(p - mouse); float mouseInfluence = smoothstep(0.8, 0.0, mouseDist) * 0.3;
+                    float t = uTime * 0.15; float scrollOffset = uScroll * 2.0;
+                    float noise1 = snoise(p * 1.5 + vec2(t, scrollOffset));
+                    float noise2 = snoise(p * 3.0 + vec2(-t * 0.5, scrollOffset * 0.5));
+                    float noise3 = snoise(p * 5.0 + vec2(t * 0.3, -scrollOffset * 0.3));
+                    float n = noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2; n = n * 0.5 + 0.5;
+                    vec3 colorA = vec3(0.0, 1.0, 0.62); vec3 colorB = vec3(1.0, 0.0, 0.5); vec3 colorC = vec3(0.0, 1.0, 1.0);
+                    vec3 color = mix(colorA, colorB, n * 0.5 + mouseInfluence); color = mix(color, colorC, noise3 * 0.3);
+                    float vignette = clamp(1.0 - length(p) * 0.4, 0.0, 1.0);
+                    vec2 grid = fract(uv * vec2(50.0, 30.0)); float gridLine = (step(0.95, grid.x) + step(0.95, grid.y)) * 0.03;
+                    float alpha = clamp((n * 0.08 + gridLine + mouseInfluence * 0.2) * vignette, 0.0, 0.15);
+                    gl_FragColor = vec4(color, alpha);
+                }`;
+            const compileShader = (source, type) => {
+                const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader);
+                return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
+            };
+            const vs = compileShader(vsSource, gl.VERTEX_SHADER);
+            const fs = compileShader(fsSource, gl.FRAGMENT_SHADER);
+            if (!vs || !fs) { initParticles2D(canvas); return; }
+            const program = gl.createProgram(); gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { initParticles2D(canvas); return; }
+            gl.useProgram(program);
+            const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+            const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            const aPosition = gl.getAttribLocation(program, 'aPosition'); gl.enableVertexAttribArray(aPosition); gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+            const uResolution = gl.getUniformLocation(program, 'uResolution');
+            const uTime = gl.getUniformLocation(program, 'uTime');
+            const uMouse = gl.getUniformLocation(program, 'uMouse');
+            const uScroll = gl.getUniformLocation(program, 'uScroll');
+            let mouseX = 0.5, mouseY = 0.5, scrollProgress = 0;
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX / window.innerWidth; mouseY = 1.0 - e.clientY / window.innerHeight; });
+            window.addEventListener('scroll', () => { scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight); }, { passive: true });
+            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; gl.viewport(0, 0, canvas.width, canvas.height); };
+            resize(); window.addEventListener('resize', resize);
+            gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+            const startTime = performance.now();
+            const animate = () => {
+                const time = (performance.now() - startTime) / 1000;
+                gl.uniform2f(uResolution, canvas.width, canvas.height); gl.uniform1f(uTime, time);
+                gl.uniform2f(uMouse, mouseX, mouseY); gl.uniform1f(uScroll, scrollProgress);
+                gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(animate);
+            };
+            animate();
+        })();
+        function initParticles2D(canvas) {
+            const ctx = canvas.getContext('2d'); let particles = []; const maxParticles = 60;
+            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+            resize(); window.addEventListener('resize', resize);
+            class Particle {
+                constructor() { this.reset(); }
+                reset() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5; this.size = Math.random() * 2 + 1; this.alpha = Math.random() * 0.5 + 0.1; }
+                update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset(); }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = `rgba(0, 255, 159, ${this.alpha})`; ctx.fill(); }
+            }
+            for (let i = 0; i < maxParticles; i++) particles.push(new Particle());
+            const animate = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(0, 255, 159, ${0.1 * (1 - dist / 120)})`; ctx.stroke(); }
+                    }
+                }
+                requestAnimationFrame(animate);
+            };
+            animate();
+        }
+
+        // GSAP ANIMATIONS
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Stats section
+            gsap.to('.stats-section', {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: '.stats-section', start: 'top 85%' }
+            });
+
+            // Leaderboard rows
+            gsap.to('.leaderboard tbody tr', {
+                opacity: 1, y: 0, duration: 0.4, stagger: 0.05, ease: 'power2.out',
+                scrollTrigger: { trigger: '.leaderboard', start: 'top 80%' }
+            });
+
+            // Team cards
+            gsap.to('.team-card', {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+                scrollTrigger: { trigger: '.team-cards', start: 'top 80%' }
+            });
+
+            // Deliberation terminal block
+            gsap.to('.terminal-block', {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: '.deliberation', start: 'top 80%' }
+            });
+
+            // Theme cards
+            gsap.to('.theme-card', {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
+                scrollTrigger: { trigger: '.themes', start: 'top 80%' }
+            });
+
+            // Podium cards
+            gsap.to('.podium-card', {
+                opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out',
+                scrollTrigger: { trigger: '.podium', start: 'top 80%' }
+            });
+
+            // Pull quotes
+            gsap.to('.pull-quote', {
+                opacity: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power2.out',
+                scrollTrigger: { trigger: '.pull-quotes', start: 'top 80%' }
+            });
+
+            // Bridge section
+            gsap.to('.bridge', {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: '.bridge', start: 'top 80%' }
+            });
+
+            // Register CTA
+            gsap.to('.register-cta', {
+                opacity: 1, y: 0, duration: 0.8, ease: 'power2.out',
+                scrollTrigger: { trigger: '.register-cta', start: 'top 85%' }
+            });
+        });
+
+        // TEAM CARD TOGGLE
+        document.querySelectorAll('.team-card-header').forEach(function(header) {
+            header.addEventListener('click', function() {
+                var card = this.parentElement;
+                card.classList.toggle('expanded');
+            });
+        });
+
+        // STICKY CTA
+        (function() {
+            var badge = document.getElementById('sticky-days-left');
+            if (!badge) return;
+            var eventDate = new Date('2026-03-14T08:30:00-07:00');
+            var now = new Date();
+            var days = Math.ceil((eventDate - now) / (1000 * 60 * 60 * 24));
+            if (days > 0) badge.textContent = days + 'd left';
+            else badge.textContent = 'TODAY';
+        })();
+
+        // PAGE TRANSITIONS
+        document.querySelectorAll('a[href]').forEach(function(link) {
+            if (link.hostname === window.location.hostname && !link.hash) {
+                link.addEventListener('click', function(e) {
+                    var overlay = document.querySelector('.page-transition-overlay');
+                    if (overlay) {
+                        e.preventDefault();
+                        var href = this.href;
+                        overlay.classList.add('fade-out');
+                        setTimeout(function() { window.location = href; }, 300);
+                    }
+                });
+            }
+        });
+    </script>
+    <div class="page-transition-overlay"></div>
+</body>
+
+</html>
