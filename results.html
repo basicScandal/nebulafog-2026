@@ -72,6 +72,23 @@
         /* Container */
         .container { max-width: 1000px; }
 
+        /* Arbiter icon */
+        .arbiter-icon { display: block; margin: 0 auto 2rem; width: 120px; height: 120px; filter: drop-shadow(0 0 20px rgba(0,255,159,0.4)) drop-shadow(0 0 40px rgba(0,255,159,0.15)); }
+        .arbiter-icon .eye-outer { fill: none; stroke: var(--color-primary); stroke-width: 1.5; }
+        .arbiter-icon .eye-iris { fill: none; stroke: var(--color-primary); stroke-width: 1; }
+        .arbiter-icon .eye-pupil { fill: var(--color-primary); }
+        .arbiter-icon .circuit { fill: none; stroke: var(--color-primary); stroke-width: 0.8; opacity: 0.5; }
+        .arbiter-icon .circuit-dot { fill: var(--color-primary); opacity: 0.6; }
+        .arbiter-icon .scan-line { fill: none; stroke: var(--color-secondary); stroke-width: 0.5; opacity: 0; }
+        @keyframes arbiter-pulse { 0%, 100% { opacity: 0.4; filter: drop-shadow(0 0 20px rgba(0,255,159,0.4)); } 50% { opacity: 1; filter: drop-shadow(0 0 30px rgba(0,255,159,0.6)) drop-shadow(0 0 60px rgba(0,255,159,0.2)); } }
+        @keyframes arbiter-scan { 0% { opacity: 0; stroke-dashoffset: 60; } 30% { opacity: 0.6; } 70% { opacity: 0.6; } 100% { opacity: 0; stroke-dashoffset: -60; } }
+        @keyframes arbiter-pupil-pulse { 0%, 100% { r: 4; } 50% { r: 5; } }
+        .arbiter-icon { animation: arbiter-pulse 4s ease-in-out infinite; }
+        .arbiter-icon .scan-line { stroke-dasharray: 30 90; animation: arbiter-scan 3s ease-in-out infinite; }
+        .arbiter-icon .scan-line:nth-child(2) { animation-delay: 1s; }
+        .arbiter-icon .scan-line:nth-child(3) { animation-delay: 2s; }
+        .arbiter-icon .eye-pupil { animation: arbiter-pupil-pulse 4s ease-in-out infinite; }
+
         /* Page header */
         .page-tag { margin-bottom: 2rem; }
         .page-title { font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 1.5rem; }
@@ -357,10 +374,45 @@
     <main class="main">
         <div class="container">
             <header class="page-header">
+                <svg class="arbiter-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer hexagonal frame -->
+                    <polygon class="eye-outer" points="60,8 104,30 104,74 60,96 16,74 16,30" stroke-linejoin="round"/>
+                    <polygon class="eye-outer" points="60,16 96,34 96,70 60,88 24,70 24,34" stroke-linejoin="round" opacity="0.3"/>
+                    <!-- Eye shape -->
+                    <path class="eye-outer" d="M28,52 Q60,24 92,52 Q60,80 28,52 Z" stroke-width="2"/>
+                    <!-- Iris rings -->
+                    <circle class="eye-iris" cx="60" cy="52" r="14"/>
+                    <circle class="eye-iris" cx="60" cy="52" r="10" opacity="0.6"/>
+                    <!-- Pupil -->
+                    <circle class="eye-pupil" cx="60" cy="52" r="4"/>
+                    <!-- Scanning lines -->
+                    <line class="scan-line" x1="28" y1="52" x2="92" y2="52"/>
+                    <line class="scan-line" x1="60" y1="24" x2="60" y2="80"/>
+                    <line class="scan-line" x1="36" y1="34" x2="84" y2="70"/>
+                    <!-- Circuit traces extending from eye -->
+                    <path class="circuit" d="M28,52 L16,52 L16,44 L8,44"/>
+                    <path class="circuit" d="M92,52 L104,52 L104,44 L112,44"/>
+                    <path class="circuit" d="M60,80 L60,88 L52,96"/>
+                    <path class="circuit" d="M60,80 L60,88 L68,96"/>
+                    <path class="circuit" d="M60,24 L60,16 L52,8"/>
+                    <path class="circuit" d="M60,24 L60,16 L68,8"/>
+                    <!-- Circuit nodes -->
+                    <circle class="circuit-dot" cx="8" cy="44" r="2"/>
+                    <circle class="circuit-dot" cx="112" cy="44" r="2"/>
+                    <circle class="circuit-dot" cx="52" cy="96" r="2"/>
+                    <circle class="circuit-dot" cx="68" cy="96" r="2"/>
+                    <circle class="circuit-dot" cx="52" cy="8" r="2"/>
+                    <circle class="circuit-dot" cx="68" cy="8" r="2"/>
+                    <!-- Corner brackets -->
+                    <path class="circuit" d="M20,20 L28,20 M20,20 L20,28" opacity="0.3"/>
+                    <path class="circuit" d="M100,20 L92,20 M100,20 L100,28" opacity="0.3"/>
+                    <path class="circuit" d="M20,84 L28,84 M20,84 L20,76" opacity="0.3"/>
+                    <path class="circuit" d="M100,84 L92,84 M100,84 L100,76" opacity="0.3"/>
+                </svg>
                 <span class="page-tag">NEBULA:FOG:PRIME // 2025 RESULTS</span>
                 <h1 class="page-title">ARBITER SCOREBOARD</h1>
-                <p class="page-subtitle">In late 2025, we ran NEBULA:FOG:PRIME &mdash; a pilot event where 15 teams built AI x Security tools and demoed them live. Then we did something different: we fed every demo video to an AI judge with the personality of Simon Cowell at a hacker convention. It watched every frame, read every transcript, and scored each team with zero mercy and zero politics.</p>
-                <p class="page-subtitle" style="margin-top: 1rem;">Below are the full, unfiltered results &mdash; the scoreboard, per-team breakdowns, the Arbiter&rsquo;s deliberation, and what it all means for the main event in March 2026. PRIME didn&rsquo;t have formal tracks &mdash; the Arbiter retroactively categorized each demo into the 2026 track framework (ROGUE::AGENT, SENTINEL::MESH, SHADOW::VECTOR) to preview how its scoring will work live.</p>
+                <p class="page-subtitle">In January 2025, we ran NEBULA:FOG:PRIME &mdash; a pilot hackathon where 15 teams built AI x Security tools and demoed them live. Then we built something new for 2026: an AI judge called The Arbiter. We pointed it at every PRIME demo video to see what it would do. It watched every frame, read every transcript, and scored each team with zero mercy and zero politics.</p>
+                <p class="page-subtitle" style="margin-top: 1rem;">Below are the full, unfiltered results &mdash; the scoreboard, per-team breakdowns, The Arbiter&rsquo;s deliberation, and what it all means for the main event in March 2026. PRIME didn&rsquo;t have formal tracks &mdash; The Arbiter retroactively categorized each demo into the 2026 track framework (ROGUE::AGENT, SENTINEL::MESH, SHADOW::VECTOR) to preview how its scoring will work live.</p>
             </header>
 
             <!-- Stats -->
@@ -1159,6 +1211,11 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
             gsap.registerPlugin(ScrollTrigger);
+
+            // Page header
+            gsap.to('.page-header', {
+                opacity: 1, y: 0, duration: 1, ease: 'power2.out'
+            });
 
             // Stats section
             gsap.to('.stats-section', {
