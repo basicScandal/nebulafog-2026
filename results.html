@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>PRIME Results | NEBULA:FOG 2026 AI Security Hackathon</title>
+    <title>PRIME 2025 Results | NEBULA:FOG AI Security Hackathon</title>
     <meta name="description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
 
     <!-- Content Security Policy -->
@@ -12,7 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="PRIME Results | NEBULA:FOG 2026 AI Security Hackathon">
+    <meta property="og:title" content="PRIME 2025 Results | NEBULA:FOG AI Security Hackathon">
     <meta property="og:description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
     <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PRIME Results | NEBULA:FOG 2026 AI Security Hackathon">
+    <meta name="twitter:title" content="PRIME 2025 Results | NEBULA:FOG AI Security Hackathon">
     <meta name="twitter:description" content="Results from NEBULA:FOG:PRIME 2025 demo scoring. 15 teams ranked by the Arbiter AI judge across Technical Execution, Innovation, Demo Quality, and track-specific criteria.">
     <meta name="twitter:image" content="https://nebulafog.ai/images/og-image.png">
 
@@ -263,17 +263,56 @@
            RESPONSIVE
            ======================================== */
         @media (max-width: 768px) {
+            /* Layout */
+            .container { padding-inline: 1rem; }
+            .page-title { font-size: clamp(1.75rem, 8vw, 2.5rem); }
+            .page-subtitle { font-size: 0.9rem; }
+
+            /* Stats */
+            .stats-section { padding: 1.5rem; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-            .leaderboard { overflow-x: auto; }
-            .themes-grid { grid-template-columns: 1fr; }
-            .team-card-header { flex-wrap: wrap; gap: 0.5rem; }
-            .criteria-label { min-width: 100px; font-size: 0.65rem; }
+            .stat-value { font-size: clamp(1.5rem, 8vw, 2.5rem); }
+
+            /* Podium */
             .podium-grid { grid-template-columns: 1fr; }
             .podium-card.gold { order: 0; }
             .podium-card.silver { order: 1; }
             .podium-card.bronze { order: 2; }
+            .podium-card { padding: 1.5rem; }
+            .podium-card.gold { padding: 1.5rem; }
+
+            /* Leaderboard */
+            .leaderboard { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .leaderboard table { min-width: 500px; }
+
+            /* Team cards */
+            .team-card-header { flex-wrap: wrap; gap: 0.5rem; padding: 0.75rem 1rem; }
+            .team-name { font-size: 0.85rem; }
+            .team-details-inner { padding: 0 1rem 1rem; }
+            .criteria-label { min-width: 90px; font-size: 0.65rem; }
+            .team-card.expanded .team-details { max-height: 1200px; }
+
+            /* Deliberation */
+            .terminal-block { padding: 1.25rem; font-size: 0.8rem; }
+
+            /* Themes */
+            .themes-grid { grid-template-columns: 1fr; }
+
+            /* Pull quotes */
+            .pull-quote { padding: 1rem 1.25rem; }
+            .pull-quote p { font-size: 0.85rem; }
+
+            /* Bridge */
+            .bridge { padding: 2rem 1.5rem; }
             .bridge-comparison { grid-template-columns: 1fr; gap: 1rem; }
             .bridge-arrow { transform: rotate(90deg); }
+            .bridge-col-value { font-size: clamp(1.25rem, 5vw, 2rem); }
+
+            /* Register CTA */
+            .register-cta { padding: 2.5rem 1.5rem; }
+            .register-cta .btn-register { padding: 0.85rem 2rem; font-size: 0.9rem; }
+
+            /* Footer */
             .footer-links { gap: 0.75rem 1rem; }
             .footer-links a { font-size: 0.6rem; }
         }
@@ -316,18 +355,19 @@
     <main class="main">
         <div class="container">
             <header class="page-header">
-                <span class="page-tag">PRIME RESULTS // 2025</span>
+                <span class="page-tag">NEBULA:FOG:PRIME // 2025 RESULTS</span>
                 <h1 class="page-title">ARBITER SCOREBOARD</h1>
-                <p class="page-subtitle">We fed 15 demo videos to an AI judge with the personality of Simon Cowell at a hacker convention. It watched every frame, read every transcript, and scored each team with zero mercy and zero politics. These are the unfiltered results.</p>
+                <p class="page-subtitle">In late 2025, we ran NEBULA:FOG:PRIME &mdash; a pilot event where 15 teams built AI x Security tools and demoed them live. Then we did something different: we fed every demo video to an AI judge with the personality of Simon Cowell at a hacker convention. It watched every frame, read every transcript, and scored each team with zero mercy and zero politics.</p>
+                <p class="page-subtitle" style="margin-top: 1rem;">Below are the full, unfiltered results &mdash; the scoreboard, per-team breakdowns, the Arbiter&rsquo;s deliberation, and what it all means for the main event in March 2026.</p>
             </header>
 
             <!-- Stats -->
             <section class="stats-section">
                 <div class="stats-grid">
-                    <div class="stat-item"><span class="stat-value">15</span><span class="stat-label">PRIME DEMOS</span></div>
-                    <div class="stat-item"><span class="stat-value">100</span><span class="stat-label">BUILDERS IN 2026</span></div>
-                    <div class="stat-item"><span class="stat-value">4</span><span class="stat-label">TRACKS IN 2026</span></div>
-                    <div class="stat-item"><span class="stat-value">$5K+</span><span class="stat-label">IN PRIZES</span></div>
+                    <div class="stat-item"><span class="stat-value">15</span><span class="stat-label">DEMOS SCORED</span></div>
+                    <div class="stat-item"><span class="stat-value">7.6</span><span class="stat-label">AVG SCORE</span></div>
+                    <div class="stat-item"><span class="stat-value">3</span><span class="stat-label">TRACKS</span></div>
+                    <div class="stat-item"><span class="stat-value">1</span><span class="stat-label">AI JUDGE</span></div>
                 </div>
             </section>
 
@@ -860,7 +900,7 @@
             <section class="deliberation">
                 <h2 class="deliberation-title">// ARBITER DELIBERATION</h2>
                 <div class="terminal-block">
-                    <p>NEBULA:FOG 2026 revealed a field split between teams who shipped working code and teams who shipped PowerPoint fever dreams. Plan AI took the crown by actually demonstrating their research aggregation system pulling real results from Coursera and Stack Overflow &mdash; revolutionary, I know, building something that works. Nebula Fog Subprime earned respect as the only ROGUE::AGENT entry that understood the assignment: they showed a complete attack chain from AI-generated phishing content to credential harvesting, not a defensive tool wearing a fake mustache.</p>
+                    <p>NEBULA:FOG:PRIME revealed a field split between teams who shipped working code and teams who shipped PowerPoint fever dreams. Plan AI took the crown by actually demonstrating their research aggregation system pulling real results from Coursera and Stack Overflow &mdash; revolutionary, I know, building something that works. Nebula Fog Subprime earned respect as the only ROGUE::AGENT entry that understood the assignment: they showed a complete attack chain from AI-generated phishing content to credential harvesting, not a defensive tool wearing a fake mustache.</p>
                     <p>The SENTINEL::MESH track suffered from chronic slideware syndrome. Advanced Security Tool burned 759 seconds on hand-drawn diagrams while LAMP Monitoring Platform explicitly labeled core features as &lsquo;Future Implementation&rsquo; &mdash; that&rsquo;s not a demo, that&rsquo;s a Kickstarter campaign. Meanwhile, half the ROGUE::AGENT entries completely misunderstood their track: Source Code Review Agent and Walmart 2 built defensive infrastructure tools and somehow thought they belonged in the offensive category. The judges aren&rsquo;t here to fix your reading comprehension.</p>
                     <p>The technical execution gap was brutal. At the top, teams like AI Vulnerability Triage and Nebula Investigations showed proper software engineering with clean Python classes, type hints, and working integrations. At the bottom, Revenge AI displayed a UI with an entropy score &lsquo;close to 0&rsquo; that perfectly described their actual functionality. Web App Security Testing&rsquo;s agents spent 305 seconds debating whether to click Dashboard or Login &mdash; a decision that apparently requires three AI experts and still ends in failure. The delta between &lsquo;shipped working code&rsquo; and &lsquo;shipped aspirational architecture diagrams&rsquo; determined everything. Welcome to hackathons: execution is the only currency that matters.<span class="terminal-cursor"></span></p>
                 </div>
@@ -943,7 +983,7 @@
                         <div class="bridge-col-label" style="margin-top:0.5rem">4 tracks &middot; $5K+ prizes</div>
                     </div>
                 </div>
-                <p class="bridge-text">PRIME proved the format works. Now we&rsquo;re scaling it. Four tracks including the new ZERO::PROOF cipher track. Every team demos. The Arbiter will be watching. No participation trophies.</p>
+                <p class="bridge-text">PRIME proved the format works. The Arbiter that scored these demos is going live at the main event. Four tracks including the new ZERO::PROOF cipher track. Every team demos. Real-time scoring. No participation trophies.</p>
             </section>
 
             <!-- Register CTA -->
