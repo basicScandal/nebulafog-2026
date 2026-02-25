@@ -297,39 +297,40 @@
                 </p>
             </header>
 
-            <!-- Sponsor Logos (HIDDEN - Reveals when SPONSORS array has data) -->
-            <section id="sponsor-logos" style="display: none; margin-bottom: 4rem; opacity: 0; transform: translateY(40px);">
+            <!-- Sponsor Logos -->
+            <section id="sponsor-logos" style="margin-bottom: 4rem; opacity: 0; transform: translateY(40px);">
                 <h2 style="font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-text);">OUR PARTNERS</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Organizations powering the future of AI security.</p>
+                <p style="color: var(--color-text-muted); margin-bottom: 3rem;">Organizations powering the future of AI security.</p>
 
-                <!-- Tier 1: Platinum -->
-                <div id="sponsors-platinum" style="display: none; margin-bottom: 3rem;">
-                    <h3 style="font-size: 0.75rem; color: var(--color-primary); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">PLATINUM PARTNERS</h3>
-                    <div class="sponsor-grid-platinum" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; align-items: center; justify-items: center;">
+                <!-- Tier 1: QPU -->
+                <div id="sponsors-qpu" style="display: none; margin-bottom: 4rem;">
+                    <div class="tier-label" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.8rem; color: var(--color-primary); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;">QPU_TIER</h3>
+                        <div style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--color-primary), transparent);"></div>
+                    </div>
+                    <div class="sponsor-grid sponsor-grid-qpu" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; align-items: center; justify-items: center;">
                         <!-- Populated by JS -->
                     </div>
                 </div>
 
-                <!-- Tier 2: Gold -->
-                <div id="sponsors-gold" style="display: none; margin-bottom: 3rem;">
-                    <h3 style="font-size: 0.75rem; color: #ffd700; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">GOLD PARTNERS</h3>
-                    <div class="sponsor-grid-gold" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; align-items: center; justify-items: center;">
+                <!-- Tier 2: GPU -->
+                <div id="sponsors-gpu" style="display: none; margin-bottom: 4rem;">
+                    <div class="tier-label" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.8rem; color: var(--color-secondary); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;">GPU_TIER</h3>
+                        <div style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--color-secondary), transparent);"></div>
+                    </div>
+                    <div class="sponsor-grid sponsor-grid-gpu" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; align-items: center; justify-items: center;">
                         <!-- Populated by JS -->
                     </div>
                 </div>
 
-                <!-- Tier 3: Silver -->
-                <div id="sponsors-silver" style="display: none; margin-bottom: 3rem;">
-                    <h3 style="font-size: 0.75rem; color: #c0c0c0; letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">SILVER PARTNERS</h3>
-                    <div class="sponsor-grid-silver" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; align-items: center; justify-items: center;">
-                        <!-- Populated by JS -->
+                <!-- Tier 3: CPU -->
+                <div id="sponsors-cpu" style="display: none;">
+                    <div class="tier-label" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.8rem; color: var(--color-accent); letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap;">CPU_TIER</h3>
+                        <div style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--color-accent), transparent);"></div>
                     </div>
-                </div>
-
-                <!-- Tier 4: Community -->
-                <div id="sponsors-community" style="display: none;">
-                    <h3 style="font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.15em; margin-bottom: 1.5rem; text-transform: uppercase;">COMMUNITY PARTNERS</h3>
-                    <div class="sponsor-grid-community" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; align-items: center; justify-items: center;">
+                    <div class="sponsor-grid sponsor-grid-cpu" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; align-items: center; justify-items: center;">
                         <!-- Populated by JS -->
                     </div>
                 </div>
@@ -507,24 +508,27 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             // ============================================
-            // SPONSOR DATA - Populate when sponsors confirm
+            // SPONSOR DATA
+            // Tiers: QPU (top), GPU (mid), CPU (base)
             // ============================================
             const SPONSORS = {
-                platinum: [
-                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                qpu: [
+                    { name: 'White Rabbit', logo: '/images/sponsors/whiterabbit.png', url: 'https://whiterabbit.vc', logoHeight: '100px' },
                 ],
-                gold: [
-                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                gpu: [
+                    { name: 'Straiker', logo: '/images/sponsors/straiker.png', url: 'https://www.straiker.ai' },
+                    { name: 'SentinelOne', logo: '/images/sponsors/sentinelone.svg', url: 'https://www.sentinelone.com' },
+                    { name: 'Clearly AI', logo: '/images/sponsors/clearlyai.png', url: 'https://clearly-ai.com', invert: true },
                 ],
-                silver: [
-                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
-                ],
-                community: [
-                    // { name: 'Company Name', logo: '/images/sponsors/company.png', url: 'https://company.com' }
+                cpu: [
+                    { name: 'VerSprite', logo: '/images/sponsors/versprite.svg', url: 'https://versprite.com', logoHeight: '72px' },
+                    { name: 'XBOW', logo: '/images/sponsors/xbow.svg', url: 'https://xbow.com', logoHeight: '28px' },
                 ]
             };
 
-            // Render sponsor logos if data exists
+            // Logo height per tier (larger = more prominent)
+            const TIER_LOGO_HEIGHT = { qpu: '72px', gpu: '48px', cpu: '48px' };
+
             function renderSponsors() {
                 const section = document.getElementById('sponsor-logos');
                 let hasAnySponsors = false;
@@ -534,25 +538,55 @@
                         hasAnySponsors = true;
                         const tierSection = document.getElementById(`sponsors-${tier}`);
                         const grid = tierSection.querySelector(`.sponsor-grid-${tier}`);
+                        const tierLogoHeight = TIER_LOGO_HEIGHT[tier] || '48px';
 
                         sponsors.forEach(sponsor => {
+                            const logoHeight = sponsor.logoHeight || tierLogoHeight;
                             const link = document.createElement('a');
                             link.href = sponsor.url;
                             link.target = '_blank';
                             link.rel = 'noopener noreferrer';
                             link.title = sponsor.name;
-                            link.style.cssText = 'transition: all 0.3s ease; opacity: 0.8;';
-                            link.onmouseover = () => { link.style.opacity = '1'; link.style.transform = 'scale(1.05)'; };
-                            link.onmouseout = () => { link.style.opacity = '0.8'; link.style.transform = 'scale(1)'; };
+                            link.style.cssText = `
+                                display: flex; align-items: center; justify-content: center;
+                                padding: 1.5rem 2rem;
+                                transition: all 0.4s var(--ease-out-expo);
+                                opacity: 0.85;
+                            `;
+                            link.onmouseover = () => {
+                                link.style.opacity = '1';
+                            };
+                            link.onmouseout = () => {
+                                link.style.opacity = '0.85';
+                            };
 
-                            const img = document.createElement('img');
-                            img.src = sponsor.logo;
-                            img.alt = sponsor.name;
-                            img.style.cssText = 'max-width: 100%; height: auto; filter: grayscale(100%) brightness(1.2); transition: filter 0.3s ease;';
-                            img.onmouseover = () => { img.style.filter = 'grayscale(0%) brightness(1)'; };
-                            img.onmouseout = () => { img.style.filter = 'grayscale(100%) brightness(1.2)'; };
+                            if (sponsor.logo) {
+                                const img = document.createElement('img');
+                                img.src = sponsor.logo;
+                                img.alt = sponsor.name;
+                                img.loading = 'lazy';
+                                const defaultFilter = sponsor.invert
+                                    ? 'invert(1) grayscale(100%) brightness(1.5)'
+                                    : 'grayscale(100%) brightness(1.5)';
+                                const hoverFilter = sponsor.invert
+                                    ? 'invert(0) grayscale(0%) brightness(1)'
+                                    : 'grayscale(0%) brightness(1)';
+                                img.style.cssText = `max-width: 100%; height: ${logoHeight}; object-fit: contain; filter: ${defaultFilter}; transition: filter 0.4s ease;`;
+                                img.onmouseover = () => { img.style.filter = hoverFilter; };
+                                img.onmouseout = () => { img.style.filter = defaultFilter; };
+                                link.appendChild(img);
+                            } else {
+                                // Placeholder when no logo yet
+                                const placeholder = document.createElement('div');
+                                placeholder.style.cssText = `
+                                    height: ${logoHeight}; display: flex; align-items: center; justify-content: center;
+                                    font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-text-muted);
+                                    letter-spacing: 0.1em; text-transform: uppercase;
+                                `;
+                                placeholder.textContent = sponsor.name;
+                                link.appendChild(placeholder);
+                            }
 
-                            link.appendChild(img);
                             grid.appendChild(link);
                         });
 
