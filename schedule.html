@@ -679,14 +679,14 @@
             // VENUE DATA - Populate when venue confirmed
             // ============================================
             const VENUE = {
-                // name: 'Venue Name',
-                // address: '123 Main St, San Francisco, CA 94105',
-                // mapsUrl: 'https://maps.google.com/?q=...',
-                // info: [
-                //     'Street parking available',
-                //     'Nearest BART: Montgomery St',
-                //     'Accessible entrance on Main St'
-                // ]
+                name: 'FutureHouse',
+                address: '1405 Minnesota St, San Francisco, CA 94107',
+                mapsUrl: 'https://w3w.co/looks.comet.gaps',
+                info: [
+                    'Dogpatch neighborhood',
+                    '1405 Minnesota St, San Francisco, CA 94107',
+                    '<a href="https://w3w.co/looks.comet.gaps" target="_blank" rel="noopener" style="color: var(--color-primary);">///looks.comet.gaps</a>'
+                ]
             };
 
             // Render judges if data exists
@@ -776,7 +776,9 @@
                         icon.className = 'fas fa-check';
                         icon.style.cssText = 'color: var(--color-primary); margin-right: 0.5rem; font-size: 0.7rem;';
                         li.appendChild(icon);
-                        li.appendChild(document.createTextNode(item));
+                        const span = document.createElement('span');
+                        span.innerHTML = item;
+                        li.appendChild(span);
                         list.appendChild(li);
                     });
                 }
