@@ -287,7 +287,7 @@ All emails consolidated to: **admin@nebulafog.ai**
 | `https://dub.sh/nf-register` | Luma registration | register.html |
 | `https://dub.sh/nf-afterparty` | After-party RSVP | schedule.html, register.html |
 | `https://www.youtube.com/@NEBULAFOG` | 2025 demo videos | about.html |
-| `https://synthetix.bandcamp.com/album/ominous-data` | DJ music link | schedule.html |
+| `https://www.instagram.com/saraafsharmusic` | Musical performer Instagram | schedule.html |
 
 ---
 

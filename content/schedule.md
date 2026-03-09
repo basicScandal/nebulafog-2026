@@ -18,10 +18,10 @@ A full day of innovation, learning, and collaboration at the intersection of AI 
 | 17:00 | Lightning Neural Transmissions | 15-minute project presentations | zap |
 | 18:30 | Achievement Recognition | Awards ceremony with tech prizes | award |
 | 19:00 | Neural Celebration | Dinner & closing panel | pizza |
-| 21:30 | Quantum Afterparty | Featuring sounds by Synthetix | music |
+| 21:30 | Quantum Afterparty | Featuring a musical performance by Sara Afshar | music |
 
 ---
 
 ## Afterparty
-Experience the future with sounds by Synthetix
-**Listen**: https://synthetix.bandcamp.com/album/ominous-data
+Featuring a musical performance by Sara Afshar
+**Instagram**: https://www.instagram.com/saraafsharmusic?igsh=NTc4MTIwNjQ2YQ%3D%3D

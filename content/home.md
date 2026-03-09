@@ -4,7 +4,7 @@
 - **Date**: January 25, 2025
 - **Location**: Future House, San Francisco
 - **Time**: 8:00 AM - 9:30 PM
-- **After-Party**: 9:30 PM onwards featuring sounds by Synthetix
+- **After-Party**: 9:30 PM onwards featuring a musical performance by Sara Afshar
 
 ## Tagline
 The Year of Agents begins here. Where AI meets Security.
@@ -54,4 +54,4 @@ Join us for the Bay Area's premier AI x Security hackathon. Build the future of 
 - **Date**: January 25, 2025
 - **Venue**: Future House, 1405 Minnesota St, San Francisco, CA 94107
 - **Time**: 8:00 AM - 9:30 PM
-- **After-Party**: 9:30 PM onwards featuring sounds by [Synthetix](https://synthetix.bandcamp.com/album/ominous-data)
+- **After-Party**: 9:30 PM onwards featuring a musical performance by [Sara Afshar](https://www.instagram.com/saraafsharmusic?igsh=NTc4MTIwNjQ2YQ%3D%3D)

@@ -22,8 +22,8 @@
 ## Event Details
 - **time**: 8:00 AM - 9:30 PM
 - **after_party**: 9:30 PM onwards
-- **after_party_dj**: Synthetix
-- **after_party_link**: https://synthetix.bandcamp.com/album/ominous-data
+- **after_party_performer**: Sara Afshar
+- **after_party_link**: https://www.instagram.com/saraafsharmusic?igsh=NTc4MTIwNjQ2YQ%3D%3D
 
 ## Registration
 - **registration_url**: https://partiful.com/e/HdFLRv5PQgspHg8SwL1z
