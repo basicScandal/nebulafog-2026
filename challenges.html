@@ -2151,7 +2151,7 @@
                         const escaped = search.replace(/[%_\\]/g, '\\$&');
                         query = query.ilike('title', '%' + escaped + '%');
                     }
-                    query = query.order('created_at', { ascending: false });
+                    query = query.order('created_at', { ascending: true });
                     const from = (page - 1) * CDB_PAGE_SIZE;
                     query = query.range(from, from + CDB_PAGE_SIZE - 1);
                     const { data, count, error } = await query;
