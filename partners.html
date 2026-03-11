@@ -209,6 +209,77 @@
         }
 
         /* ========================================
+           COMMUNITY EVENTS SECTION
+           ======================================== */
+        .community-section {
+            margin-top: 6rem;
+            padding: 4rem;
+            border: 1px solid var(--color-text-dim);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .community-tag {
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .community-title {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        .community-text {
+            color: var(--color-text-muted);
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .community-link {
+            display: inline-block;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .community-link:hover {
+            transform: scale(1.02);
+        }
+
+        .community-link:hover .community-image {
+            border-color: var(--color-accent);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .community-image {
+            max-width: 480px;
+            width: 100%;
+            border: 1px solid var(--color-text-dim);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .community-cta {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--color-accent);
+            letter-spacing: 0.1em;
+        }
+
+        .community-cta i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .community-link:hover .community-cta i {
+            transform: translateX(4px);
+        }
+
+        /* ========================================
            FOOTER - PAGE SPECIFIC
            ======================================== */
         .footer {
@@ -240,6 +311,8 @@
         @media (max-width: 768px) {
             .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
             .page-header { margin-bottom: 4rem; }
+            .community-section { margin-top: 4rem; padding: 2rem; }
+            .community-image { max-width: 100%; }
 
             /* Mobile footer */
             .footer-links {
@@ -345,6 +418,19 @@
                 <a href="mailto:admin@nebulafog.ai?subject=Partnership%20Inquiry%20-%20NEBULA:FOG%202026" class="btn-primary" style="margin-top: 1.5rem;">
                     <i class="fas fa-envelope"></i>
                     <span>Contact for Partnership</span>
+                </a>
+            </section>
+
+            <!-- Community Events -->
+            <section class="community-section">
+                <p class="community-tag">ALLIED SIGNAL // COMMUNITY EVENT</p>
+                <h2 class="community-title">SEC_NERDS :: THE CON</h2>
+                <p class="community-text">
+                    SF's hacker community is thriving. Check out SecNerdsCon — where hackers, exploits, and AI robots converge.
+                </p>
+                <a href="https://secnerdssf.com/thecon" target="_blank" rel="noopener noreferrer" class="community-link">
+                    <img src="images/secnerdscon.jpeg" alt="SecNerdsCon - Hackers, Exploits, AI Robots" class="community-image" loading="lazy">
+                    <p class="community-cta">Learn more at secnerdssf.com <i class="fas fa-arrow-right"></i></p>
                 </a>
             </section>
         </div>
@@ -624,6 +710,18 @@
                 y: 0,
                 duration: 0.8,
                 delay: 1,
+                ease: 'power3.out'
+            });
+
+            // Animate community section on scroll
+            gsap.to('.community-section', {
+                scrollTrigger: {
+                    trigger: '.community-section',
+                    start: 'top 80%',
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
                 ease: 'power3.out'
             });
 
