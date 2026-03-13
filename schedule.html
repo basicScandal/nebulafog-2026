@@ -672,6 +672,7 @@
 
         // Initialize GSAP animations
         document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
             gsap.registerPlugin(ScrollTrigger);
 
             // ============================================

@@ -3106,16 +3106,20 @@
                 });
 
                 section.style.display = 'block';
-                gsap.to(section, {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    delay: 1.5,
-                    ease: 'power3.out'
-                });
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(section, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        delay: 1.5,
+                        ease: 'power3.out'
+                    });
+                }
             }
 
             renderSponsorChallenges();
+
+            if (typeof gsap === 'undefined') return;
 
             // Animate page header
             gsap.to('.page-header', {

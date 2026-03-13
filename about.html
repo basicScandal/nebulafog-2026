@@ -1668,6 +1668,8 @@
     <script>
         // Wait for deferred scripts to load
         document.addEventListener('DOMContentLoaded', () => {
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
         // Register GSAP plugins
         gsap.registerPlugin(ScrollTrigger);
 

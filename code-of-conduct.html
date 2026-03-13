@@ -671,6 +671,8 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap === 'undefined') return;
+
             // Animate page header
             gsap.to('.page-header', {
                 opacity: 1,
