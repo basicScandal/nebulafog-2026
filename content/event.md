@@ -7,7 +7,7 @@
 - **date**: January 25, 2025
 - **location**: San Francisco
 - **venue**: Future House
-- **venue_address**: 1405 Minnesota St, San Francisco, CA 94107
+- **venue_address**: 1409 Minnesota St, San Francisco, CA 94107
 
 ## Hero Section
 - **hero_title**: NEBULA:FOG:PROTOCOL
