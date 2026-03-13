@@ -1859,6 +1859,12 @@
             }
 
             async start() {
+                // Skip if GSAP failed to load (CDN blocked/slow)
+                if (typeof gsap === 'undefined') {
+                    this.skip();
+                    return;
+                }
+
                 // Skip for reduced motion preference
                 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
                     this.skip();
@@ -1968,6 +1974,8 @@
             }
 
             animateContent() {
+                if (typeof gsap === 'undefined') return;
+
                 const content = document.getElementById('splash-content');
                 const title = document.getElementById('splash-title');
                 const date = document.getElementById('splash-date');
