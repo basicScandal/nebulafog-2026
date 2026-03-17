@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>The Mission | NEBULA:FOG 2026 AI x Security Hackathon</title>
-    <meta name="description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. 120+ builders shipped 24 projects in 2025. Join March 14, 2026.">
+    <meta name="description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. From 120+ builders in 2025 to 100 operators in 2026. View results.">
 
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://unpkg.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
@@ -13,7 +13,7 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="The Mission | NEBULA:FOG 2026 AI x Security Hackathon">
-    <meta property="og:description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. 120+ builders shipped 24 projects in 2025. Join March 14, 2026.">
+    <meta property="og:description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. From 120+ builders in 2025 to 100 operators in 2026. View results.">
     <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="The Mission | NEBULA:FOG 2026 AI x Security Hackathon">
-    <meta name="twitter:description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. 120+ builders shipped 24 projects in 2025. Join March 14, 2026.">
+    <meta name="twitter:description" content="The mission behind NEBULA:FOG - SF's AI x Security hackathon. From 120+ builders in 2025 to 100 operators in 2026. View results.">
     <meta name="twitter:image" content="https://nebulafog.ai/images/og-image.png">
 
     <!-- Canonical -->
@@ -1171,7 +1171,7 @@
     </a>
 
     <nav class="nav-minimal">
-        <a href="register.html" class="nav-pill">Register</a>
+        <a href="results.html" class="nav-pill">Results</a>
         <a href="challenges.html" class="nav-pill">Challenges</a>
     </nav>
 
@@ -1326,7 +1326,7 @@
                     </p>
 
                     <p class="section-subtitle" style="opacity: 1; transform: none;">
-                        January 2025 was the prototype. March 2026 is the upgrade.
+                        January 2025 was the prototype. March 2026 was the upgrade.
                     </p>
 
                     <div class="origin-stats">
@@ -1624,8 +1624,8 @@
                 New to this space? That's fine. Show us what you want to build.
             </p>
 
-            <a href="register.html" class="btn-primary">
-                <span>Register Now</span>
+            <a href="results.html" class="btn-primary">
+                <span>View Results</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
         </div>
@@ -1653,11 +1653,10 @@
     <!-- Sticky CTA Bar -->
     <div class="sticky-cta-bar" id="sticky-cta">
         <div class="sticky-cta-countdown">
-            <span class="sticky-cta-label">BREACH IN</span>
-            <span class="sticky-cta-timer" id="sticky-countdown">00:00:00:00</span>
+            <span class="sticky-cta-label">EVENT CONCLUDED</span>
         </div>
-        <a href="register.html" class="sticky-cta-button">
-            <span>Register Now</span>
+        <a href="results.html" class="sticky-cta-button">
+            <span>View Results</span>
             <i class="fas fa-arrow-right"></i>
         </a>
         <button class="sticky-cta-close" id="sticky-close" aria-label="Close">
@@ -2852,8 +2851,6 @@
         (function initStickyBar() {
             const stickyBar = document.getElementById('sticky-cta');
             const closeBtn = document.getElementById('sticky-close');
-            const stickyCountdown = document.getElementById('sticky-countdown');
-            const targetDate = new Date('2026-03-13T23:59:59-07:00').getTime();
 
             if (!stickyBar) return;
 
@@ -2865,7 +2862,6 @@
             // Close button handler
             closeBtn.addEventListener('click', () => {
                 stickyBar.classList.remove('visible');
-                // Don't show again this session
                 sessionStorage.setItem('stickyClosed', 'true');
             });
 
@@ -2873,31 +2869,6 @@
             if (sessionStorage.getItem('stickyClosed')) {
                 return;
             }
-
-            // Update sticky countdown
-            function updateStickyCountdown() {
-                const now = Date.now();
-                const diff = targetDate - now;
-
-                if (diff <= 0) {
-                    stickyCountdown.textContent = '00:00:00:00';
-                    return;
-                }
-
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-                stickyCountdown.textContent =
-                    String(days).padStart(2, '0') + ':' +
-                    String(hours).padStart(2, '0') + ':' +
-                    String(mins).padStart(2, '0') + ':' +
-                    String(secs).padStart(2, '0');
-            }
-
-            updateStickyCountdown();
-            setInterval(updateStickyCountdown, 1000);
         })();
 
         }); // End DOMContentLoaded

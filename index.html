@@ -6,16 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-visual">
     <title>NEBULA:FOG 2026 | AI x Security Hackathon</title>
     <meta name="description"
-        content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026.">
+        content="NEBULA:FOG 2026 — SF's AI x Security hackathon. 100 builders shipped projects across 4 tracks on March 14, 2026. Watch the demos.">
 
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="NEBULA:FOG 2026 | AI x Security Hackathon | March 14, SF">
+    <meta property="og:title" content="NEBULA:FOG 2026 | AI x Security Hackathon | San Francisco">
     <meta property="og:description"
-        content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026. Register now.">
+        content="NEBULA:FOG 2026 — SF's AI x Security hackathon. 100 builders shipped projects across 4 tracks on March 14, 2026. Watch the demos.">
     <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -23,9 +23,9 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NEBULA:FOG 2026 | AI x Security Hackathon | March 14, SF">
+    <meta name="twitter:title" content="NEBULA:FOG 2026 | AI x Security Hackathon | San Francisco">
     <meta name="twitter:description"
-        content="Build AI that attacks, defends, or breaks the rules. $5K+ in prizes, 100 builders, everyone demos. San Francisco, March 14, 2026. Register now.">
+        content="NEBULA:FOG 2026 — SF's AI x Security hackathon. 100 builders shipped projects across 4 tracks on March 14, 2026. Watch the demos.">
     <meta name="twitter:image" content="https://nebulafog.ai/images/og-image.png">
 
     <!-- Structured Data - Event Schema -->
@@ -1639,9 +1639,9 @@
     <div class="grid-bg"></div>
     <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
 
-    <!-- Sticky Register CTA (appears on scroll) -->
-    <a href="register.html" class="sticky-register" id="sticky-register-cta">
-        REGISTER NOW <span class="cta-badge" id="sticky-days-left"></span>
+    <!-- Event Concluded Banner (appears on scroll) -->
+    <a href="results.html" class="sticky-register" id="sticky-register-cta">
+        VIEW RESULTS <span class="cta-badge">CONCLUDED</span>
     </a>
 
     <!-- Breach Sequence Overlay -->
@@ -1698,35 +1698,12 @@
                 </div>
             </div>
 
-            <!-- Countdown Timer -->
+            <!-- Event Concluded -->
             <div class="countdown-section" id="countdown-section">
-                <div class="countdown-grid">
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="countdown-days">00</span>
-                        <span class="countdown-label">DAYS</span>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="countdown-hours">00</span>
-                        <span class="countdown-label">HOURS</span>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="countdown-minutes">00</span>
-                        <span class="countdown-label">MINS</span>
-                    </div>
-                    <div class="countdown-separator">:</div>
-                    <div class="countdown-item">
-                        <span class="countdown-value" id="countdown-seconds">00</span>
-                        <span class="countdown-label">SECS</span>
-                    </div>
-                </div>
-                <div class="attendee-cap">
-                    <span class="cap-icon"><i class="fas fa-users"></i></span>
-                    <span class="cap-text">CAPACITY: <span class="cap-number" id="cap-filled">73</span> / <span class="cap-number">100</span> OPERATIVES</span>
-                </div>
-                <div class="capacity-bar">
-                    <div class="capacity-fill" id="capacity-fill" style="width: 73%"></div>
+                <div style="text-align: center; padding: 1rem 0;">
+                    <div style="font-size: 0.7rem; letter-spacing: 0.2em; color: var(--color-text-muted); margin-bottom: 0.5rem;">MISSION STATUS</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--color-primary); text-shadow: 0 0 20px var(--color-primary);">EVENT CONCLUDED</div>
+                    <div style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 0.5rem;">March 14, 2026 · San Francisco</div>
                 </div>
             </div>
 
@@ -1741,9 +1718,9 @@
                     </a>
                 </div>
 
-                <!-- Primary CTA - Register -->
-                <a href="register.html" class="hero-cta-primary">
-                    <span>Register Now</span>
+                <!-- Primary CTA - Results -->
+                <a href="results.html" class="hero-cta-primary">
+                    <span>View Results</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
@@ -2410,44 +2387,11 @@
         }
 
         // ========================================
-        // COUNTDOWN TIMER
+        // COUNTDOWN TIMER (Event concluded)
         // ========================================
         class CountdownTimer {
-            constructor() {
-                this.targetDate = new Date('2026-03-14T00:00:00-08:00').getTime();
-                this.daysEl = document.getElementById('countdown-days');
-                this.hoursEl = document.getElementById('countdown-hours');
-                this.minutesEl = document.getElementById('countdown-minutes');
-                this.secondsEl = document.getElementById('countdown-seconds');
-            }
-
-            start() {
-                this.update();
-                setInterval(() => this.update(), 1000);
-            }
-
-            update() {
-                const now = new Date().getTime();
-                const distance = this.targetDate - now;
-
-                if (distance < 0) {
-                    this.daysEl.textContent = '00';
-                    this.hoursEl.textContent = '00';
-                    this.minutesEl.textContent = '00';
-                    this.secondsEl.textContent = '00';
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                this.daysEl.textContent = days.toString().padStart(2, '0');
-                this.hoursEl.textContent = hours.toString().padStart(2, '0');
-                this.minutesEl.textContent = minutes.toString().padStart(2, '0');
-                this.secondsEl.textContent = seconds.toString().padStart(2, '0');
-            }
+            constructor() {}
+            start() {}
         }
 
         // ========================================
@@ -2474,7 +2418,7 @@
                         content: [
                             { type: 'thinking', text: 'Scanning NEBULA:FOG database...' },
                             { type: 'action', text: 'Read', detail: 'event_config.yaml' },
-                            { type: 'output', text: 'NEBULA:FOG 2026 is an AI x Security hackathon' },
+                            { type: 'output', text: 'NEBULA:FOG 2026 was an AI x Security hackathon' },
                             { type: 'output', text: 'focused on building at the intersection of' },
                             { type: 'highlight', text: 'artificial intelligence and cybersecurity.' },
                             { type: 'action', text: 'Complete', detail: 'Event overview loaded' }
@@ -2485,9 +2429,9 @@
                         content: [
                             { type: 'thinking', text: 'Querying schedule database...' },
                             { type: 'action', text: 'Read', detail: 'schedule.json' },
-                            { type: 'highlight', text: 'DATE: March 14, 2026 (Pi Day)' },
+                            { type: 'highlight', text: 'DATE: March 14, 2026 (Pi Day) — CONCLUDED' },
                             { type: 'output', text: 'A single-day intensive hackathon' },
-                            { type: 'output', text: 'where builders create AI-powered security tools.' },
+                            { type: 'output', text: 'where builders created AI-powered security tools.' },
                             { type: 'action', text: 'Complete', detail: 'Timeline retrieved' }
                         ]
                     },
@@ -2496,9 +2440,9 @@
                         content: [
                             { type: 'thinking', text: 'Checking registration limits...' },
                             { type: 'action', text: 'Read', detail: 'capacity.config' },
-                            { type: 'secondary', text: 'ALERT: Limited capacity event' },
-                            { type: 'highlight', text: 'Maximum 100 operatives will be admitted.' },
-                            { type: 'output', text: 'Early registration strongly recommended.' },
+                            { type: 'secondary', text: 'EVENT CONCLUDED' },
+                            { type: 'highlight', text: '100 operatives participated.' },
+                            { type: 'output', text: 'View results at nebulafog.ai/results.html' },
                             { type: 'action', text: 'Complete', detail: 'Capacity check done' }
                         ]
                     },
@@ -2541,11 +2485,11 @@
                 this.responses = {
                     'date': [
                         { type: 'highlight', text: 'March 14, 2026 (Pi Day - 3.14)' },
-                        { type: 'output', text: 'A single-day intensive hackathon event.' }
+                        { type: 'output', text: 'The event has concluded. View results.' }
                     ],
                     'when': [
                         { type: 'highlight', text: 'March 14, 2026 (Pi Day - 3.14)' },
-                        { type: 'output', text: 'A single-day intensive hackathon event.' }
+                        { type: 'output', text: 'The event has concluded. View results.' }
                     ],
                     'what': [
                         { type: 'output', text: 'NEBULA:FOG is an AI x Security hackathon' },
@@ -2553,12 +2497,12 @@
                         { type: 'highlight', text: 'intersection of AI and cybersecurity.' }
                     ],
                     'capacity': [
-                        { type: 'secondary', text: 'Limited to 100 operatives maximum.' },
-                        { type: 'output', text: 'Register early to secure your spot.' }
+                        { type: 'secondary', text: 'Capped at 100 operatives.' },
+                        { type: 'output', text: 'The event has concluded.' }
                     ],
                     'limit': [
-                        { type: 'secondary', text: 'Limited to 100 operatives maximum.' },
-                        { type: 'output', text: 'Register early to secure your spot.' }
+                        { type: 'secondary', text: 'Capped at 100 operatives.' },
+                        { type: 'output', text: 'The event has concluded.' }
                     ],
                     '100': [
                         { type: 'secondary', text: 'Yes, capped at 100 participants.' },
@@ -2585,14 +2529,14 @@
                         { type: 'highlight', text: 'Watch demos at youtube.com/@NEBULAFOG' }
                     ],
                     'register': [
-                        { type: 'highlight', text: 'Registration is OPEN!' },
-                        { type: 'secondary', text: 'Limited to 100 spots.' },
-                        { type: 'output', text: 'Register at nebulafog.ai/register' }
+                        { type: 'secondary', text: 'Registration is CLOSED.' },
+                        { type: 'output', text: 'The event concluded on March 14, 2026.' },
+                        { type: 'highlight', text: 'View results at nebulafog.ai/results.html' }
                     ],
                     'signup': [
-                        { type: 'highlight', text: 'Registration is OPEN!' },
-                        { type: 'secondary', text: 'Limited to 100 spots.' },
-                        { type: 'output', text: 'Register at nebulafog.ai/register' }
+                        { type: 'secondary', text: 'Registration is CLOSED.' },
+                        { type: 'output', text: 'The event concluded on March 14, 2026.' },
+                        { type: 'highlight', text: 'View results at nebulafog.ai/results.html' }
                     ],
                     'who': [
                         { type: 'output', text: 'Ideal for: Security researchers,' },
