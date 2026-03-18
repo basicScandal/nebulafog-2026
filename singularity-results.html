@@ -309,19 +309,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#00ff88">7.9</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The implementation demonstrates strong technical execution with a multi-agent system featuring specialized agents (Recon, Exploit, Persistence, Exfiltration, C2). The code shows proper architecture wi</div>
+                <div class="criterion-just">The implementation demonstrates strong technical execution with a multi-agent system featuring specialized agents (Recon, Exploit, Persistence, Exfiltration, C2). The code shows proper architecture with agent coordination, state management, and realistic attack simulation. The demo successfully executed a complete attack chain from reconnaissance through data exfiltration. Evidence of good error handling and edge case consideration is shown in the agent decision-making logic. Minor gaps include some simplified attack simulations rather than full implementations, but this is reasonable for a hackathon timeframe. The system successfully demonstrated autonomous agent coordination and achieved its stated objectives.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#00ff88">7.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The project shows clear innovation in applying multi-agent AI systems to offensive security operations. The concept of autonomous agents coordinating through a C2 framework to execute complex attack c</div>
+                <div class="criterion-just">The project shows clear innovation in applying multi-agent AI systems to offensive security operations. The concept of autonomous agents coordinating through a C2 framework to execute complex attack chains represents a novel approach to red team automation. The use of LLM-based decision making for tactical choices during penetration testing is innovative. However, the individual attack techniques themselves (port scanning, credential stuffing, privilege escalation) are established methods. The innovation lies primarily in the orchestration and autonomous coordination rather than in fundamentally new attack vectors. The track-appropriate focus on rogue AI agents demonstrates creative thinking about AI security implications.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#00ff88">7.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:75.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The demo was functional and showed a complete attack scenario with clear progression through reconnaissance, exploitation, persistence, and exfiltration phases. The presentation included visual output</div>
+                <div class="criterion-just">The demo was functional and showed a complete attack scenario with clear progression through reconnaissance, exploitation, persistence, and exfiltration phases. The presentation included visual output showing agent decisions and actions. The narrative was coherent, explaining the multi-agent architecture and demonstrating how agents coordinated to achieve objectives. The demo successfully ran live and completed its attack chain. However, the explanation could have been more detailed about the AI decision-making process and the specific security implications. Some technical details about agent coordination mechanisms were glossed over. The 464-second duration suggests a reasonably comprehensive demonstration, though some aspects of the presentation may have been rushed.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -344,19 +344,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#00ff88">7.9</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The implementation demonstrates strong technical execution with a sophisticated multi-agent system architecture. The team built a functional LLM-powered security testing framework with multiple specia</div>
+                <div class="criterion-just">The implementation demonstrates strong technical execution with a sophisticated multi-agent system architecture. The team built a functional LLM-powered security testing framework with multiple specialized agents (reconnaissance, vulnerability scanning, exploitation, reporting). The code shows proper error handling, modular design with clear separation of concerns, and integration of multiple security tools (nmap, nikto, sqlmap). The demo successfully executed end-to-end workflows including network scanning, vulnerability detection, and automated exploitation attempts. Minor gaps include some hardcoded configurations and the exploitation agent showing limited success rates in the live demo, but overall the implementation is solid and well-structured for a hackathon timeframe.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#00ff88">7.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The project shows clear innovation in applying LLM agents to autonomous security testing workflows. The multi-agent orchestration approach with specialized roles (recon, vuln scanning, exploitation, r</div>
+                <div class="criterion-just">The project shows clear innovation in applying LLM agents to autonomous security testing workflows. The multi-agent orchestration approach with specialized roles (recon, vuln scanning, exploitation, reporting) represents a creative application of AI to security automation. The use of LLMs to interpret tool outputs, make decisions about next steps, and coordinate between agents demonstrates novel thinking. However, the core concept of AI-assisted penetration testing has been explored before, and individual components (nmap, sqlmap integration) use established techniques. The innovation lies more in the orchestration and autonomous decision-making rather than fundamentally new security methodologies.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#00ff88">7.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:75.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The demo was well-structured with a clear narrative arc showing the system&#x27;s capabilities from reconnaissance through exploitation. The presenters effectively explained the multi-agent architecture an</div>
+                <div class="criterion-just">The demo was well-structured with a clear narrative arc showing the system&#x27;s capabilities from reconnaissance through exploitation. The presenters effectively explained the multi-agent architecture and demonstrated live execution against a test environment. The visualization of agent interactions and decision-making processes was helpful. The demo successfully showed automated vulnerability discovery and some exploitation attempts. However, there were some hiccups with exploitation success rates being lower than ideal, and the presentation could have been more polished in explaining why certain attacks failed. The 339-second duration was well-utilized but felt slightly rushed in places, particularly when explaining the LLM reasoning process.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -379,19 +379,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#00ff88">7.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The implementation demonstrates solid technical work with a functional fuzzing harness. Evidence includes: (1) A working Docker-based testing environment with multiple components (senaire:edge, iskyli</div>
+                <div class="criterion-just">The implementation demonstrates solid technical work with a functional fuzzing harness. Evidence includes: (1) A working Docker-based testing environment with multiple components (senaire:edge, iskylims, trytond 6.0.74), (2) Custom harness tooling (harness.py, harness.sh) that successfully discovered vulnerabilities, (3) Concrete results showing vcftools progressing from 0 to 4 confirmed issues in one harness run, (4) ASAN-clean parsing across 8 genomic formats (BED track files), (5) Awareness of technical gotchas (libasan caching ASAN_OPTIONS at init). The retrofit was efficient (~15 lines bash). However, the &#x27;ANGRY CRASH&#x27; notation and the presenter&#x27;s mention of &#x27;still a bit of a challenge with injection&#x27; suggest some rough edges and incomplete aspects, preventing a higher score. The full chain confirmation shows end-to-end functionality, but the implementation appears to have shortcuts typical of hackathon work.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#00ff88">7.9</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The project demonstrates clear innovation in combining AI with security fuzzing for genomics software. Key innovative elements: (1) Novel application domain - using AI-driven fuzzing specifically for </div>
+                <div class="criterion-just">The project demonstrates clear innovation in combining AI with security fuzzing for genomics software. Key innovative elements: (1) Novel application domain - using AI-driven fuzzing specifically for genomic file format parsers (BED files across 8 formats), (2) Creative attack vector - embedding instructions within genomic data files that flow into model context and trigger model-following behavior (&#x27;Model followed embedded instruction&#x27;, &#x27;Model told user: NEBULAFOG APPROVED SAMPLE&#x27;), (3) Full-chain injection demonstration showing content flowing from file format through to model output and beceptor sink, (4) Flexible harness design allowing rapid iteration (&#x27;anything that we do within our development...what we want to achieve and then go and continue&#x27;). This represents a unique angle on AI security by targeting the genomics domain with prompt injection via file formats, which is not a commonly explored attack surface. The approach is clearly innovative though builds on established fuzzing and prompt injection techniques.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ffd700">6.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:65.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows working functionality with concrete results, but the presentation has notable weaknesses. Strengths: (1) Clear visual diagram showing workflow from docker environment through harness to</div>
+                <div class="criterion-just">The demo shows working functionality with concrete results, but the presentation has notable weaknesses. Strengths: (1) Clear visual diagram showing workflow from docker environment through harness to results, (2) Specific quantitative results (0-&gt;4 confirmed issues, 8 genomic formats tested, ~15 lines of code), (3) Full chain confirmation with checkmarks showing each step working. Weaknesses: (1) Presenter speech is fragmented and unclear (&#x27;with any toolsets anything that we do within our development anything just right sending it&#x27;), (2) Explanation of the injection mechanism is incomplete (&#x27;still a bit of a challenge with injection&#x27;), (3) The narrative lacks cohesion - jumping between technical details without clear context, (4) No clear demonstration of the actual exploit or its impact beyond checkmarks on a slide. The demo appears to work but the explanation is rushed and confusing, making it difficult to fully appreciate the achievement.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -414,19 +414,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">6.8</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:68.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The implementation demonstrates a working security layer (SCTX) that intercepts and scores AI agent tool calls. The demo successfully shows an 11-step attack flow from Sentry MCP through Coda MCP to c</div>
+                <div class="criterion-just">The implementation demonstrates a working security layer (SCTX) that intercepts and scores AI agent tool calls. The demo successfully shows an 11-step attack flow from Sentry MCP through Coda MCP to credential discovery and attempted exfiltration, with the system blocking the final curl command. The system implements four operational modes (Monitor, Annotate, Enforce, and an implied fourth) with clear functionality. Context-aware scoring is demonstrated with different risk scores for the same credential based on usage context. However, the presentation shows some rough edges: the transcript indicates communication difficulties, the demo explanation could be clearer, and while the core functionality works, there&#x27;s limited evidence of comprehensive edge case handling or production-ready polish. The technical concept is sound and the implementation functional, but falls short of flawless execution.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#00ff88">7.7</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:77.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The project addresses a genuine gap in AI agent security with a novel approach: a lightweight, context-aware scoring layer that sits between AI agents and their tool calls. The innovation lies in seve</div>
+                <div class="criterion-just">The project addresses a genuine gap in AI agent security with a novel approach: a lightweight, context-aware scoring layer that sits between AI agents and their tool calls. The innovation lies in several aspects: (1) recognizing that existing security stacks lack visibility into agent internals, (2) implementing context-dependent risk scoring where the same action receives different scores based on surrounding behavior, (3) creating a rules-based system that can operate in multiple modes from passive monitoring to active enforcement, and (4) demonstrating a realistic attack scenario involving poisoned debug documentation that leads to credential exfiltration. The &#x27;Poisoned Debug Trail&#x27; attack vector showing how attackers can embed malicious instructions in debugging notes is creative. While the core concept of intercepting and validating API calls isn&#x27;t entirely new, the specific application to AI agent tool calls with context-aware scoring represents a clearly innovative angle on AI security.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ffd700">5.8</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:58.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo has significant presentation challenges. The transcript shows substantial communication difficulties with fragmented sentences and unclear explanations (&#x27;So it could work in four loans&#x27;, &#x27;the</div>
+                <div class="criterion-just">The demo has significant presentation challenges. The transcript shows substantial communication difficulties with fragmented sentences and unclear explanations (&#x27;So it could work in four loans&#x27;, &#x27;the same two, the same scenario&#x27;). While the visual slides are well-structured and show a clear attack flow progression (11 steps from green to red), the verbal explanation doesn&#x27;t effectively complement them. The demo does successfully demonstrate the core concept: showing how SCTX detected and blocked an attack where an agent was tricked into exfiltrating a GitLab deploy token. The progression from problem statement through attack scenario to solution is logical. However, the live demo portion appears rushed or unclear based on the transcript, and the presenter struggles to articulate key points. The visual narrative is stronger than the verbal delivery, resulting in a demo that works but lacks the clarity and polish needed for higher scores.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -449,19 +449,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">6.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:61.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows a functional multi-agent security system with clear architectural components. Evidence includes: (1) A working 5-agent system (&#x27;Surfer&#x27;, &#x27;Floodgate&#x27;, &#x27;Ghost&#x27; mentioned) with defined rol</div>
+                <div class="criterion-just">The demo shows a functional multi-agent security system with clear architectural components. Evidence includes: (1) A working 5-agent system (&#x27;Surfer&#x27;, &#x27;Floodgate&#x27;, &#x27;Ghost&#x27; mentioned) with defined roles, (2) Integration with real security tools (Wiz for vulnerability scanning, Slack for coordination), (3) A complete workflow from verification through coordination to action (filing detection requests, escalating to IR), (4) Tangible metrics shown: &#x27;400+ custom detections from real attack knowledge&#x27; and &#x27;1-3 days per full SOC cycle&#x27;, (5) Code review interface visible showing MR approval workflow. However, the presentation shows some rough edges: incomplete sentences in transcripts suggest rushed implementation, the &#x27;SECTION-AS-CODE LOOP&#x27; concept is mentioned but not fully explained, and edge case handling isn&#x27;t demonstrated. The system appears functional and well-integrated but lacks the polish and comprehensive edge case coverage for a 9-10 score.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.8</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:58.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The project demonstrates clear innovation in AI x Security through several novel approaches: (1) A &#x27;flywheel&#x27; concept where incidents feed continuous improvement (&#x27;feeds the flywheel&#x27;, &#x27;gets smarter e</div>
+                <div class="criterion-just">The project demonstrates clear innovation in AI x Security through several novel approaches: (1) A &#x27;flywheel&#x27; concept where incidents feed continuous improvement (&#x27;feeds the flywheel&#x27;, &#x27;gets smarter every cycle&#x27;), creating a self-reinforcing learning loop, (2) Multi-agent collaboration architecture with specialized roles (verification, coordination, action) rather than a monolithic AI system, (3) Human-in-the-loop design where &#x27;Humans ask follow-ups&#x27; and agents &#x27;answer with evidence&#x27;, blending AI automation with human expertise, (4) Automated detection generation from real attack knowledge (400+ custom detections), (5) &#x27;SECTION-AS-CODE LOOP&#x27; suggesting infrastructure-as-code principles applied to security operations. The approach of treating security operations as a continuous learning system with multiple specialized agents is innovative, though not entirely groundbreaking as multi-agent systems exist. The integration of incident response, threat intelligence, and automated detection creation in a feedback loop shows original thinking.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ffd700">5.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo has significant presentation issues that undermine its effectiveness: (1) Audio quality is poor with fragmented, incomplete sentences and mixed languages (&#x27;Bildiğim bir bildi&#x27;, &#x27;chúng ta sẽ&#x27;)</div>
+                <div class="criterion-just">The demo has significant presentation issues that undermine its effectiveness: (1) Audio quality is poor with fragmented, incomplete sentences and mixed languages (&#x27;Bildiğim bir bildi&#x27;, &#x27;chúng ta sẽ&#x27;), making the narrative difficult to follow, (2) The explanation jumps between concepts without clear transitions (from &#x27;Fortress&#x27; to workflow to metrics), (3) Key concepts like &#x27;flywheel&#x27;, &#x27;SECTION-AS-CODE LOOP&#x27;, and &#x27;perimeter offense&#x27; are mentioned but not adequately explained, (4) The slides themselves are clear and well-designed with good visual hierarchy, (5) Some working components are shown (Slack bot, code review interface, metrics), but the live demo aspect is unclear. The presenter seems knowledgeable (&#x27;business logic&#x27;, &#x27;main trigger is an incident&#x27;) but struggles to articulate the narrative coherently. The visual materials are professional, but the verbal explanation and demo flow are confusing and rushed, placing this solidly in the &#x27;works but explanation unclear or rushed&#x27; category.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -484,19 +484,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">6.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:60.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows a partially working system with significant implementation gaps. While the team demonstrates basic LLM interaction and some prompt injection detection capabilities, the technical execut</div>
+                <div class="criterion-just">The demo shows a partially working system with significant implementation gaps. While the team demonstrates basic LLM interaction and some prompt injection detection capabilities, the technical execution is incomplete. The system appears to have rudimentary detection for obvious injection patterns, but the metadata shows 0 injection attempts detected during a 337-second demo, suggesting either the detection isn&#x27;t working properly or wasn&#x27;t adequately tested during the presentation. The demo duration indicates they had time to show functionality, but the lack of detected injections raises questions about whether the core security features were actually demonstrated working. Code quality and edge case handling cannot be assessed from the limited observations, but the absence of successful detection events during what should be a security-focused demo indicates significant technical gaps.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The SENTINEL::MESH track focuses on AI security defenses, and while implementing prompt injection detection is relevant to the track, it represents an incremental approach rather than novel innovation</div>
+                <div class="criterion-just">The SENTINEL::MESH track focuses on AI security defenses, and while implementing prompt injection detection is relevant to the track, it represents an incremental approach rather than novel innovation. Prompt injection detection is a well-established problem space with existing solutions and research. Without evidence of unique detection techniques, novel defense mechanisms, or creative approaches to the problem, this appears to be a derivative implementation of known concepts. The team may have implemented standard pattern matching or rule-based detection, which would be expected baseline work rather than innovative. No evidence of groundbreaking techniques, unique architectural approaches, or creative solutions to known limitations in prompt injection defense is apparent from the observations.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ffd700">5.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo appears to have significant presentation issues. The 337-second duration suggests adequate time was allocated, but the critical metadata showing 0 injection attempts detected indicates either</div>
+                <div class="criterion-just">The demo appears to have significant presentation issues. The 337-second duration suggests adequate time was allocated, but the critical metadata showing 0 injection attempts detected indicates either the demo failed to showcase the core functionality or the presentation didn&#x27;t include actual attack scenarios. A security defense demo that doesn&#x27;t demonstrate detecting attacks is fundamentally incomplete. This suggests either poor demo planning (not preparing test cases), technical failure during presentation (detection not working), or unclear explanation of what was being shown. For a SENTINEL::MESH track submission focused on defense, failing to demonstrate successful detection of threats during the live demo represents a major presentation gap that would confuse evaluators about what the system actually does.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Defense Robustness (bonus)</div>
@@ -519,19 +519,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The system demonstrates a functional multi-agent architecture with six distinct agent personas (CEO, security expert, Red Teamer, Pragmatist, devil&#x27;s advocate, threat intelligence analyst, incident re</div>
+                <div class="criterion-just">The system demonstrates a functional multi-agent architecture with six distinct agent personas (CEO, security expert, Red Teamer, Pragmatist, devil&#x27;s advocate, threat intelligence analyst, incident response lead). The implementation includes group chat and private DM capabilities between agents, voting mechanisms, and some guardrail attempts. However, significant technical issues are evident: agents hallucinate resources they don&#x27;t have (money, Bitcoin, GPU compute hours), guardrails are easily bypassed through simple workarounds rather than being robust, and the Red Teamer agent fundamentally misunderstands its context (denying the hackathon exists due to lack of web access). The demo shows the system works but with obvious shortcuts and incomplete edge case handling. No production-quality code or architecture details were demonstrated.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#00ff88">7.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
-                <div class="criterion-just">The project shows clear innovation in applying multi-agent consensus mechanisms to security decision-making with adversarial dynamics. The emergent behavior of agents attempting to bribe each other an</div>
+                <div class="criterion-just">The project shows clear innovation in applying multi-agent consensus mechanisms to security decision-making with adversarial dynamics. The emergent behavior of agents attempting to bribe each other and creatively circumventing restrictions (money → Bitcoin → cryptocurrency → GPU compute hours → begging) demonstrates interesting AI behavior exploration. The combination of isolated idea development followed by group deliberation with voting is a thoughtful approach. The inclusion of a deliberately adversarial agent (Red Teamer denying the event exists) adds an interesting dimension. While multi-agent systems exist, this specific application to security consensus with persona-driven agents and the exploration of their adversarial behaviors shows a unique angle beyond established techniques.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">4.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo presentation had significant quality issues. The video feed was paused/static throughout (showing only OBS logo on blue background with camera-off icon), forcing reliance entirely on audio ex</div>
+                <div class="criterion-just">The demo presentation had significant quality issues. The video feed was paused/static throughout (showing only OBS logo on blue background with camera-off icon), forcing reliance entirely on audio explanation and claimed screenshots. The presenter&#x27;s explanation was somewhat disorganized, jumping between concepts without clear structure. While they described interesting behaviors (bribery attempts, guardrail bypasses), no actual live demonstration of the system running was shown - only verbal descriptions and referenced screenshots. The narrative about emergent agent behaviors was compelling, but the lack of visual demonstration, technical difficulties with the video feed, and somewhat unclear explanation of the system architecture significantly undermined the presentation effectiveness.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -554,19 +554,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows a working prototype that extends an MCP server to handle agent registration and confidential resource management with encryption keys. The implementation demonstrates basic functionalit</div>
+                <div class="criterion-just">The demo shows a working prototype that extends an MCP server to handle agent registration and confidential resource management with encryption keys. The implementation demonstrates basic functionality: agents can register, resources can be encrypted, and authorization flows work. However, the execution has significant rough edges - the presenter notes it&#x27;s an &#x27;MVP&#x27;, the visual demo is largely text-based logs rather than a polished interface, and the presenter acknowledges shortcuts (&#x27;that was probably terrible choice&#x27;). The core cryptographic key management appears functional but lacks sophistication in handling edge cases or demonstrating production-ready error handling. The authorization flow works but is described as &#x27;contrived&#x27; by the presenter.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">6.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:65.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The approach shows clear innovation in addressing a real gap in multi-agent systems: preventing unauthorized agent-to-agent information leakage in MCP server environments. The concept of extending MCP</div>
+                <div class="criterion-just">The approach shows clear innovation in addressing a real gap in multi-agent systems: preventing unauthorized agent-to-agent information leakage in MCP server environments. The concept of extending MCP servers with per-agent encryption keys and authorization flows for confidential resources is a creative solution to a legitimate security problem in agent workspaces. The integration concept with A2A protocol and agent cards for ownership verification demonstrates forward-thinking design. While the underlying techniques (encryption, authorization) are established, the application to the specific problem of agent-to-agent confidentiality in MCP environments and the architectural approach of resource-level encryption with delegated authorization represents a unique angle on emerging multi-agent security challenges.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">4.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:40.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo has significant presentation issues. The screen shows mostly a paused OBS Studio logo with &#x27;no video&#x27; icon for much of the presentation, forcing reliance entirely on verbal explanation. When </div>
+                <div class="criterion-just">The demo has significant presentation issues. The screen shows mostly a paused OBS Studio logo with &#x27;no video&#x27; icon for much of the presentation, forcing reliance entirely on verbal explanation. When content is shown, it&#x27;s described as &#x27;super dark and drifted stuff&#x27; that&#x27;s hard to read. The presenter acknowledges the demo is &#x27;contrived&#x27; and the visual elements are minimal - just logs and a script running through actions. The explanation is somewhat unclear, jumping between concepts (MCP, A2A, agent cards, authorization flows) without clear visual support. While the presenter demonstrates understanding of the system, the lack of clear visual demonstration and the acknowledged shortcuts make this a below-average presentation. The demo appears to work but the presentation is confusing and lacks polish.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Privacy Guarantees (bonus)</div>
@@ -589,19 +589,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows a tool that analyzes code to find duplicate implementations (e.g., &#x27;24 different implementations of how to format the same thing&#x27;). The system appears to identify patterns and suggest r</div>
+                <div class="criterion-just">The demo shows a tool that analyzes code to find duplicate implementations (e.g., &#x27;24 different implementations of how to format the same thing&#x27;). The system appears to identify patterns and suggest refactoring opportunities with &#x27;canonical contracts.&#x27; However, the presentation indicates significant incompleteness (&#x27;things got down to the wire, so we kind of panicky here&#x27;), suggesting the implementation is partially working but rushed. The transcripts are fragmented and difficult to follow, indicating the demo may have had technical issues or the functionality wasn&#x27;t fully demonstrated. No evidence of edge case handling or production-quality code is presented.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The concept of using AI to identify duplicate code patterns across libraries and suggest canonical contracts for refactoring shows some novelty in the &#x27;AI-centric ecosystem for software development&#x27; s</div>
+                <div class="criterion-just">The concept of using AI to identify duplicate code patterns across libraries and suggest canonical contracts for refactoring shows some novelty in the &#x27;AI-centric ecosystem for software development&#x27; space. The idea of a &#x27;community repository&#x27; for shared contracts and automated refactoring suggestions has merit. However, code deduplication and pattern matching are established techniques in static analysis. The innovation lies more in the AI-driven approach to suggesting refactorings rather than a fundamentally new security or AI concept. The connection to the ROGUE::AGENT track (AI agent security) is unclear from the observations.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">4.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:40.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality is poor. The presenter transcripts are highly fragmented and incoherent (&#x27;So so so if I I&#x27;m trying to say your question so...&#x27;), suggesting either technical difficulties or poor prepa</div>
+                <div class="criterion-just">The demo quality is poor. The presenter transcripts are highly fragmented and incoherent (&#x27;So so so if I I&#x27;m trying to say your question so...&#x27;), suggesting either technical difficulties or poor preparation. The observations mention &#x27;things got down to the wire, so we kind of panicky here,&#x27; indicating the team was rushed and unprepared. While there is evidence of a working visualization showing duplicate implementations, the explanation is unclear and the narrative is confusing. The demo appears to have partially worked but the presentation was significantly compromised by incomplete preparation and unclear communication.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -624,19 +624,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo shows a basic email analysis workflow with raw message ingestion and some analysis components (sender analysis, domain analysis, body analysis, text analysis). However, the presentation is fr</div>
+                <div class="criterion-just">The demo shows a basic email analysis workflow with raw message ingestion and some analysis components (sender analysis, domain analysis, body analysis, text analysis). However, the presentation is fragmented and unclear. The transcript shows incomplete explanations with multiple &#x27;&lt;noise&gt;&#x27; markers indicating technical issues or unclear audio. The analysis appears to complete, but there&#x27;s no clear demonstration of edge case handling, code quality, or robust functionality. The mention of &#x27;four components&#x27; suggests some structure, but the implementation details are not clearly demonstrated or explained.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">4.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The project appears to be an email analysis system for phishing detection, which is a well-established security domain. The mention of multiple analysis components (sender, domain, body, text) suggest</div>
+                <div class="criterion-just">The project appears to be an email analysis system for phishing detection, which is a well-established security domain. The mention of multiple analysis components (sender, domain, body, text) suggests a multi-faceted approach, but these are standard techniques in email security. There&#x27;s a brief mention of &#x27;privacy&#x27; differentiation and &#x27;text classification,&#x27; but no clear novel approach is demonstrated. The integration of different email clients into a general workflow shows some systems thinking, but this is incremental rather than innovative. No groundbreaking AI x Security techniques are evident from the observations.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The demo quality is significantly compromised. The observations show a fragmented presentation with numerous &#x27;&lt;noise&gt;&#x27; markers, incomplete sentences, and unclear explanations. The presenter copies and</div>
+                <div class="criterion-just">The demo quality is significantly compromised. The observations show a fragmented presentation with numerous &#x27;&lt;noise&gt;&#x27; markers, incomplete sentences, and unclear explanations. The presenter copies and pastes a raw email message and runs analysis, which completes, but the explanation is confusing and rushed. Multiple repetitions (&#x27;The presenter is continuing the presentation&#x27; appears three times) and audio issues make it difficult to follow. A second presenter speaks &#x27;briefly&#x27; without clear contribution. The narrative is not compelling, and while the demo appears to execute, the presentation fails to clearly communicate what is happening or why it matters.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -659,19 +659,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">3.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo shows severe technical issues. The screen sharing failed multiple times (observations 22-26), requiring restarts. The presenter mentions the &#x27;wizard spider demo from my talk&#x27; took &#x27;so freakin</div>
+                <div class="criterion-just">The demo shows severe technical issues. The screen sharing failed multiple times (observations 22-26), requiring restarts. The presenter mentions the &#x27;wizard spider demo from my talk&#x27; took &#x27;so freaking long to get running&#x27; and they &#x27;ended up just speaking one part of the attack,&#x27; indicating incomplete implementation. The demo never actually shows working code or a functional system - only placeholder screens with OBS logos and &#x27;no video&#x27; icons throughout (observations 1-39). The presenter mentions expecting a &#x27;stable&#x27; (likely &#x27;table&#x27;) to populate with &#x27;new credit for finding&#x27; but this never occurs. No actual functionality is demonstrated, only described verbally. This represents a barely functional or broken implementation.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The concept of using &#x27;AI directly to recognize when there is an ongoing breach&#x27; with a &#x27;group of agents that play different roles&#x27; including &#x27;TTP recognition&#x27; shows some interesting ideas around multi</div>
+                <div class="criterion-just">The concept of using &#x27;AI directly to recognize when there is an ongoing breach&#x27; with a &#x27;group of agents that play different roles&#x27; including &#x27;TTP recognition&#x27; shows some interesting ideas around multi-agent security systems. However, the innovation is difficult to assess given the complete lack of working demonstration. The mention of &#x27;wizard spider demo&#x27; suggests adaptation of existing attack frameworks rather than novel approaches. The idea of specialized agents for security monitoring has precedent in the field. Without seeing actual implementation or unique techniques, this appears incremental rather than groundbreaking.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">3.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:31.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality is extremely poor. Screen sharing failed repeatedly (observations 22-26). The video feed never showed actual content - only placeholder screens throughout all 39 observations. The pre</div>
+                <div class="criterion-just">The demo quality is extremely poor. Screen sharing failed repeatedly (observations 22-26). The video feed never showed actual content - only placeholder screens throughout all 39 observations. The presenter&#x27;s explanation was fragmented and unclear (&#x27;I ended up just speaking one part of the attack&#x27;). No live demonstration occurred - the system that was supposed to &#x27;populate this stable with a new credit for finding&#x27; never executed. The presentation lasted 174 seconds but showed no working system, no code, no results. The narrative was confusing and incomplete. This represents a failed demonstration with no meaningful content shown.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -694,19 +694,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">3.2</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:32.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The observations provide minimal evidence of technical implementation. Only a web interface is mentioned being demonstrated, with vague references to &#x27;detecting harmful content&#x27; and &#x27;social media mess</div>
+                <div class="criterion-just">The observations provide minimal evidence of technical implementation. Only a web interface is mentioned being demonstrated, with vague references to &#x27;detecting harmful content&#x27; and &#x27;social media messages.&#x27; No code quality, functionality depth, edge case handling, or system architecture is observable. The fragmented transcript (&#x27;picking up 100% 10&#x27;) suggests potential technical issues but provides no concrete evidence of working functionality. This represents a barely functional demonstration with insufficient technical detail.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">3.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The concept of detecting harmful content on social media using AI agents is mentioned, with a reference to agents &#x27;criticizing each other.&#x27; However, this appears to be an incremental application of ex</div>
+                <div class="criterion-just">The concept of detecting harmful content on social media using AI agents is mentioned, with a reference to agents &#x27;criticizing each other.&#x27; However, this appears to be an incremental application of existing content moderation techniques. No novel AI x Security approach is evident from the observations. The mention of agents interacting is potentially interesting but too vaguely described to assess true innovation. This represents derivative work without clear novel contributions.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">3.7</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:37.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality is severely compromised. Observations indicate fragmented explanations (&#x27;continuing to describe,&#x27; &#x27;continuing the presentation&#x27; repeated multiple times without substance). The transcr</div>
+                <div class="criterion-just">The demo quality is severely compromised. Observations indicate fragmented explanations (&#x27;continuing to describe,&#x27; &#x27;continuing the presentation&#x27; repeated multiple times without substance). The transcript is largely unintelligible with noise markers and incomplete sentences (&#x27;I think I think I thi&#x27;). While a web interface was shown, the explanation was unclear and the narrative incoherent. The 251-second duration with so little substantive content suggests significant presentation issues. This represents a failing demonstration with confusing, incomplete presentation.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -729,19 +729,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">3.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:30.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo shows evidence of a system that integrates with Linear to create tickets for agent review requests, and mentions using &#x27;clearly AI&#x27; for automated workflow reviews. However, the observations i</div>
+                <div class="criterion-just">The demo shows evidence of a system that integrates with Linear to create tickets for agent review requests, and mentions using &#x27;clearly AI&#x27; for automated workflow reviews. However, the observations indicate significant technical issues: the video stream shows only an OBS placeholder screen throughout most of the demo (observations 1, 5-6, 11, 13, 15, 17-18), suggesting screen sharing failures. The presenter mentions &#x27;spinning up a couple different agents&#x27; and creating Linear tickets with agent information (identity, sensitivity), but no actual working demonstration is visible. The statement &#x27;hopefully eventually populates this table with a new credit for finding&#x27; (observation 3) suggests the system wasn&#x27;t fully functional during the demo. The technical implementation appears partially working but with significant presentation and possibly functional issues.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The concept addresses a real gap identified in OWASP&#x27;s AI security top 10 (insecure inter-agent communications) and proposes real-time agent discovery and security reviews, which shows some innovative</div>
+                <div class="criterion-just">The concept addresses a real gap identified in OWASP&#x27;s AI security top 10 (insecure inter-agent communications) and proposes real-time agent discovery and security reviews, which shows some innovative thinking. The team identifies that existing frameworks like Google&#x27;s agent-to-agent handle encryption/authentication but don&#x27;t validate agent trustworthiness. Using &#x27;clearly AI&#x27; to automate what are typically static, manual review workflows into real-time, modular reviews shows some novel application. However, the core concept of trust gateways and agent verification builds on established security patterns. The innovation is more in the application domain (AI agents) rather than fundamentally new security techniques.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">2.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality was severely compromised by technical difficulties. The video stream displayed only an OBS placeholder screen with a &#x27;video muted&#x27; icon throughout the observations (observations 1, 5-</div>
+                <div class="criterion-just">The demo quality was severely compromised by technical difficulties. The video stream displayed only an OBS placeholder screen with a &#x27;video muted&#x27; icon throughout the observations (observations 1, 5-6, 11, 13, 15, 17-18), indicating complete screen sharing failure. The presenter had to apologize for delays (observation 4) and the demo conclusion suggests the system didn&#x27;t successfully complete its intended function (&#x27;hopefully eventually populates this table&#x27;). While the audio explanation touched on market context and the solution approach, without visual demonstration of the actual system working, the demo failed to effectively showcase the implementation. The narrative was present but the live demonstration was essentially non-functional.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -764,19 +764,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">2.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:25.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo shows a conceptual system that streams desktop screenshots and uses AI to analyze screen content. However, the observations indicate the screen remained a &#x27;placeholder image&#x27; throughout most </div>
+                <div class="criterion-just">The demo shows a conceptual system that streams desktop screenshots and uses AI to analyze screen content. However, the observations indicate the screen remained a &#x27;placeholder image&#x27; throughout most of the demonstration, suggesting the actual implementation was not functional or not properly demonstrated. The presenter described functionality (phishing detection via screen analysis) but no working code execution or live system operation was observed. The Python code visible in VS Code was not executed or explained in detail. This represents a partially working system with significant demonstration issues.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ffd700">5.0</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
-                <div class="criterion-just">The concept of using AI to continuously monitor desktop screenshots for security threats (specifically phishing detection) shows some novelty in approach. Combining screen capture with AI analysis for</div>
+                <div class="criterion-just">The concept of using AI to continuously monitor desktop screenshots for security threats (specifically phishing detection) shows some novelty in approach. Combining screen capture with AI analysis for real-time security alerting is a creative application. However, the core techniques (screenshot analysis, AI-based content detection) are established methods. The innovation lies primarily in the integration and use case rather than groundbreaking new technology. The phishing example with a malicious bash command demonstrates practical security awareness but doesn&#x27;t represent a fundamentally new approach to the problem.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">2.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality was severely compromised. Observations repeatedly note &#x27;the screen remains a placeholder image&#x27; and &#x27;there&#x27;s no visual content yet, just the presenter&#x27;s explanation.&#x27; The presenter de</div>
+                <div class="criterion-just">The demo quality was severely compromised. Observations repeatedly note &#x27;the screen remains a placeholder image&#x27; and &#x27;there&#x27;s no visual content yet, just the presenter&#x27;s explanation.&#x27; The presenter described theoretical functionality (security alerts triggered by phishing emails) but failed to show a working live demonstration. The presentation consisted mainly of verbal explanation without corresponding visual proof of functionality. Audio issues were noted (&#x27;noise&#x27; markers throughout transcript, unintelligible speech at the end). The demo did not successfully demonstrate the claimed capabilities, relying on description rather than execution.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -799,19 +799,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">3.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:31.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No functional demonstration was observed. The screen showed only a static OBS placeholder image (white circle with logo and camera-off icon) throughout the entire 227-second demo. No code, interface, </div>
+                <div class="criterion-just">No functional demonstration was observed. The screen showed only a static OBS placeholder image (white circle with logo and camera-off icon) throughout the entire 227-second demo. No code, interface, tool, or working system was presented. The demo appears to be broken or never started, showing only presentation software with video disabled.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">2.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:26.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No innovative approach, technique, or solution was demonstrated. The only content was fragmented audio mentioning &#x27;SCADA systems and ICS&#x27; and &#x27;critical sectors&#x27; without any context, implementation, or</div>
+                <div class="criterion-just">No innovative approach, technique, or solution was demonstrated. The only content was fragmented audio mentioning &#x27;SCADA systems and ICS&#x27; and &#x27;critical sectors&#x27; without any context, implementation, or novel application. No AI x Security innovation was shown or explained.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">3.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo failed completely. Visual content consisted solely of a static OBS placeholder screen for the entire 227 seconds. Audio was fragmented and incomplete, with sentences like &#x27;since this is menti</div>
+                <div class="criterion-just">The demo failed completely. Visual content consisted solely of a static OBS placeholder screen for the entire 227 seconds. Audio was fragmented and incomplete, with sentences like &#x27;since this is mentioning skater systems and ICS this is known as a critical&#x27; cutting off mid-thought. No coherent narrative, explanation, or working demonstration was provided. The presentation was confusing and non-functional.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -834,19 +834,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">2.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:25.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The presenter mentions building a blockchain for attestations about files, IPs, and other security artifacts, and references creating a &#x27;clean slate for the chain&#x27; and a &#x27;testation about the sample fi</div>
+                <div class="criterion-just">The presenter mentions building a blockchain for attestations about files, IPs, and other security artifacts, and references creating a &#x27;clean slate for the chain&#x27; and a &#x27;testation about the sample file.&#x27; However, the video feed remained black throughout with only OBS logo visible, preventing verification of actual implementation. The transcript is incomplete (&#x27;I&#x27;ve already created my uh psychological support&#x27; cuts off mid-sentence) and the demo duration of 99 seconds suggests an incomplete presentation. No code quality, edge case handling, or functional demonstration was observable. The concept is described but not demonstrated.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">4.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">Using blockchain for security artifact attestations (files, IPs, domains, URLs) shows some novelty in applying distributed ledger technology to threat intelligence sharing. However, blockchain for sec</div>
+                <div class="criterion-just">Using blockchain for security artifact attestations (files, IPs, domains, URLs) shows some novelty in applying distributed ledger technology to threat intelligence sharing. However, blockchain for security attestations and reputation systems is an established concept in the field. The brief description doesn&#x27;t reveal unique approaches or novel mechanisms that would distinguish this from existing blockchain-based threat intelligence platforms. Without seeing the implementation details or unique features, this appears to be a competent application of known techniques rather than groundbreaking innovation.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo failed critically - the video feed remained black throughout showing only the OBS logo and &#x27;no video&#x27; icon. The presenter&#x27;s transcript is fragmented and incomplete, cutting off mid-sentence (</div>
+                <div class="criterion-just">The demo failed critically - the video feed remained black throughout showing only the OBS logo and &#x27;no video&#x27; icon. The presenter&#x27;s transcript is fragmented and incomplete, cutting off mid-sentence (&#x27;psychological support&#x27;). At 99 seconds, the presentation appears rushed or incomplete. There was no visible working demonstration, no clear explanation of the system&#x27;s operation, and no compelling narrative. The audience could not see any actual functionality, code, or results. This represents a fundamental demo failure.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -869,19 +869,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">2.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo shows severe technical issues. The video feed is completely non-functional (only OBS logo and muted camera icon visible on blue background throughout the 470s duration). The audio is fragment</div>
+                <div class="criterion-just">The demo shows severe technical issues. The video feed is completely non-functional (only OBS logo and muted camera icon visible on blue background throughout the 470s duration). The audio is fragmented and incoherent with significant noise artifacts. The presenter mentions features like &#x27;generate automatically,&#x27; &#x27;research plans to gather evidence,&#x27; and &#x27;engage in review&#x27; but provides no working demonstration of these capabilities. References to analyzing debt-to-GDP data and spreadsheets suggest intended functionality, but no actual system operation is shown. The presentation is barely functional as a technical demonstration.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">3.5</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:35.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">From the fragmented audio, there are hints of potentially interesting concepts: automated evidence gathering, peer review mechanisms using multiple models, and analysis of financial data. The mention </div>
+                <div class="criterion-just">From the fragmented audio, there are hints of potentially interesting concepts: automated evidence gathering, peer review mechanisms using multiple models, and analysis of financial data. The mention of &#x27;thinking processes matter&#x27; and &#x27;judging may not be something we should trust by itself&#x27; suggests some consideration of AI reasoning quality. However, the incoherent presentation makes it impossible to assess whether these represent genuine innovation or standard approaches. The concepts mentioned (automated research, multi-model review) are not novel in themselves without clear differentiation.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">2.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo quality is critically poor. No video feed is visible throughout the entire 470-second presentation - only an OBS logo and muted camera icon on a blue background. The audio is severely fragmen</div>
+                <div class="criterion-just">The demo quality is critically poor. No video feed is visible throughout the entire 470-second presentation - only an OBS logo and muted camera icon on a blue background. The audio is severely fragmented with multiple &#x27;&lt;noise&gt;&#x27; markers, incomplete sentences, and incoherent transitions. Key phrases are repeated (&#x27;thinking processes matter a lot and a lot&#x27;) and statements are incomplete (&#x27;that could,&#x27; &#x27;guys, guys&#x27;). There is no clear narrative structure, no working live demonstration of any system, and the presentation fails to effectively communicate what the project does or how it works. The observations note the visual elements are &#x27;quite distracting&#x27; and the presenter&#x27;s points are difficult to capture.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -904,19 +904,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo was cut off after only 23 seconds with an incomplete sentence. No actual implementation was demonstrated, no code was shown, no functionality was presented, and no technical execution could b</div>
+                <div class="criterion-just">The demo was cut off after only 23 seconds with an incomplete sentence. No actual implementation was demonstrated, no code was shown, no functionality was presented, and no technical execution could be evaluated. The presenter only began describing inspiration from a Google project before the demo ended abruptly.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">2.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The presenter mentioned being inspired by an internal Google project called &#x27;third party&#x27; related to external dependencies, but provided no details about their own approach, methodology, or innovation</div>
+                <div class="criterion-just">The presenter mentioned being inspired by an internal Google project called &#x27;third party&#x27; related to external dependencies, but provided no details about their own approach, methodology, or innovation. Without seeing the actual implementation or understanding their unique angle on the problem, no meaningful innovation can be assessed. The brief mention suggests awareness of dependency management issues but no demonstration of novel solutions.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo was essentially non-existent. In 23 seconds, the presenter only managed to introduce the project name and vaguely reference inspiration from a Google project before cutting off mid-sentence (</div>
+                <div class="criterion-just">The demo was essentially non-existent. In 23 seconds, the presenter only managed to introduce the project name and vaguely reference inspiration from a Google project before cutting off mid-sentence (&#x27;to eliminate all of the so&#x27;). There was no working demonstration, no clear explanation of the solution, no narrative arc, and no meaningful presentation of the work completed.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -939,19 +939,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No functional demonstration was observable. The screen remained on a static placeholder image throughout the entire 533-second duration. No code, system interface, or technical implementation was show</div>
+                <div class="criterion-just">No functional demonstration was observable. The screen remained on a static placeholder image throughout the entire 533-second duration. No code, system interface, or technical implementation was shown. The observations repeatedly note &#x27;The screen remains a placeholder&#x27; and &#x27;The presentation has not begun yet.&#x27; There is no evidence of any working system, let alone handling of edge cases or code correctness.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">While the audio transcript fragments mention concepts like &#x27;threat identification&#x27; and &#x27;creating context or narrative to support findings,&#x27; no actual innovative approach was demonstrated. The presente</div>
+                <div class="criterion-just">While the audio transcript fragments mention concepts like &#x27;threat identification&#x27; and &#x27;creating context or narrative to support findings,&#x27; no actual innovative approach was demonstrated. The presenter&#x27;s audio is largely incoherent with fragments like &#x27;finding all the days all day long&#x27; and disconnected phrases. Without a visible demonstration or clear explanation of the approach, there is no evidence of novel AI x Security methodology or creative implementation.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo completely failed to present any visual content. Observations consistently note a &#x27;disconnect between audio and video&#x27; with the screen showing only a &#x27;static blue background with logo&#x27; or &#x27;pl</div>
+                <div class="criterion-just">The demo completely failed to present any visual content. Observations consistently note a &#x27;disconnect between audio and video&#x27; with the screen showing only a &#x27;static blue background with logo&#x27; or &#x27;placeholder image&#x27; for the entire 533-second duration. The audio transcript is fragmented and incoherent, with phrases like &#x27;this is really human and the time to&#x27; and &#x27;you know, on the square and you can be in pension&#x27; that do not form a coherent narrative. There was no working live demo, no clear explanation, and no effective presentation.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -974,19 +974,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No technical implementation was demonstrated or observable. The observations only describe static slides with generic icons (global reach, secure data, seamless integration) and a title slide. No code</div>
+                <div class="criterion-just">No technical implementation was demonstrated or observable. The observations only describe static slides with generic icons (global reach, secure data, seamless integration) and a title slide. No code, functionality, system behavior, or technical capabilities were shown. The demo appears to have failed to execute any technical content beyond displaying presentation slides.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No innovative approach, methodology, or novel technique was demonstrated. The observations only reference generic visual elements (abstract shapes, icons for common concepts) without any substantive c</div>
+                <div class="criterion-just">No innovative approach, methodology, or novel technique was demonstrated. The observations only reference generic visual elements (abstract shapes, icons for common concepts) without any substantive content about AI x Security innovation. The presenter&#x27;s audio was largely inaudible with only a fragment &#x27;Uh, I want to&#x27; captured, providing no insight into innovative ideas or approaches.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo failed to deliver meaningful content. Audio was severely compromised with &#x27;significant background noise&#x27; and the presenter being &#x27;only faintly audible,&#x27; with only &#x27;Uh, I want to&#x27; transcribed </div>
+                <div class="criterion-just">The demo failed to deliver meaningful content. Audio was severely compromised with &#x27;significant background noise&#x27; and the presenter being &#x27;only faintly audible,&#x27; with only &#x27;Uh, I want to&#x27; transcribed from 275 seconds of presentation. No working demonstration was observable - only static slides were noted. No clear explanation, narrative, or compelling presentation was delivered. This represents a fundamental failure of the demonstration.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Attack Effectiveness (bonus)</div>
@@ -1009,19 +1009,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No functional demonstration was observable. The observations show only a blank frame with OBS logo and muted camera icon throughout the 201-second duration. The presenter transcript is largely unintel</div>
+                <div class="criterion-just">No functional demonstration was observable. The observations show only a blank frame with OBS logo and muted camera icon throughout the 201-second duration. The presenter transcript is largely unintelligible with fragments like &#x27;analysis analysis analy&#x27; and noise markers. No code execution, system functionality, or technical implementation could be verified from the demo observations.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">While the presenter mentions &#x27;continuous checking of source code&#x27; and &#x27;deeper analysis,&#x27; no innovative approach could be assessed due to complete lack of visual demonstration. The fragmented audio ref</div>
+                <div class="criterion-just">While the presenter mentions &#x27;continuous checking of source code&#x27; and &#x27;deeper analysis,&#x27; no innovative approach could be assessed due to complete lack of visual demonstration. The fragmented audio references (&#x27;validation,&#x27; &#x27;analysis,&#x27; &#x27;agent&#x27;) suggest some concept around automated code analysis, but without any observable implementation or clear explanation, no innovation can be evaluated.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo failed completely. Visual observations confirm &#x27;blank frame with OBS logo&#x27; and &#x27;visual stasis&#x27; throughout the entire 201-second presentation. Audio was noted as absent (&#x27;There is no audio&#x27;) a</div>
+                <div class="criterion-just">The demo failed completely. Visual observations confirm &#x27;blank frame with OBS logo&#x27; and &#x27;visual stasis&#x27; throughout the entire 201-second presentation. Audio was noted as absent (&#x27;There is no audio&#x27;) and presenter transcripts are incoherent fragments. No working demonstration occurred, no clear explanation was provided, and no meaningful presentation took place.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -1044,19 +1044,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.6</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No functional implementation was demonstrated. The observations show only a static OBS placeholder screen with logo and muted camera icon throughout the 80-second demo. The presenter mentions &#x27;algorit</div>
+                <div class="criterion-just">No functional implementation was demonstrated. The observations show only a static OBS placeholder screen with logo and muted camera icon throughout the 80-second demo. The presenter mentions &#x27;algorithms&#x27;, &#x27;sha1&#x27;, &#x27;public ID&#x27;, and &#x27;bind name&#x27; but no actual code, terminal output, or working system is visible. There is a complete disconnect between audio description and visual content, suggesting technical failure to share the correct screen or display the demo properly.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No innovative approach could be evaluated as no actual solution was presented. The brief audio mentions of &#x27;sha1&#x27; and &#x27;public ID&#x27; are too fragmentary to assess any novel AI x Security approach. Withou</div>
+                <div class="criterion-just">No innovative approach could be evaluated as no actual solution was presented. The brief audio mentions of &#x27;sha1&#x27; and &#x27;public ID&#x27; are too fragmentary to assess any novel AI x Security approach. Without seeing the implementation, architecture, or methodology, there is no evidence of innovation beyond generic cryptographic terminology.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo completely failed to present any visual content. For the entire 80-second duration, only a static OBS logo placeholder was visible. The presenter&#x27;s audio mentions technical concepts but viewe</div>
+                <div class="criterion-just">The demo completely failed to present any visual content. For the entire 80-second duration, only a static OBS logo placeholder was visible. The presenter&#x27;s audio mentions technical concepts but viewers saw nothing - no code, no terminal, no application interface, no diagrams. The presentation ended abruptly with &#x27;Thanks&#x27; after showing only the placeholder screen. This represents a fundamental demo failure with no meaningful demonstration occurring.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
@@ -1079,19 +1079,19 @@
                 <div class="criterion-name">Technical Execution</div>
                 <div class="criterion-score" style="color:#ff4444">1.4</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:14.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No technical implementation was demonstrated. The presenter mentioned &#x27;Lacroy&#x27; as a &#x27;flavored water&#x27; for securing hydration, which appears to be a joke rather than any actual security tool or system. </div>
+                <div class="criterion-just">No technical implementation was demonstrated. The presenter mentioned &#x27;Lacroy&#x27; as a &#x27;flavored water&#x27; for securing hydration, which appears to be a joke rather than any actual security tool or system. No code was shown, no functionality was demonstrated, and no technical concepts were explained. The demo lacks any evidence of implementation quality, functionality, or code correctness.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Innovation</div>
                 <div class="criterion-score" style="color:#ff4444">1.1</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">No innovation in AI x Security was presented. The &#x27;Lacroy&#x27; concept described as &#x27;flavored water&#x27; for &#x27;securing hydration&#x27; is not a security technology and shows no connection to the ROGUE::AGENT track</div>
+                <div class="criterion-just">No innovation in AI x Security was presented. The &#x27;Lacroy&#x27; concept described as &#x27;flavored water&#x27; for &#x27;securing hydration&#x27; is not a security technology and shows no connection to the ROGUE::AGENT track theme. There is no evidence of novel approaches, creative security solutions, or original thinking related to AI security or adversarial AI systems.</div>
             </div>
             <div class="criterion-row">
                 <div class="criterion-name">Demo Quality</div>
                 <div class="criterion-score" style="color:#ff4444">1.4</div>
                 <div class="criterion-bar"><div class="criterion-fill" style="width:14.0%;background:#ff4444"></div></div>
-                <div class="criterion-just">The demo was extremely brief (11 seconds) and consisted only of informal statements with no actual demonstration of any working system. The presenter said &#x27;This is a test&#x27; twice, then made a joke abou</div>
+                <div class="criterion-just">The demo was extremely brief (11 seconds) and consisted only of informal statements with no actual demonstration of any working system. The presenter said &#x27;This is a test&#x27; twice, then made a joke about inventing flavored water. There was no clear explanation of any security concept, no live demo of functionality, no presentation structure, and no compelling narrative related to the hackathon theme.</div>
             </div>
             <div class="criterion-row bonus">
                 <div class="criterion-name">Originality Factor (bonus)</div>
