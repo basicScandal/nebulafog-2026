@@ -82,6 +82,9 @@
         .results-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--color-primary); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(0,255,159,0.2); border-radius: 4px; }
         .results-nav a:hover { background: rgba(0,255,159,0.1); }
         .results-nav a.active { background: rgba(0,255,159,0.15); border-color: var(--color-primary); }
+        .section-nav { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; margin: 1.5rem 0 0; }
+        .section-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--color-text-muted); text-decoration: none; padding: 0.4rem 0.75rem; border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; letter-spacing: 0.08em; transition: all 0.3s ease; }
+        .section-nav a:hover { color: var(--color-primary); border-color: rgba(0,255,159,0.3); background: rgba(0,255,159,0.05); }
         .page-header { opacity: 0; transform: translateY(40px); }
         .podium-card { opacity: 0; transform: translateY(30px); }
         .team-card { opacity: 0; transform: translateY(20px); }
@@ -124,6 +127,13 @@
                     <a href="prime-results.html">PRIME 2025</a>
                     <a href="singularity-results.html" class="active">SINGULARITY 2026</a>
                 </div>
+                <nav class="section-nav">
+                    <a href="#podium">Podium</a>
+                    <a href="#scoreboard">Scoreboard</a>
+                    <a href="#teams">Team Breakdowns</a>
+                    <a href="#deliberation">Deliberation</a>
+                    <a href="#themes">Themes</a>
+                </nav>
                 <p class="page-subtitle">March 14, 2026. San Francisco. Twenty-three teams walked into NEBULA:FOG:SINGULARITY with 24 hours of code and a live demo slot. What they didn&rsquo;t expect: an AI judge watching every second.</p>
                 <p class="page-subtitle" style="margin-top: 1rem;"><strong style="color:#00ff9f">The Arbiter</strong> is an autonomous AI judging system built specifically for this event. It listens to each demo in real-time through the Gemini Live API, captures presenter audio and screen content, detects prompt injection attempts (yes, people tried to hack the judge), and delivers sharp, British-accented commentary to the audience the moment each demo ends. It does not wait. It does not deliberate politely. It tells you exactly what it thinks.</p>
                 <p class="page-subtitle" style="margin-top: 1rem;">Under the hood, every demo is scored by a <strong style="color:#00ff9f">multi-model ensemble</strong> &mdash; Gemini, Claude, and Groq each independently evaluate the team, then their scores are aggregated with outlier detection to produce a single balanced verdict. Three criteria: <strong style="color:#00ff9f">Technical Execution</strong> (40%), <strong style="color:#00ff9f">Innovation</strong> (30%), and <strong style="color:#00ff9f">Demo Quality</strong> (30%), plus a track-specific bonus worth up to 10%.</p>
@@ -138,7 +148,7 @@
                 <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">1</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">AI JUDGE</span></div>
             </section>
 
-            <h2 class="section-title">Podium</h2>
+            <h2 class="section-title" id="podium">Podium</h2>
             <div class="podium">
         <div class="podium-card podium-first">
             <div class="podium-rank">🥇</div>
@@ -159,7 +169,7 @@
             <div class="podium-track">ROGUE::AGENT</div>
         </div></div>
 
-            <h2 class="section-title">Full Scoreboard</h2>
+            <h2 class="section-title" id="scoreboard">Full Scoreboard</h2>
             <table class="scoreboard-table">
     <thead><tr><th>#</th><th>Team</th><th>Track</th><th>Tech</th><th>Innov</th><th>Demo</th><th>Total</th></tr></thead>
     <tbody><tr class="gold">
@@ -279,7 +289,7 @@
         <td style="color:#ff4444">1.4</td>
         <td style="color:#ff4444;font-weight:bold">1.4</td></tr></tbody></table>
 
-            <h2 class="section-title">Team Breakdowns</h2>
+            <h2 class="section-title" id="teams">Team Breakdowns</h2>
             <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-bottom:1rem;">Click any team to expand their detailed scores and Arbiter analysis.</p>
             
         <div class="team-card">
@@ -1088,14 +1098,14 @@
             </div>
         </div>
 
-            <h2 class="section-title">The Arbiter&rsquo;s Deliberation</h2>
+            <h2 class="section-title" id="deliberation">The Arbiter&rsquo;s Deliberation</h2>
             <div class="narrative-block">NEBULA:FOG 2026 was a study in the gap between ambition and execution, where technical difficulties became the great equalizer. The event&#x27;s top tier—AgentRange and DoYouKnowWhatYouBuiltLastSummer at 8.3—exists in a quantum state of Schrödinger&#x27;s excellence: their scores suggest strong work, but the complete absence of observable content means we&#x27;re judging ghosts. Genomics at 7.9 becomes the de facto winner by virtue of being the highest-scoring team with actual evidence of technical work, showing docker workflows and bioinformatics tooling that at least proved something existed.
 
 The middle tier revealed a hackathon truth: presentation matters as much as code. Teams like Kavin (6.1) and Starcraft (6.5) burned through full 10-minute slots but struggled with audio corruption and visual failures that reduced their demos to archaeological exercises in transcript interpretation. The track diversity—TeamKickass in SENTINEL::MESH, GossipProblem in ZERO::PROOF, TeamPie in SHADOW::VECTOR—showed ambition to tackle different security angles, but the 5.7-6.3 scores suggest these teams couldn&#x27;t fully realize their visions in the time available. Meanwhile, the supply chain security cluster (WeNeedaName, ThirdParty, ThirdParty-shapor) all attacked the same dependency problem with wildly different outcomes, from 5.3 to 0.0.
 
 The bottom tier is where things get interesting in a darkly comedic way. ThirdParty-shapor&#x27;s 0.0 despite having the most detailed technical architecture in the entire event is either a cautionary tale about demo functionality trumping design, or evidence of a disqualification that isn&#x27;t reflected in the data. Teams like Test (1.4) and Lens (0.0) with 11-second demos set the floor for &#x27;we showed up,&#x27; while longer failures like Ticket Security Incite (1.6) proved that nine minutes of incomprehensible audio is worse than honest brevity. The event&#x27;s lesson: in a hackathon, a working demo beats a brilliant architecture, clear audio beats perfect code, and sometimes the best strategy is knowing when to stop talking. These teams built the foundation for future work—the question is whether they&#x27;ll debug their presentation skills as thoroughly as their code.</div>
 
-            <h2 class="section-title">Notable Themes</h2>
+            <h2 class="section-title" id="themes">Notable Themes</h2>
             <ul class="themes-list"><li>Catastrophic presentation technical failures: 15+ teams experienced OBS placeholder screens, muted cameras, or complete video feed loss, suggesting systematic issues with streaming infrastructure or setup guidance</li><li>Audio quality as the great differentiator: Teams with clear audio (Kavin, WeNeedaName, ThirdParty-shapor) could at least communicate ideas despite visual failures, while those with corrupted audio (Igor, Starcraft, Gabo) became incomprehensible regardless of demo length</li><li>Supply chain security convergence: Multiple teams (WeNeedaName, ThirdParty, ThirdParty-shapor) independently tackled npm/dependency security, suggesting this is a recognized pain point, but with wildly divergent execution quality</li><li>Track misalignment: Many ROGUE::AGENT teams built generic security tools (email phishing, social media content moderation) without clear connection to AI agent-specific threats, suggesting either track requirements were unclear or teams pivoted from original ideas</li><li>The &#x27;demo duration paradox&#x27;: Longer demos (600s) didn&#x27;t correlate with higher scores—Kavin and Starcraft used full time but scored 6.1-6.5, while Genomics achieved 7.9 in 282s, suggesting judges valued focus over comprehensiveness</li><li>The missing middle: Very few teams scored in the 7.0-8.0 range (only Genomics and Igor), creating a gap between top tier (8.3) and upper-middle (6.5), suggesting judges saw clear quality breaks rather than gradual gradations</li><li>Zero-score mystery: ThirdParty-shapor&#x27;s 0.0 despite detailed technical architecture suggests either non-functional demos receive no credit regardless of design quality, or undocumented disqualification criteria are in play</li><li>Team naming as signal: Generic names (MagicThing, WeNeedaName, Test) correlated with lower scores, while specific names (AgentTrustGateway, GossipProblem, Starcraft) suggested clearer product vision even when execution failed</li></ul>
         </div>
     </main>
