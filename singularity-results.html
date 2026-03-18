@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SINGULARITY 2026 Results | NEBULA:FOG AI Security Hackathon</title>
+    <meta name="description" content="Results from NEBULA:FOG:SINGULARITY 2026. 23 teams judged live by the Arbiter AI across Technical Execution, Innovation, and Demo Quality.">
+
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SINGULARITY 2026 Results | NEBULA:FOG AI Security Hackathon">
+    <meta property="og:description" content="Results from NEBULA:FOG:SINGULARITY 2026. 25 teams judged live by the Arbiter AI.">
+    <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:url" content="https://nebulafog.ai/singularity-results.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SINGULARITY 2026 Results | NEBULA:FOG AI Security Hackathon">
+    <link rel="canonical" href="https://nebulafog.ai/singularity-results.html">
+    <meta name="theme-color" content="#00ff9f">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/posthog-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        .container { max-width: 1000px; }
+        .main { padding-top: 40px; }
+        .page-header { margin-bottom: 2rem; }
+        .arbiter-icon { display: block; margin: 0 auto 1.5rem; width: 100px; height: 100px; filter: drop-shadow(0 0 20px rgba(0,255,159,0.4)); }
+        .arbiter-icon .eye-outer { fill: none; stroke: #00ff9f; stroke-width: 1.5; }
+        .arbiter-icon .eye-pupil { fill: #00ff9f; }
+        .arbiter-icon .eye-iris { fill: none; stroke: #00ff9f; stroke-width: 1; }
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #00ff9f; letter-spacing: 0.2em; }
+        .page-title { font-size: 2rem; margin: 1rem 0; color: #fff; }
+        .page-subtitle { color: #999; font-size: 0.9rem; line-height: 1.6; max-width: 700px; margin: 0 auto; }
+        .podium { display: flex; gap: 1.5rem; justify-content: center; margin: 3rem 0; flex-wrap: wrap; }
+        .podium-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(0,255,159,0.15); border-radius: 12px; padding: 1.5rem; text-align: center; min-width: 200px; }
+        .podium-first { border-color: rgba(255,215,0,0.4); box-shadow: 0 0 20px rgba(255,215,0,0.1); }
+        .podium-second { border-color: rgba(192,192,192,0.3); }
+        .podium-third { border-color: rgba(205,127,50,0.3); }
+        .podium-rank { font-size: 2rem; margin-bottom: 0.5rem; }
+        .podium-name { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin-bottom: 0.5rem; }
+        .podium-score { font-size: 2rem; font-weight: bold; }
+        .podium-track { font-size: 0.7rem; color: #888; margin-top: 0.25rem; }
+        .section-title { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #00ff9f; letter-spacing: 0.15em; text-transform: uppercase; margin: 3rem 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(0,255,159,0.1); }
+        .scoreboard-table { width: 100%; border-collapse: collapse; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        .scoreboard-table th { text-align: left; color: #00ff9f; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.5rem; border-bottom: 1px solid rgba(0,255,159,0.2); }
+        .scoreboard-table td { padding: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .scoreboard-table tr.gold td { color: #ffd700; }
+        .scoreboard-table tr.silver td { color: #c0c0c0; }
+        .scoreboard-table tr.bronze td { color: #cd7f32; }
+        .track-cell { font-size: 0.65rem; color: #888; }
+        .team-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+        .team-card-header { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 1rem; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+        .team-card-header:hover { background: rgba(255,255,255,0.03); }
+        .team-rank { color: #888; width: 2rem; }
+        .team-name { flex: 1; font-weight: 600; }
+        .team-track { font-size: 0.65rem; color: #888; }
+        .team-total { font-weight: bold; }
+        .expand-icon { color: #888; font-size: 0.7rem; transition: transform 0.2s; }
+        .team-card.expanded .expand-icon { transform: rotate(180deg); }
+        .team-card-body { display: none; padding: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
+        .team-card.expanded .team-card-body { display: block; }
+        .criterion-row { margin-bottom: 1rem; }
+        .criterion-name { font-size: 0.75rem; color: #888; }
+        .criterion-score { font-size: 1.2rem; font-weight: bold; }
+        .criterion-bar { height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin: 0.25rem 0; }
+        .criterion-fill { height: 100%; border-radius: 2px; }
+        .criterion-just { font-size: 0.75rem; color: #888; line-height: 1.4; }
+        .criterion-row.bonus { opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.5rem; }
+        .team-reasoning { font-size: 0.75rem; color: #888; line-height: 1.5; margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,0.05); font-style: italic; }
+        .narrative-block { background: rgba(0,255,159,0.03); border: 1px solid rgba(0,255,159,0.1); border-radius: 8px; padding: 1.5rem; font-size: 0.85rem; line-height: 1.7; color: #888; }
+        .themes-list { list-style: none; padding: 0; }
+        .themes-list li { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.8rem; color: #888; }
+        .themes-list li::before { content: "// "; color: var(--color-primary); }
+        .results-nav { display: flex; gap: 1rem; justify-content: center; margin: 2rem 0; }
+        .results-nav a { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--color-primary); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid rgba(0,255,159,0.2); border-radius: 4px; }
+        .results-nav a:hover { background: rgba(0,255,159,0.1); }
+        .results-nav a.active { background: rgba(0,255,159,0.15); border-color: var(--color-primary); }
+        .page-header { opacity: 0; transform: translateY(40px); }
+        .podium-card { opacity: 0; transform: translateY(30px); }
+        .team-card { opacity: 0; transform: translateY(20px); }
+        .narrative-block { opacity: 0; transform: translateY(30px); }
+    </style>
+</head>
+<body>
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-ring"></div>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+
+    <nav class="hud-nav" role="navigation" aria-label="System Interface">
+        <div class="hud-status">
+            <div class="status-dot"></div>
+            <span>SYS_CONNECTED</span>
+        </div>
+        <ul class="hud-links">
+            <li><a href="index.html" class="hud-link">HOME</a></li>
+            <li><a href="about.html" class="hud-link">MISSION</a></li>
+            <li><a href="challenges.html" class="hud-link">CHALLENGES</a></li>
+            <li><a href="schedule.html" class="hud-link">SCHEDULE</a></li>
+            <li><a href="partners.html" class="hud-link">PARTNERS</a></li>
+        </ul>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <header class="page-header">
+                <svg class="arbiter-icon" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+                    <polygon class="eye-outer" points="60,8 104,30 104,74 60,96 16,74 16,30" stroke-linejoin="round"/>
+                    <path class="eye-outer" d="M28,52 Q60,24 92,52 Q60,80 28,52 Z" stroke-width="2"/>
+                    <circle class="eye-iris" cx="60" cy="52" r="14"/>
+                    <circle class="eye-pupil" cx="60" cy="52" r="4"/>
+                </svg>
+                <span class="page-tag">NEBULA:FOG:SINGULARITY // 2026 RESULTS</span>
+                <h1 class="page-title">The Arbiter Has Spoken</h1>
+                <div class="results-nav" style="margin: 1.5rem 0;">
+                    <a href="prime-results.html">PRIME 2025</a>
+                    <a href="singularity-results.html" class="active">SINGULARITY 2026</a>
+                </div>
+                <p class="page-subtitle">March 14, 2026. San Francisco. Twenty-three teams walked into NEBULA:FOG:SINGULARITY with 24 hours of code and a live demo slot. What they didn&rsquo;t expect: an AI judge watching every second.</p>
+                <p class="page-subtitle" style="margin-top: 1rem;"><strong style="color:#00ff9f">The Arbiter</strong> is an autonomous AI judging system built specifically for this event. It listens to each demo in real-time through the Gemini Live API, captures presenter audio and screen content, detects prompt injection attempts (yes, people tried to hack the judge), and delivers sharp, British-accented commentary to the audience the moment each demo ends. It does not wait. It does not deliberate politely. It tells you exactly what it thinks.</p>
+                <p class="page-subtitle" style="margin-top: 1rem;">Under the hood, every demo is scored by a <strong style="color:#00ff9f">multi-model ensemble</strong> &mdash; Gemini, Claude, and Groq each independently evaluate the team, then their scores are aggregated with outlier detection to produce a single balanced verdict. Three criteria: <strong style="color:#00ff9f">Technical Execution</strong> (40%), <strong style="color:#00ff9f">Innovation</strong> (30%), and <strong style="color:#00ff9f">Demo Quality</strong> (30%), plus a track-specific bonus worth up to 10%.</p>
+                <p class="page-subtitle" style="margin-top: 1rem;">After all 25 demos, The Arbiter ran a cross-team comparative deliberation &mdash; analyzing every team against every other team to produce the final rankings. Below are the full, unfiltered results: the scoreboard, per-team breakdowns with criterion-level scores and AI-generated justifications, The Arbiter&rsquo;s deliberation narrative, and the themes that emerged. Click any team card to expand their detailed analysis.</p>
+            </header>
+
+            <section style="padding:2rem;border:1px solid rgba(0,255,159,0.1);border-radius:8px;margin-bottom:3rem;display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem;">
+                <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">25</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">DEMOS JUDGED</span></div>
+                <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">4.4</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">AVG SCORE</span></div>
+                <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">3</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">AI MODELS</span></div>
+                <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">4</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">TRACKS</span></div>
+                <div style="text-align:center;"><span style="display:block;font-size:2rem;font-weight:bold;color:#00ff9f;">1</span><span style="font-size:0.7rem;color:var(--color-text-secondary);letter-spacing:0.1em;">AI JUDGE</span></div>
+            </section>
+
+            <h2 class="section-title">Podium</h2>
+            <div class="podium">
+        <div class="podium-card podium-first">
+            <div class="podium-rank">🥇</div>
+            <h3 class="podium-name">AgentRange</h3>
+            <div class="podium-score" style="color:#00ff88">8.3<span style="opacity:0.5">/10</span></div>
+            <div class="podium-track">ROGUE::AGENT</div>
+        </div>
+        <div class="podium-card podium-second">
+            <div class="podium-rank">🥈</div>
+            <h3 class="podium-name">DoYouKnowWhatYouBuiltLastSummer</h3>
+            <div class="podium-score" style="color:#00ff88">8.3<span style="opacity:0.5">/10</span></div>
+            <div class="podium-track">ROGUE::AGENT</div>
+        </div>
+        <div class="podium-card podium-third">
+            <div class="podium-rank">🥉</div>
+            <h3 class="podium-name">Genomics</h3>
+            <div class="podium-score" style="color:#00ff88">7.9<span style="opacity:0.5">/10</span></div>
+            <div class="podium-track">ROGUE::AGENT</div>
+        </div></div>
+
+            <h2 class="section-title">Full Scoreboard</h2>
+            <table class="scoreboard-table">
+    <thead><tr><th>#</th><th>Team</th><th>Track</th><th>Tech</th><th>Innov</th><th>Demo</th><th>Total</th></tr></thead>
+    <tbody><tr class="gold">
+        <td>1</td><td>AgentRange</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#00ff88">7.9</td>
+        <td style="color:#00ff88">7.0</td>
+        <td style="color:#00ff88">7.5</td>
+        <td style="color:#00ff88;font-weight:bold">8.3</td></tr><tr class="silver">
+        <td>2</td><td>DoYouKnowWhatYouBuiltLastSummer</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#00ff88">7.9</td>
+        <td style="color:#00ff88">7.0</td>
+        <td style="color:#00ff88">7.5</td>
+        <td style="color:#00ff88;font-weight:bold">8.3</td></tr><tr class="bronze">
+        <td>3</td><td>Genomics</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#00ff88">7.0</td>
+        <td style="color:#00ff88">7.9</td>
+        <td style="color:#ffd700">6.5</td>
+        <td style="color:#00ff88;font-weight:bold">7.9</td></tr><tr class="">
+        <td>4</td><td>Igor</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ffd700">6.8</td>
+        <td style="color:#00ff88">7.7</td>
+        <td style="color:#ffd700">5.8</td>
+        <td style="color:#00ff88;font-weight:bold">7.5</td></tr><tr class="">
+        <td>5</td><td>Starcraft</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ffd700">6.1</td>
+        <td style="color:#ffd700">5.8</td>
+        <td style="color:#ffd700">5.5</td>
+        <td style="color:#ffd700;font-weight:bold">6.5</td></tr><tr class="">
+        <td>6</td><td>TeamKickass</td><td class="track-cell">SENTINEL::MESH</td>
+        <td style="color:#ffd700">6.0</td>
+        <td style="color:#ffd700">5.5</td>
+        <td style="color:#ffd700">5.5</td>
+        <td style="color:#ffd700;font-weight:bold">6.3</td></tr><tr class="">
+        <td>7</td><td>Kavin</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#00ff88">7.0</td>
+        <td style="color:#ff4444">4.5</td>
+        <td style="color:#ffd700;font-weight:bold">6.1</td></tr><tr class="">
+        <td>8</td><td>GossipProblem</td><td class="track-cell">ZERO::PROOF</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ffd700">6.5</td>
+        <td style="color:#ff4444">4.0</td>
+        <td style="color:#ffd700;font-weight:bold">5.7</td></tr><tr class="">
+        <td>9</td><td>WeNeedaName</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ffd700">5.5</td>
+        <td style="color:#ff4444">4.0</td>
+        <td style="color:#ffd700;font-weight:bold">5.3</td></tr><tr class="">
+        <td>10</td><td>KC2</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ff4444">4.5</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ffd700;font-weight:bold">5.2</td></tr><tr class="">
+        <td>11</td><td>Overwatch</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">3.6</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ff4444">3.1</td>
+        <td style="color:#ff4444;font-weight:bold">4.2</td></tr><tr class="">
+        <td>12</td><td>KC</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">3.2</td>
+        <td style="color:#ff4444">3.6</td>
+        <td style="color:#ff4444">3.7</td>
+        <td style="color:#ff4444;font-weight:bold">3.8</td></tr><tr class="">
+        <td>13</td><td>AgentTrustGateway</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">3.0</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ff4444">2.1</td>
+        <td style="color:#ff4444;font-weight:bold">3.7</td></tr><tr class="">
+        <td>14</td><td>Tobias</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">2.5</td>
+        <td style="color:#ffd700">5.0</td>
+        <td style="color:#ff4444">2.1</td>
+        <td style="color:#ff4444;font-weight:bold">3.5</td></tr><tr class="">
+        <td>15</td><td>Winston</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">3.1</td>
+        <td style="color:#ff4444">2.6</td>
+        <td style="color:#ff4444">3.6</td>
+        <td style="color:#ff4444;font-weight:bold">3.3</td></tr><tr class="">
+        <td>16</td><td>RickToday</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">2.5</td>
+        <td style="color:#ff4444">4.5</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444;font-weight:bold">3.2</td></tr><tr class="">
+        <td>17</td><td>Gabo</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">2.1</td>
+        <td style="color:#ff4444">3.5</td>
+        <td style="color:#ff4444">2.1</td>
+        <td style="color:#ff4444;font-weight:bold">2.7</td></tr><tr class="">
+        <td>18</td><td>ThirdParty</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">2.1</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444;font-weight:bold">1.9</td></tr><tr class="">
+        <td>19</td><td>Ticket Security Incite</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444;font-weight:bold">1.6</td></tr><tr class="">
+        <td>20</td><td>TeamPie</td><td class="track-cell">SHADOW::VECTOR</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444;font-weight:bold">1.5</td></tr><tr class="">
+        <td>21</td><td>MagicThing</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444;font-weight:bold">1.4</td></tr><tr class="">
+        <td>22</td><td>Rick</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">1.6</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444;font-weight:bold">1.4</td></tr><tr class="">
+        <td>23</td><td>Test</td><td class="track-cell">ROGUE::AGENT</td>
+        <td style="color:#ff4444">1.4</td>
+        <td style="color:#ff4444">1.1</td>
+        <td style="color:#ff4444">1.4</td>
+        <td style="color:#ff4444;font-weight:bold">1.4</td></tr></tbody></table>
+
+            <h2 class="section-title">Team Breakdowns</h2>
+            <p style="font-size:0.75rem;color:var(--color-text-secondary);margin-bottom:1rem;">Click any team to expand their detailed scores and Arbiter analysis.</p>
+            
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#1</span>
+                <span class="team-name">AgentRange</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#00ff88">8.3</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#00ff88">7.9</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The implementation demonstrates strong technical execution with a multi-agent system featuring specialized agents (Recon, Exploit, Persistence, Exfiltration, C2). The code shows proper architecture wi</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#00ff88">7.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The project shows clear innovation in applying multi-agent AI systems to offensive security operations. The concept of autonomous agents coordinating through a C2 framework to execute complex attack c</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#00ff88">7.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:75.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The demo was functional and showed a complete attack scenario with clear progression through reconnaissance, exploitation, persistence, and exfiltration phases. The presentation included visual output</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#00ff88">8.4</div>
+            </div>
+                <div class="team-reasoning">The 8.3 score and extended demo time suggest substantive work, but the complete absence of observable content creates an evaluation paradox. The zero injection attempts indicate security awareness, and the duration implies they had enough working functionality to sustain judge attention. However, without transcript or observation data, this ranking relies purely on numerical score rather than demonstrated merit.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#2</span>
+                <span class="team-name">DoYouKnowWhatYouBuiltLastSummer</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#00ff88">8.3</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#00ff88">7.9</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The implementation demonstrates strong technical execution with a sophisticated multi-agent system architecture. The team built a functional LLM-powered security testing framework with multiple specia</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#00ff88">7.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The project shows clear innovation in applying LLM agents to autonomous security testing workflows. The multi-agent orchestration approach with specialized roles (recon, vuln scanning, exploitation, r</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#00ff88">7.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:75.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The demo was well-structured with a clear narrative arc showing the system&#x27;s capabilities from reconnaissance through exploitation. The presenters effectively explained the multi-agent architecture an</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#00ff88">8.0</div>
+            </div>
+                <div class="team-reasoning">The score places them at the top tier, and the shorter duration compared to AgentRange could indicate either superior focus or less comprehensive coverage. The team name suggests self-awareness about the hackathon context, but without observable demo content, it&#x27;s impossible to determine if this confidence is warranted or ironic.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#3</span>
+                <span class="team-name">Genomics</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#00ff88">7.9</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#00ff88">7.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The implementation demonstrates solid technical work with a functional fuzzing harness. Evidence includes: (1) A working Docker-based testing environment with multiple components (senaire:edge, iskyli</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#00ff88">7.9</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:79.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The project demonstrates clear innovation in combining AI with security fuzzing for genomics software. Key innovative elements: (1) Novel application domain - using AI-driven fuzzing specifically for </div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ffd700">6.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:65.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows working functionality with concrete results, but the presentation has notable weaknesses. Strengths: (1) Clear visual diagram showing workflow from docker environment through harness to</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#00ff88">7.9</div>
+            </div>
+                <div class="team-reasoning">The 7.9 score reflects solid technical work with observable implementation details. The docker/harness workflow and bioinformatics tooling demonstrate domain expertise, but the presentation struggled with audio quality. This is the highest-scoring team with actual observable technical content, making it a more defensible podium position than the tied 8.3 teams with missing data.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#4</span>
+                <span class="team-name">Igor</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#00ff88">7.5</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">6.8</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:68.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The implementation demonstrates a working security layer (SCTX) that intercepts and scores AI agent tool calls. The demo successfully shows an 11-step attack flow from Sentry MCP through Coda MCP to c</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#00ff88">7.7</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:77.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The project addresses a genuine gap in AI agent security with a novel approach: a lightweight, context-aware scoring layer that sits between AI agents and their tool calls. The innovation lies in seve</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ffd700">5.8</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:58.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo has significant presentation challenges. The transcript shows substantial communication difficulties with fragmented sentences and unclear explanations (&#x27;So it could work in four loans&#x27;, &#x27;the</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#00ff88">7.4</div>
+            </div>
+                <div class="team-reasoning">The 7.5 score suggests judges found value in the live demonstration, but the captured observations focus on hackathon ambiance rather than technical merit. The extensive audio corruption and lack of coherent technical narrative indicate either severe recording issues or a presentation that relied heavily on visual elements not adequately captured. The score feels generous given the observable evidence.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#5</span>
+                <span class="team-name">Starcraft</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ffd700">6.5</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">6.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:61.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows a functional multi-agent security system with clear architectural components. Evidence includes: (1) A working 5-agent system (&#x27;Surfer&#x27;, &#x27;Floodgate&#x27;, &#x27;Ghost&#x27; mentioned) with defined rol</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.8</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:58.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The project demonstrates clear innovation in AI x Security through several novel approaches: (1) A &#x27;flywheel&#x27; concept where incidents feed continuous improvement (&#x27;feeds the flywheel&#x27;, &#x27;gets smarter e</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ffd700">5.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo has significant presentation issues that undermine its effectiveness: (1) Audio quality is poor with fragmented, incomplete sentences and mixed languages (&#x27;Bildiğim bir bildi&#x27;, &#x27;chúng ta sẽ&#x27;)</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ffd700">6.8</div>
+            </div>
+                <div class="team-reasoning">The 6.5 score and full 600-second duration suggest substantial work, and the &#x27;5 AI agents&#x27; branding indicates multi-agent architecture. However, the multilingual audio corruption and lack of technical detail in observations suggest either recording failures or a presentation that didn&#x27;t effectively communicate its technical approach. The &#x27;Fortress&#x27; and &#x27;two sector&#x27; mentions hint at security architecture, but without coherent explanation, this feels like a mid-tier effort with presentation challenges.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#6</span>
+                <span class="team-name">TeamKickass</span>
+                <span class="team-track">SENTINEL::MESH</span>
+                <span class="team-total" style="color:#ffd700">6.3</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">6.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:60.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows a partially working system with significant implementation gaps. While the team demonstrates basic LLM interaction and some prompt injection detection capabilities, the technical execut</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The SENTINEL::MESH track focuses on AI security defenses, and while implementing prompt injection detection is relevant to the track, it represents an incremental approach rather than novel innovation</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ffd700">5.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo appears to have significant presentation issues. The 337-second duration suggests adequate time was allocated, but the critical metadata showing 0 injection attempts detected indicates either</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Defense Robustness (bonus)</div>
+                <div class="criterion-score" style="color:#ffd700">5.6</div>
+            </div>
+                <div class="team-reasoning">The track choice is notable—SENTINEL::MESH implies distributed security monitoring rather than agent containment. The 6.3 score suggests competent execution, but without observable content, it&#x27;s unclear whether they genuinely addressed mesh security challenges or simply reframed a ROGUE::AGENT solution. The score places them in the upper-middle tier, suggesting judges saw merit but not exceptional innovation.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#7</span>
+                <span class="team-name">Kavin</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ffd700">6.1</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The system demonstrates a functional multi-agent architecture with six distinct agent personas (CEO, security expert, Red Teamer, Pragmatist, devil&#x27;s advocate, threat intelligence analyst, incident re</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#00ff88">7.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:70.0%;background:#00ff88"></div></div>
+                <div class="criterion-just">The project shows clear innovation in applying multi-agent consensus mechanisms to security decision-making with adversarial dynamics. The emergent behavior of agents attempting to bribe each other an</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">4.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo presentation had significant quality issues. The video feed was paused/static throughout (showing only OBS logo on blue background with camera-off icon), forcing reliance entirely on audio ex</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ffd700">6.5</div>
+            </div>
+                <div class="team-reasoning">The 6.1 score reflects judges&#x27; appreciation for clear problem articulation despite catastrophic visual presentation failures. The multi-agent decision-making concept is sound, but the irony of using agents to decide &#x27;what is my project&#x27; at a hackathon raises questions about whether this was a genuine security tool or a meta-commentary. The complete reliance on audio-only presentation in a visual demo format significantly hampered impact.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#8</span>
+                <span class="team-name">GossipProblem</span>
+                <span class="team-track">ZERO::PROOF</span>
+                <span class="team-total" style="color:#ffd700">5.7</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows a working prototype that extends an MCP server to handle agent registration and confidential resource management with encryption keys. The implementation demonstrates basic functionalit</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">6.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:65.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The approach shows clear innovation in addressing a real gap in multi-agent systems: preventing unauthorized agent-to-agent information leakage in MCP server environments. The concept of extending MCP</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">4.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:40.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo has significant presentation issues. The screen shows mostly a paused OBS Studio logo with &#x27;no video&#x27; icon for much of the presentation, forcing reliance entirely on verbal explanation. When </div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Privacy Guarantees (bonus)</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+            </div>
+                <div class="team-reasoning">The 5.7 score reflects the challenge of the ZERO::PROOF track and the difficulty of explaining cryptographic concepts in a short demo. The MCP server data exposure problem is legitimate, and the mention of agent cards and authorization suggests they were building toward privacy-preserving verification. However, the connection to zero-knowledge proofs isn&#x27;t explicit in the observations, and the paused stream indicates presentation struggles. This feels like an ambitious idea that needed more development time.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#9</span>
+                <span class="team-name">WeNeedaName</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ffd700">5.3</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows a tool that analyzes code to find duplicate implementations (e.g., &#x27;24 different implementations of how to format the same thing&#x27;). The system appears to identify patterns and suggest r</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:55.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The concept of using AI to identify duplicate code patterns across libraries and suggest canonical contracts for refactoring shows some novelty in the &#x27;AI-centric ecosystem for software development&#x27; s</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">4.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:40.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality is poor. The presenter transcripts are highly fragmented and incoherent (&#x27;So so so if I I&#x27;m trying to say your question so...&#x27;), suggesting either technical difficulties or poor prepa</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">4.5</div>
+            </div>
+                <div class="team-reasoning">The 5.3 score suggests judges appreciated the dependency bloat problem but didn&#x27;t see strong execution or clear connection to AI agent security. The &#x27;real data&#x27; claim is promising, but without specifics about what data or how it&#x27;s used, this feels like a traditional supply chain security project reframed for the hackathon. The team name and mention of &#x27;dying out&#x27; tools suggest they may have pivoted mid-event or struggled with scope definition.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#10</span>
+                <span class="team-name">KC2</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ffd700">5.2</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo shows a basic email analysis workflow with raw message ingestion and some analysis components (sender analysis, domain analysis, body analysis, text analysis). However, the presentation is fr</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">4.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The project appears to be an email analysis system for phishing detection, which is a well-established security domain. The mention of multiple analysis components (sender, domain, body, text) suggest</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The demo quality is significantly compromised. The observations show a fragmented presentation with numerous &#x27;&lt;noise&gt;&#x27; markers, incomplete sentences, and unclear explanations. The presenter copies and</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">3.5</div>
+            </div>
+                <div class="team-reasoning">The 5.2 score reflects competent execution of email security analysis, but the approach feels conventional rather than innovative. The four-component analysis (sender, domain, body, text) is standard phishing detection, and the connection to rogue AI agents isn&#x27;t evident. The repetitive observations and noisy audio suggest presentation challenges, but the sustained demo time and multiple presenters indicate a functioning system. This is solid security engineering without hackathon-level innovation.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#11</span>
+                <span class="team-name">Overwatch</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">4.2</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">3.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo shows severe technical issues. The screen sharing failed multiple times (observations 22-26), requiring restarts. The presenter mentions the &#x27;wizard spider demo from my talk&#x27; took &#x27;so freakin</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The concept of using &#x27;AI directly to recognize when there is an ongoing breach&#x27; with a &#x27;group of agents that play different roles&#x27; including &#x27;TTP recognition&#x27; shows some interesting ideas around multi</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">3.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:31.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality is extremely poor. Screen sharing failed repeatedly (observations 22-26). The video feed never showed actual content - only placeholder screens throughout all 39 observations. The pre</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">3.5</div>
+            </div>
+                <div class="team-reasoning">The 4.2 score reflects an interesting idea hampered by execution challenges. Using AI to detect ongoing breaches in real-time is genuinely novel, but the sub-3-minute demo and technical setup issues suggest they didn&#x27;t have a working prototype. The &#x27;bridge water&#x27; name shows creativity, but the score indicates judges saw potential without proof. This feels like a strong concept that needed another few hours of development.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#12</span>
+                <span class="team-name">KC</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">3.8</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">3.2</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:32.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The observations provide minimal evidence of technical implementation. Only a web interface is mentioned being demonstrated, with vague references to &#x27;detecting harmful content&#x27; and &#x27;social media mess</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">3.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The concept of detecting harmful content on social media using AI agents is mentioned, with a reference to agents &#x27;criticizing each other.&#x27; However, this appears to be an incremental application of ex</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">3.7</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:37.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality is severely compromised. Observations indicate fragmented explanations (&#x27;continuing to describe,&#x27; &#x27;continuing the presentation&#x27; repeated multiple times without substance). The transcr</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">3.6</div>
+            </div>
+                <div class="team-reasoning">The 3.8 score suggests judges saw a working demo but limited innovation or relevance to the track. The social media harmful content detection is a valid problem, but it&#x27;s unclear how this addresses rogue AI agents specifically. The mention of agents criticizing each other is intriguing but underdeveloped. The severe audio quality issues and repetitive observations indicate significant presentation challenges. This feels like a content moderation project hastily reframed for the hackathon.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#13</span>
+                <span class="team-name">AgentTrustGateway</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">3.7</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">3.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:30.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo shows evidence of a system that integrates with Linear to create tickets for agent review requests, and mentions using &#x27;clearly AI&#x27; for automated workflow reviews. However, the observations i</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The concept addresses a real gap identified in OWASP&#x27;s AI security top 10 (insecure inter-agent communications) and proposes real-time agent discovery and security reviews, which shows some innovative</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality was severely compromised by technical difficulties. The video stream displayed only an OBS placeholder screen with a &#x27;video muted&#x27; icon throughout the observations (observations 1, 5-</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">4.0</div>
+            </div>
+                <div class="team-reasoning">The 3.7 score reflects the gap between concept and execution. Agent trust is exactly the right problem for this track, and the team name shows clear focus. However, the extensive technical difficulties, coordination issues between presenters, and lack of working demo functionality severely hampered the presentation. The &#x27;populate this table&#x27; comment suggests they were trying to demonstrate functionality that wasn&#x27;t working. This is a case where the right idea met the wrong execution circumstances.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#14</span>
+                <span class="team-name">Tobias</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">3.5</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">2.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:25.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo shows a conceptual system that streams desktop screenshots and uses AI to analyze screen content. However, the observations indicate the screen remained a &#x27;placeholder image&#x27; throughout most </div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ffd700">5.0</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:50.0%;background:#ffd700"></div></div>
+                <div class="criterion-just">The concept of using AI to continuously monitor desktop screenshots for security threats (specifically phishing detection) shows some novelty in approach. Combining screen capture with AI analysis for</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality was severely compromised. Observations repeatedly note &#x27;the screen remains a placeholder image&#x27; and &#x27;there&#x27;s no visual content yet, just the presenter&#x27;s explanation.&#x27; The presenter de</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">3.5</div>
+            </div>
+                <div class="team-reasoning">The 3.5 score seems harsh given the working code and novel approach. Desktop streaming with AI analysis for phishing detection is genuinely creative, and the concrete example shows it working. However, the short demo time and unclear connection to the ROGUE::AGENT track likely hurt the score. This feels like a solid technical implementation that didn&#x27;t quite fit the track requirements—judges may have seen it as more of a user protection tool than an agent security solution.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#15</span>
+                <span class="team-name">Winston</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">3.3</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">3.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:31.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No functional demonstration was observed. The screen showed only a static OBS placeholder image (white circle with logo and camera-off icon) throughout the entire 227-second demo. No code, interface, </div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">2.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:26.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No innovative approach, technique, or solution was demonstrated. The only content was fragmented audio mentioning &#x27;SCADA systems and ICS&#x27; and &#x27;critical sectors&#x27; without any context, implementation, or</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">3.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:36.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo failed completely. Visual content consisted solely of a static OBS placeholder screen for the entire 227 seconds. Audio was fragmented and incomplete, with sentences like &#x27;since this is menti</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+            </div>
+                <div class="team-reasoning">The 3.3 score appears to be largely based on the ICS/SCADA mention, which is a legitimately important and underexplored area for AI agent security. However, with video feed completely off and only a single fragmented sentence captured, there&#x27;s almost no evidence of actual work. This score feels generous—likely judges gave credit for attempting to address critical infrastructure, but the presentation failure prevented any meaningful evaluation of the solution.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#16</span>
+                <span class="team-name">RickToday</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">3.2</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">2.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:25.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The presenter mentions building a blockchain for attestations about files, IPs, and other security artifacts, and references creating a &#x27;clean slate for the chain&#x27; and a &#x27;testation about the sample fi</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">4.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:45.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">Using blockchain for security artifact attestations (files, IPs, domains, URLs) shows some novelty in applying distributed ledger technology to threat intelligence sharing. However, blockchain for sec</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo failed critically - the video feed remained black throughout showing only the OBS logo and &#x27;no video&#x27; icon. The presenter&#x27;s transcript is fragmented and incomplete, cutting off mid-sentence (</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">3.5</div>
+            </div>
+                <div class="team-reasoning">The 3.2 score reflects judges&#x27; appreciation for honesty about scope while acknowledging the minimal execution. Framing this as &#x27;4-5 hours today&#x27; is both refreshing and damning—it explains the short demo and lack of polish, but also signals this wasn&#x27;t a serious hackathon effort. The complete video failure and sub-2-minute demo suggest judges gave credit for showing up and trying something, but there&#x27;s no evidence of meaningful technical contribution. This is a participation score.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#17</span>
+                <span class="team-name">Gabo</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">2.7</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo shows severe technical issues. The video feed is completely non-functional (only OBS logo and muted camera icon visible on blue background throughout the 470s duration). The audio is fragment</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">3.5</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:35.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">From the fragmented audio, there are hints of potentially interesting concepts: automated evidence gathering, peer review mechanisms using multiple models, and analysis of financial data. The mention </div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo quality is critically poor. No video feed is visible throughout the entire 470-second presentation - only an OBS logo and muted camera icon on a blue background. The audio is severely fragmen</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+            </div>
+                <div class="team-reasoning">The 2.7 score reflects judges&#x27; struggle to find substance beneath the presentation chaos. The epistemological angle about &#x27;thinking processes&#x27; and &#x27;judging instinct&#x27; could be interesting in the context of AI agent decision-making, but the severe audio corruption and lack of visual feed made evaluation nearly impossible. The 470-second duration suggests they kept talking despite technical failures, which may have hurt more than helped. This feels like an ambitious conceptual approach that completely failed in execution.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#18</span>
+                <span class="team-name">ThirdParty</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">1.9</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo was cut off after only 23 seconds with an incomplete sentence. No actual implementation was demonstrated, no code was shown, no functionality was presented, and no technical execution could b</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">2.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:21.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The presenter mentioned being inspired by an internal Google project called &#x27;third party&#x27; related to external dependencies, but provided no details about their own approach, methodology, or innovation</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo was essentially non-existent. In 23 seconds, the presenter only managed to introduce the project name and vaguely reference inspiration from a Google project before cutting off mid-sentence (</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+            </div>
+                <div class="team-reasoning">The 1.9 score reflects a promising start that went nowhere. The Google-inspired third-party dependency security angle is legitimate and timely, but 23 seconds isn&#x27;t enough to demonstrate anything. The mid-sentence cutoff suggests either technical catastrophe or the presenter gave up. This is particularly disappointing because the problem space is exactly right for the track—supply chain attacks via dependencies are a real vector for rogue code injection. This feels like a team that had a good idea but couldn&#x27;t execute under pressure.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#19</span>
+                <span class="team-name">Ticket Security Incite</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">1.6</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No functional demonstration was observable. The screen remained on a static placeholder image throughout the entire 533-second duration. No code, system interface, or technical implementation was show</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">While the audio transcript fragments mention concepts like &#x27;threat identification&#x27; and &#x27;creating context or narrative to support findings,&#x27; no actual innovative approach was demonstrated. The presente</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo completely failed to present any visual content. Observations consistently note a &#x27;disconnect between audio and video&#x27; with the screen showing only a &#x27;static blue background with logo&#x27; or &#x27;pl</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+            </div>
+                <div class="team-reasoning">The 1.6 score reflects judges&#x27; frustration with a long presentation that communicated nothing. Nine minutes of placeholder screens and incomprehensible audio is worse than a short failed demo—it suggests the team didn&#x27;t recognize their presentation had failed and kept going. The &#x27;human and the time to&#x27; fragment hints at human-in-the-loop security, which could be interesting, but there&#x27;s no evidence of implementation. This score is generous—it likely reflects credit for persistence rather than technical merit.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#20</span>
+                <span class="team-name">TeamPie</span>
+                <span class="team-track">SHADOW::VECTOR</span>
+                <span class="team-total" style="color:#ff4444">1.5</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No technical implementation was demonstrated or observable. The observations only describe static slides with generic icons (global reach, secure data, seamless integration) and a title slide. No code</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No innovative approach, methodology, or novel technique was demonstrated. The observations only reference generic visual elements (abstract shapes, icons for common concepts) without any substantive c</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo failed to deliver meaningful content. Audio was severely compromised with &#x27;significant background noise&#x27; and the presenter being &#x27;only faintly audible,&#x27; with only &#x27;Uh, I want to&#x27; transcribed </div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Attack Effectiveness (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">0.6</div>
+            </div>
+                <div class="team-reasoning">The 1.5 score reflects the challenge of evaluating a completely failed presentation in a unique track. SHADOW::VECTOR implies vector embedding security—a genuinely important and underexplored area as AI systems increasingly rely on embeddings. However, with nearly no audio and only generic visual slides, judges had nothing to evaluate. The three-pillar framework could be meaningful, but without explanation, it&#x27;s just buzzwords. This feels like a team that understood the importance of their chosen track but couldn&#x27;t execute the presentation.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#21</span>
+                <span class="team-name">MagicThing</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">1.4</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No functional demonstration was observable. The observations show only a blank frame with OBS logo and muted camera icon throughout the 201-second duration. The presenter transcript is largely unintel</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">While the presenter mentions &#x27;continuous checking of source code&#x27; and &#x27;deeper analysis,&#x27; no innovative approach could be assessed due to complete lack of visual demonstration. The fragmented audio ref</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo failed completely. Visual observations confirm &#x27;blank frame with OBS logo&#x27; and &#x27;visual stasis&#x27; throughout the entire 201-second presentation. Audio was noted as absent (&#x27;There is no audio&#x27;) a</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+            </div>
+                <div class="team-reasoning">The 1.4 score reflects a complete presentation collapse. The fragments about source code checking suggest they were building some kind of automated security scanner, which is relevant to the track. However, the combination of no visual feed, incomprehensible audio with random Chinese characters, and generic team name suggests either catastrophic technical failure or a project that never came together. The &#x27;MagicThing&#x27; name is particularly telling—it sounds like a placeholder that never got replaced.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#22</span>
+                <span class="team-name">Rick</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">1.4</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.6</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:16.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No functional implementation was demonstrated. The observations show only a static OBS placeholder screen with logo and muted camera icon throughout the 80-second demo. The presenter mentions &#x27;algorit</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No innovative approach could be evaluated as no actual solution was presented. The brief audio mentions of &#x27;sha1&#x27; and &#x27;public ID&#x27; are too fragmentary to assess any novel AI x Security approach. Withou</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo completely failed to present any visual content. For the entire 80-second duration, only a static OBS logo placeholder was visible. The presenter&#x27;s audio mentions technical concepts but viewe</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+            </div>
+                <div class="team-reasoning">The 1.4 score reflects one of the most complete presentation failures in the event. 80 seconds of static placeholder with nearly no transcribable audio suggests either severe technical issues or a team that gave up mid-presentation. The mention of &#x27;algorithms and IDs&#x27; is too vague to indicate any specific approach. This score is likely a minimum participation credit—judges couldn&#x27;t evaluate what they couldn&#x27;t see or hear.</div>
+            </div>
+        </div>
+        <div class="team-card">
+            <div class="team-card-header">
+                <span class="team-rank">#23</span>
+                <span class="team-name">Test</span>
+                <span class="team-track">ROGUE::AGENT</span>
+                <span class="team-total" style="color:#ff4444">1.4</span>
+                <span class="expand-icon">&#9660;</span>
+            </div>
+            <div class="team-card-body">
+                
+            <div class="criterion-row">
+                <div class="criterion-name">Technical Execution</div>
+                <div class="criterion-score" style="color:#ff4444">1.4</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:14.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No technical implementation was demonstrated. The presenter mentioned &#x27;Lacroy&#x27; as a &#x27;flavored water&#x27; for securing hydration, which appears to be a joke rather than any actual security tool or system. </div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Innovation</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:11.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">No innovation in AI x Security was presented. The &#x27;Lacroy&#x27; concept described as &#x27;flavored water&#x27; for &#x27;securing hydration&#x27; is not a security technology and shows no connection to the ROGUE::AGENT track</div>
+            </div>
+            <div class="criterion-row">
+                <div class="criterion-name">Demo Quality</div>
+                <div class="criterion-score" style="color:#ff4444">1.4</div>
+                <div class="criterion-bar"><div class="criterion-fill" style="width:14.0%;background:#ff4444"></div></div>
+                <div class="criterion-just">The demo was extremely brief (11 seconds) and consisted only of informal statements with no actual demonstration of any working system. The presenter said &#x27;This is a test&#x27; twice, then made a joke abou</div>
+            </div>
+            <div class="criterion-row bonus">
+                <div class="criterion-name">Originality Factor (bonus)</div>
+                <div class="criterion-score" style="color:#ff4444">1.1</div>
+            </div>
+                <div class="team-reasoning">The 1.4 score is puzzling—this shouldn&#x27;t have been scored at all as it&#x27;s explicitly a test. The 11-second duration and &#x27;test of me demoing&#x27; statement make it clear this wasn&#x27;t a real submission. Either this was a technical test that accidentally got included in judging, or a team used &#x27;test&#x27; as cover for a non-existent project. The score likely reflects judges&#x27; confusion about whether to evaluate it at all. This is the baseline for &#x27;showed up but presented nothing.&#x27;</div>
+            </div>
+        </div>
+
+            <h2 class="section-title">The Arbiter&rsquo;s Deliberation</h2>
+            <div class="narrative-block">NEBULA:FOG 2026 was a study in the gap between ambition and execution, where technical difficulties became the great equalizer. The event&#x27;s top tier—AgentRange and DoYouKnowWhatYouBuiltLastSummer at 8.3—exists in a quantum state of Schrödinger&#x27;s excellence: their scores suggest strong work, but the complete absence of observable content means we&#x27;re judging ghosts. Genomics at 7.9 becomes the de facto winner by virtue of being the highest-scoring team with actual evidence of technical work, showing docker workflows and bioinformatics tooling that at least proved something existed.
+
+The middle tier revealed a hackathon truth: presentation matters as much as code. Teams like Kavin (6.1) and Starcraft (6.5) burned through full 10-minute slots but struggled with audio corruption and visual failures that reduced their demos to archaeological exercises in transcript interpretation. The track diversity—TeamKickass in SENTINEL::MESH, GossipProblem in ZERO::PROOF, TeamPie in SHADOW::VECTOR—showed ambition to tackle different security angles, but the 5.7-6.3 scores suggest these teams couldn&#x27;t fully realize their visions in the time available. Meanwhile, the supply chain security cluster (WeNeedaName, ThirdParty, ThirdParty-shapor) all attacked the same dependency problem with wildly different outcomes, from 5.3 to 0.0.
+
+The bottom tier is where things get interesting in a darkly comedic way. ThirdParty-shapor&#x27;s 0.0 despite having the most detailed technical architecture in the entire event is either a cautionary tale about demo functionality trumping design, or evidence of a disqualification that isn&#x27;t reflected in the data. Teams like Test (1.4) and Lens (0.0) with 11-second demos set the floor for &#x27;we showed up,&#x27; while longer failures like Ticket Security Incite (1.6) proved that nine minutes of incomprehensible audio is worse than honest brevity. The event&#x27;s lesson: in a hackathon, a working demo beats a brilliant architecture, clear audio beats perfect code, and sometimes the best strategy is knowing when to stop talking. These teams built the foundation for future work—the question is whether they&#x27;ll debug their presentation skills as thoroughly as their code.</div>
+
+            <h2 class="section-title">Notable Themes</h2>
+            <ul class="themes-list"><li>Catastrophic presentation technical failures: 15+ teams experienced OBS placeholder screens, muted cameras, or complete video feed loss, suggesting systematic issues with streaming infrastructure or setup guidance</li><li>Audio quality as the great differentiator: Teams with clear audio (Kavin, WeNeedaName, ThirdParty-shapor) could at least communicate ideas despite visual failures, while those with corrupted audio (Igor, Starcraft, Gabo) became incomprehensible regardless of demo length</li><li>Supply chain security convergence: Multiple teams (WeNeedaName, ThirdParty, ThirdParty-shapor) independently tackled npm/dependency security, suggesting this is a recognized pain point, but with wildly divergent execution quality</li><li>Track misalignment: Many ROGUE::AGENT teams built generic security tools (email phishing, social media content moderation) without clear connection to AI agent-specific threats, suggesting either track requirements were unclear or teams pivoted from original ideas</li><li>The &#x27;demo duration paradox&#x27;: Longer demos (600s) didn&#x27;t correlate with higher scores—Kavin and Starcraft used full time but scored 6.1-6.5, while Genomics achieved 7.9 in 282s, suggesting judges valued focus over comprehensiveness</li><li>The missing middle: Very few teams scored in the 7.0-8.0 range (only Genomics and Igor), creating a gap between top tier (8.3) and upper-middle (6.5), suggesting judges saw clear quality breaks rather than gradual gradations</li><li>Zero-score mystery: ThirdParty-shapor&#x27;s 0.0 despite detailed technical architecture suggests either non-functional demos receive no credit regardless of design quality, or undocumented disqualification criteria are in play</li><li>Team naming as signal: Generic names (MagicThing, WeNeedaName, Test) correlated with lower scores, while specific names (AgentTrustGateway, GossipProblem, Starcraft) suggested clearer product vision even when execution failed</li></ul>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
+            <p class="footer-text">AI x Security</p>
+            <nav class="footer-links">
+                <a href="about.html">MISSION</a>
+                <a href="challenges.html">CHALLENGES</a>
+                <a href="schedule.html">SCHEDULE</a>
+                <a href="results.html">RESULTS</a>
+                <a href="partners.html">PARTNERS</a>
+            </nav>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/nebulafog/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/NebulaFogSF" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://bsky.app/profile/nebulafogsf.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky"><svg class="bluesky-icon" viewBox="0 0 568 501" xmlns="http://www.w3.org/2000/svg"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.889-129.52 80.986-149.071-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.659 0 75.291 0 57.946 0-28.906 76.135-1.612 123.121 33.664Z"/></svg></a>
+                <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>MISSION</span></a></li>
+            <li><a href="challenges.html"><i class="fas fa-trophy"></i><span>CHALLENGES</span></a></li>
+            <li><a href="schedule.html"><i class="fas fa-calendar-alt"></i><span>SCHEDULE</span></a></li>
+            <li><a href="results.html"><i class="fas fa-trophy"></i><span>RESULTS</span></a></li>
+            <li><a href="partners.html"><i class="fas fa-handshake"></i><span>PARTNERS</span></a></li>
+        </ul>
+    </nav>
+
+    <script>
+        document.querySelectorAll('.team-card-header').forEach(function(header) {
+            header.addEventListener('click', function() {
+                this.parentElement.classList.toggle('expanded');
+            });
+        });
+
+        // CURSOR SYSTEM
+        (function() {
+            if (window.matchMedia('(max-width: 768px)').matches) return;
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorRing = document.querySelector('.cursor-ring');
+            if (!cursorDot || !cursorRing) return;
+            let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, ringX = 0, ringY = 0;
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+            const animate = () => {
+                dotX += (mouseX - dotX) * 0.5; dotY += (mouseY - dotY) * 0.5;
+                ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+                cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px';
+                cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+                requestAnimationFrame(animate);
+            };
+            animate();
+            document.querySelectorAll('a, button, .btn-primary').forEach(el => {
+                el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+            });
+            document.addEventListener('mousedown', () => cursorRing.classList.add('clicking'));
+            document.addEventListener('mouseup', () => cursorRing.classList.remove('clicking'));
+        })();
+
+        // PARTICLES SYSTEM
+        (function() {
+            if (window.matchMedia('(max-width: 768px)').matches) return;
+            const canvas = document.getElementById('particles');
+            if (!canvas) return;
+            let gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (!gl) { initParticles2D(canvas); return; }
+            const vsSource = `attribute vec4 aPosition; void main() { gl_Position = aPosition; }`;
+            const fsSource = `precision mediump float;
+                uniform vec2 uResolution; uniform float uTime; uniform vec2 uMouse; uniform float uScroll;
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                float snoise(vec2 v) {
+                    const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                    vec2 i = floor(v + dot(v, C.yy)); vec2 x0 = v - i + dot(i, C.xx);
+                    vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                    vec4 x12 = x0.xyxy + C.xxzz; x12.xy -= i1; i = mod289(i);
+                    vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+                    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                    m = m*m; m = m*m;
+                    vec3 x = 2.0 * fract(p * C.www) - 1.0; vec3 h = abs(x) - 0.5;
+                    vec3 ox = floor(x + 0.5); vec3 a0 = x - ox;
+                    m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+                    vec3 g; g.x = a0.x * x0.x + h.x * x0.y; g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                    return 130.0 * dot(m, g);
+                }
+                void main() {
+                    vec2 uv = gl_FragCoord.xy / uResolution; vec2 p = uv * 2.0 - 1.0;
+                    p.x *= uResolution.x / uResolution.y;
+                    vec2 mouse = uMouse * 2.0 - 1.0; mouse.x *= uResolution.x / uResolution.y;
+                    float mouseDist = length(p - mouse); float mouseInfluence = smoothstep(0.8, 0.0, mouseDist) * 0.3;
+                    float t = uTime * 0.15; float scrollOffset = uScroll * 2.0;
+                    float noise1 = snoise(p * 1.5 + vec2(t, scrollOffset));
+                    float noise2 = snoise(p * 3.0 + vec2(-t * 0.5, scrollOffset * 0.5));
+                    float noise3 = snoise(p * 5.0 + vec2(t * 0.3, -scrollOffset * 0.3));
+                    float n = noise1 * 0.5 + noise2 * 0.3 + noise3 * 0.2; n = n * 0.5 + 0.5;
+                    vec3 colorA = vec3(0.0, 1.0, 0.62); vec3 colorB = vec3(1.0, 0.0, 0.5); vec3 colorC = vec3(0.0, 1.0, 1.0);
+                    vec3 color = mix(colorA, colorB, n * 0.5 + mouseInfluence); color = mix(color, colorC, noise3 * 0.3);
+                    float vignette = clamp(1.0 - length(p) * 0.4, 0.0, 1.0);
+                    vec2 grid = fract(uv * vec2(50.0, 30.0)); float gridLine = (step(0.95, grid.x) + step(0.95, grid.y)) * 0.03;
+                    float alpha = clamp((n * 0.08 + gridLine + mouseInfluence * 0.2) * vignette, 0.0, 0.15);
+                    gl_FragColor = vec4(color, alpha);
+                }`;
+            const compileShader = (source, type) => {
+                const shader = gl.createShader(type); gl.shaderSource(shader, source); gl.compileShader(shader);
+                return gl.getShaderParameter(shader, gl.COMPILE_STATUS) ? shader : null;
+            };
+            const vs = compileShader(vsSource, gl.VERTEX_SHADER);
+            const fs = compileShader(fsSource, gl.FRAGMENT_SHADER);
+            if (!vs || !fs) { initParticles2D(canvas); return; }
+            const program = gl.createProgram(); gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
+            if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { initParticles2D(canvas); return; }
+            gl.useProgram(program);
+            const vertices = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
+            const buffer = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buffer); gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+            const aPosition = gl.getAttribLocation(program, 'aPosition'); gl.enableVertexAttribArray(aPosition); gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+            const uResolution = gl.getUniformLocation(program, 'uResolution');
+            const uTime = gl.getUniformLocation(program, 'uTime');
+            const uMouse = gl.getUniformLocation(program, 'uMouse');
+            const uScroll = gl.getUniformLocation(program, 'uScroll');
+            let mouseX = 0.5, mouseY = 0.5, scrollProgress = 0;
+            document.addEventListener('mousemove', (e) => { mouseX = e.clientX / window.innerWidth; mouseY = 1.0 - e.clientY / window.innerHeight; });
+            window.addEventListener('scroll', () => { scrollProgress = window.scrollY / (document.body.scrollHeight - window.innerHeight); }, { passive: true });
+            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; gl.viewport(0, 0, canvas.width, canvas.height); };
+            resize(); window.addEventListener('resize', resize);
+            gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+            const startTime = performance.now();
+            const animate = () => {
+                const time = (performance.now() - startTime) / 1000;
+                gl.uniform2f(uResolution, canvas.width, canvas.height); gl.uniform1f(uTime, time);
+                gl.uniform2f(uMouse, mouseX, mouseY); gl.uniform1f(uScroll, scrollProgress);
+                gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+                requestAnimationFrame(animate);
+            };
+            animate();
+        })();
+        function initParticles2D(canvas) {
+            const ctx = canvas.getContext('2d'); let particles = []; const maxParticles = 60;
+            const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+            resize(); window.addEventListener('resize', resize);
+            class Particle {
+                constructor() { this.reset(); }
+                reset() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5; this.size = Math.random() * 2 + 1; this.alpha = Math.random() * 0.5 + 0.1; }
+                update() { this.x += this.vx; this.y += this.vy; if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset(); }
+                draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = `rgba(0, 255, 159, ${this.alpha})`; ctx.fill(); }
+            }
+            for (let i = 0; i < maxParticles; i++) particles.push(new Particle());
+            const animate = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(0, 255, 159, ${0.1 * (1 - dist / 120)})`; ctx.stroke(); }
+                    }
+                }
+                requestAnimationFrame(animate);
+            };
+            animate();
+        }
+
+        // GSAP ANIMATIONS
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof gsap === 'undefined') return;
+
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Animate page header
+            gsap.to('.page-header', {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: 'power3.out'
+            });
+
+            // Animate podium cards (staggered)
+            gsap.to('.podium-card', {
+                opacity: 1,
+                y: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                delay: 0.4,
+                ease: 'power3.out'
+            });
+
+            // Animate team cards (staggered, scroll triggered)
+            gsap.to('.team-card', {
+                scrollTrigger: {
+                    trigger: '.team-card',
+                    start: 'top 85%',
+                },
+                opacity: 1,
+                y: 0,
+                duration: 0.6,
+                stagger: 0.05,
+                ease: 'power3.out'
+            });
+
+            // Animate narrative blocks (scroll triggered)
+            gsap.utils.toArray('.narrative-block').forEach(block => {
+                gsap.to(block, {
+                    scrollTrigger: {
+                        trigger: block,
+                        start: 'top 85%',
+                    },
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out'
+                });
+            });
+        });
+    </script>
+    <div class="page-transition-overlay"></div>
+<script defer src="/analytics.js"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3dca859b2622453e93f3f92fc322cb93"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
