@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Demo Gallery | NEBULA:FOG AI x Security Hackathon</title>
+    <meta name="description" content="Watch demos from NEBULA:FOG hackathons. 40 teams building at the intersection of AI and security.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; frame-src https://www.youtube.com https://youtube.com; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Demo Gallery | NEBULA:FOG AI x Security Hackathon">
+    <meta property="og:description" content="Watch demos from NEBULA:FOG hackathons. 40 teams building at the intersection of AI and security.">
+    <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:url" content="https://nebulafog.ai/gallery.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://nebulafog.ai/gallery.html">
+    <meta name="theme-color" content="#00ff9f">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/posthog-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles/common.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+    .page-header { margin-bottom: 3rem; }
+    .page-tag { margin-bottom: 2rem; }
+    .page-title { font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 1.5rem; }
+    .page-subtitle { font-size: 1rem; color: var(--color-text-muted); max-width: 650px; margin: 0 auto; line-height: 1.8; }
+
+    .filter-bar {
+        display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;
+        margin-bottom: 3rem; opacity: 0; transform: translateY(20px);
+    }
+    .filter-btn {
+        font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.1em;
+        color: var(--color-text-muted); background: transparent;
+        border: 1px solid rgba(255,255,255,0.1); border-radius: 4px;
+        padding: 0.6rem 1.2rem; cursor: pointer; transition: all 0.3s ease;
+    }
+    .filter-btn:hover { color: var(--color-primary); border-color: rgba(0,255,159,0.3); background: rgba(0,255,159,0.05); }
+    .filter-btn.active { color: var(--color-primary); border-color: var(--color-primary); background: rgba(0,255,159,0.1); }
+    .filter-count { opacity: 0.6; margin-left: 0.3rem; }
+
+    .gallery-grid {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+        gap: 1.25rem; margin-bottom: 4rem;
+    }
+    @media (max-width: 768px) { .gallery-grid { grid-template-columns: 1fr; } }
+
+    .demo-card {
+        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);
+        border-radius: 8px; overflow: hidden; transition: all 0.3s ease;
+        opacity: 0; transform: translateY(20px);
+    }
+    .demo-card:hover { border-color: rgba(0,255,159,0.2); background: rgba(255,255,255,0.04); }
+    .demo-card.hidden { display: none; }
+
+    .card-top { display: flex; align-items: center; gap: 0.75rem; padding: 1rem 1.25rem; }
+    .card-rank {
+        font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700;
+        min-width: 2.5rem; text-align: center; line-height: 1;
+    }
+    .card-rank.gold { color: #ffd700; }
+    .card-rank.silver { color: #c0c0c0; }
+    .card-rank.bronze { color: #cd7f32; }
+    .card-info { flex: 1; min-width: 0; }
+    .card-name {
+        font-family: var(--font-mono); font-size: 0.85rem; font-weight: 600;
+        white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .card-meta { display: flex; align-items: center; gap: 0.75rem; margin-top: 0.3rem; }
+    .card-track {
+        font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;
+        padding: 0.15rem 0.5rem; border-radius: 3px; border: 1px solid;
+    }
+    .track-rogue { color: #aa44ff; border-color: rgba(170,68,255,0.3); background: rgba(170,68,255,0.08); }
+    .track-sentinel { color: #4488ff; border-color: rgba(68,136,255,0.3); background: rgba(68,136,255,0.08); }
+    .track-zero { color: #0ff; border-color: rgba(0,255,255,0.3); background: rgba(0,255,255,0.08); }
+    .track-shadow { color: #ff4444; border-color: rgba(255,68,68,0.3); background: rgba(255,68,68,0.08); }
+    .card-duration { font-size: 0.65rem; color: var(--color-text-muted); }
+    .card-event {
+        font-size: 0.55rem; letter-spacing: 0.08em; color: var(--color-text-dim);
+        font-family: var(--font-mono);
+    }
+    .card-score {
+        font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700;
+        color: var(--color-primary); text-align: center; min-width: 3rem;
+    }
+    .card-score.na { font-size: 0.7rem; color: var(--color-text-dim); }
+
+    .card-body { padding: 0 1.25rem 1rem; }
+    .card-desc {
+        font-size: 0.8rem; color: var(--color-text-muted); line-height: 1.5;
+        display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+
+    .card-expand {
+        display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+        padding: 0.6rem; border-top: 1px solid rgba(255,255,255,0.04);
+        font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-dim);
+        cursor: pointer; transition: all 0.2s;
+    }
+    .card-expand:hover { color: var(--color-primary); background: rgba(0,255,159,0.03); }
+    .card-expand i { transition: transform 0.2s; }
+    .demo-card.expanded .card-expand i { transform: rotate(180deg); }
+
+    .card-details { display: none; padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .demo-card.expanded .card-details { display: block; }
+
+    .detail-section { margin-bottom: 1rem; }
+    .detail-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-primary); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .detail-scores { display: flex; gap: 1rem; }
+    .detail-score-item { flex: 1; }
+    .detail-score-name { font-size: 0.65rem; color: var(--color-text-dim); }
+    .detail-score-val { font-size: 1.1rem; font-weight: 700; }
+    .detail-score-bar { height: 3px; background: rgba(255,255,255,0.05); border-radius: 2px; margin-top: 0.2rem; }
+    .detail-score-fill { height: 100%; border-radius: 2px; background: var(--color-primary); }
+
+    .detail-text { font-size: 0.75rem; color: var(--color-text-muted); line-height: 1.6; }
+    .detail-text li { margin-bottom: 0.3rem; }
+    .detail-text ul { padding-left: 1rem; list-style: none; }
+    .detail-text ul li::before { content: "// "; color: var(--color-primary); }
+
+    .card-video { padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .video-embed {
+        position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px;
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    .video-embed iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    .video-link {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        font-family: var(--font-mono); font-size: 0.75rem; color: var(--color-primary);
+        text-decoration: none; padding: 0.5rem 0;
+    }
+    .video-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-ring"></div>
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
+
+    <nav class="hud-nav" role="navigation" aria-label="System Interface">
+        <div class="hud-status">
+            <div class="status-dot"></div>
+            <span>SYS_CONNECTED</span>
+            <span style="margin-left: 10px; opacity: 0.7;">GALLERY_VIEW</span>
+        </div>
+        <ul class="hud-links">
+            <li><a href="index.html" class="hud-link">HOME</a></li>
+            <li><a href="about.html" class="hud-link">MISSION</a></li>
+            <li><a href="challenges.html" class="hud-link">CHALLENGES</a></li>
+            <li><a href="schedule.html" class="hud-link">SCHEDULE</a></li>
+            <li><a href="results.html" class="hud-link">RESULTS</a></li>
+            <li><a href="gallery.html" class="hud-link active" data-text="GALLERY">GALLERY</a></li>
+            <li><a href="partners.html" class="hud-link">PARTNERS</a></li>
+        </ul>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <header class="page-header" style="opacity:0;transform:translateY(40px)">
+                <span class="page-tag">DEMO ARCHIVE // 2025-2026</span>
+                <h1 class="page-title">DEMO GALLERY</h1>
+                <p class="page-subtitle">What 40 teams built at the intersection of AI and security. Watch the PRIME 2025 demos. Explore the SINGULARITY 2026 scorecards.</p>
+            </header>
+
+            <div class="filter-bar" id="filter-bar">
+                <button class="filter-btn active" data-filter="all">ALL DEMOS</button>
+                <button class="filter-btn" data-filter="prime">PRIME 2025 <span class="filter-count">15</span></button>
+                <button class="filter-btn" data-filter="singularity">SINGULARITY 2026 <span class="filter-count">25</span></button>
+            </div>
+
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Cards injected by JS -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
+            <p class="footer-text">AI x Security</p>
+            <nav class="footer-links">
+                <a href="about.html">MISSION</a>
+                <a href="challenges.html">CHALLENGES</a>
+                <a href="schedule.html">SCHEDULE</a>
+                <a href="results.html">RESULTS</a>
+                <a href="gallery.html">GALLERY</a>
+                <a href="partners.html">PARTNERS</a>
+            </nav>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/nebulafog/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/NebulaFogSF" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://bsky.app/profile/nebulafogsf.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky"><svg class="bluesky-icon" viewBox="0 0 568 501" xmlns="http://www.w3.org/2000/svg"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.889-129.52 80.986-149.071-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.659 0 75.291 0 57.946 0-28.906 76.135-1.612 123.121 33.664Z"/></svg></a>
+                <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>HOME</span></a></li>
+            <li><a href="challenges.html"><i class="fas fa-trophy"></i><span>CHALLENGES</span></a></li>
+            <li><a href="results.html"><i class="fas fa-trophy"></i><span>RESULTS</span></a></li>
+            <li><a href="gallery.html" class="active"><i class="fas fa-images"></i><span>GALLERY</span></a></li>
+            <li><a href="partners.html"><i class="fas fa-handshake"></i><span>PARTNERS</span></a></li>
+        </ul>
+    </nav>
+
+    <script>
+    const TEAMS = [
+      // SINGULARITY 2026 (live event)
+      {e:"singularity",rank:1,name:"AgentRange",track:"ROGUE::AGENT",score:8.3,duration:"7.7 min",desc:"Achieved top-tier score with sustained 464-second demonstration showing technical depth.",scores:{tech:7.9,innov:7.0,demo:7.5},strengths:["Top-tier score of 8.3 with sustained demonstration","Clean execution with zero injection attempts"],weaknesses:["Observation and transcript data missing","Cannot determine if high score reflects genuine innovation"]},
+      {e:"singularity",rank:2,name:"DoYouKnowWhatYouBuiltLastSummer",track:"ROGUE::AGENT",score:8.3,duration:"5.6 min",desc:"Matched top score while maintaining efficient 339-second presentation.",scores:{tech:7.9,innov:7.0,demo:7.5},strengths:["Matched top score of 8.3 with efficient presentation","Zero injection attempts with clean security posture"],weaknesses:["Complete absence of observations and transcript data","Cannot determine if team name humor reflects genuine innovation"]},
+      {e:"singularity",rank:3,name:"Genomics",track:"ROGUE::AGENT",score:7.9,duration:"4.7 min",desc:"Clear technical architecture with docker containerization and bioinformatics tooling.",scores:{tech:7.0,innov:7.9,demo:6.5},strengths:["Docker containerization and .harness/ workflow integration","Practical bioinformatics tooling with vcftools and retrofit bash scripts"],weaknesses:["Heavy audio noise in transcript","Observations focus on visual diagram interpretation without clear security angle"]},
+      {e:"singularity",rank:4,name:"Igor",track:"ROGUE::AGENT",score:7.5,duration:"6.6 min",desc:"Sustained demonstration showing commitment to comprehensive coverage of the working context.",scores:{tech:6.8,innov:7.7,demo:5.8},strengths:["Sustained 398-second demonstration","Observations captured active hackathon environment"],weaknesses:["Observations dominated by environmental description rather than technical content","Transcript heavily corrupted with noise"]},
+      {e:"singularity",rank:5,name:"Starcraft",track:"ROGUE::AGENT",score:6.5,duration:"10.0 min",desc:"5 AI agents with 'Fortress' and 'two sector' security architecture design.",scores:{tech:6.1,innov:5.8,demo:5.5},strengths:["Clear branding with '5 AI agents' and security team focus","Maximum 600-second demonstration","'Fortress' and 'two sector' design suggests systematic approach"],weaknesses:["Transcript corrupted with multilingual fragments","No clear articulation of how 5-agent system addresses rogue agent threats"]},
+      {e:"singularity",rank:6,name:"TeamKickass",track:"SENTINEL::MESH",score:6.3,duration:"5.6 min",desc:"Only team in SENTINEL::MESH track with observable score, attempting distributed security monitoring.",scores:{tech:6.0,innov:5.5,demo:5.5},strengths:["Only SENTINEL::MESH entry with a score","337-second demo with zero injection attempts"],weaknesses:["Complete absence of observations and transcript","Unclear if track choice was strategic or misaligned"]},
+      {e:"singularity",rank:7,name:"Kavin",track:"ROGUE::AGENT",score:6.1,duration:"10.0 min",desc:"Multi-agent decision-making system: 'I have this multi-agent setup... suppose you can't decide what you want to do.'",scores:{tech:5.0,innov:7.0,demo:4.5},strengths:["Clearly articulated multi-agent decision-making problem","Maximum 600-second demonstration"],weaknesses:["OBS placeholder screen throughout — visual feed remained paused","Camera-off icon forced judges to rely purely on audio"]},
+      {e:"singularity",rank:8,name:"GossipProblem",track:"ZERO::PROOF",score:5.7,duration:"4.9 min",desc:"Data exposure risks in MCP server architectures with agent card ownership and authorization.",scores:{tech:5.0,innov:6.5,demo:4.0},strengths:["Only team in ZERO::PROOF track","Understanding of data exposure risks in MCP server architectures"],weaknesses:["Paused OBS Studio logo indicating presentation issues","Connection to zero-knowledge proofs not explicit"]},
+      {e:"singularity",rank:9,name:"WeNeedaName",track:"ROGUE::AGENT",score:5.3,duration:"10.0 min",desc:"Detecting dependency bloat: developers importing libraries that become 'massive piece of software'.",scores:{tech:5.0,innov:5.5,demo:4.0},strengths:["Concrete problem: dependency bloat and supply chain security","Mentioned 'we have real data' — empirical approach"],weaknesses:["Using 'older tools that are dying out'","No clear connection to ROGUE::AGENT track specifically"]},
+      {e:"singularity",rank:10,name:"KC2",track:"ROGUE::AGENT",score:5.2,duration:"8.9 min",desc:"Email security workflow: receiving raw messages, analysis with four components including sender and domain analysis.",scores:{tech:5.0,innov:4.5,demo:5.0},strengths:["Clear email security workflow with four analysis components","Practical phishing detection use case with concrete example"],weaknesses:["Observations extremely repetitive","Email security is well-trodden ground"]},
+      {e:"singularity",rank:11,name:"Overwatch",track:"ROGUE::AGENT",score:4.2,duration:"2.9 min",desc:"'Use AI directly to recognize when there is an ongoing breach' — real-time security monitoring.",scores:{tech:3.6,innov:5.0,demo:3.1},strengths:["Novel problem: AI for real-time breach detection","Self-aware 'bridge water' project name"],weaknesses:["Extremely short 174-second demo","No evidence of actual breach detection working"]},
+      {e:"singularity",rank:12,name:"KC",track:"ROGUE::AGENT",score:3.8,duration:"4.2 min",desc:"Web interface for detecting harmful content on social media with multi-agent approach.",scores:{tech:3.2,innov:3.6,demo:3.7},strengths:["Web interface for harmful content detection","Multi-agent approach where agents criticize each other"],weaknesses:["Observations extremely repetitive and vague","Connection to ROGUE::AGENT track unclear"]},
+      {e:"singularity",rank:13,name:"AgentTrustGateway",track:"ROGUE::AGENT",score:3.7,duration:"5.2 min",desc:"'We created something that will allow agents to trust each other' — agent-to-agent trust gateway.",scores:{tech:3.0,innov:5.0,demo:2.1},strengths:["Directly addresses agent-to-agent trust — central to track","Clear problem articulation in opening statement"],weaknesses:["Video not present throughout — severe technical issues","Demo functionality not working during presentation"]},
+      {e:"singularity",rank:14,name:"Tobias",track:"ROGUE::AGENT",score:3.5,duration:"2.8 min",desc:"Real-time screen analysis for phishing detection: 'streaming the desktop and using an AI model to analyze what's going on.'",scores:{tech:2.5,innov:5.0,demo:2.1},strengths:["Working code: AI model analyzing desktop stream in real-time","Concrete phishing example with Python code visible"],weaknesses:["165-second demo quite short","Tangentially related to rogue AI agents"]},
+      {e:"singularity",rank:15,name:"Winston",track:"ROGUE::AGENT",score:3.3,duration:"3.8 min",desc:"Focus on SCADA/ICS critical infrastructure security with AI agent monitoring.",scores:{tech:3.1,innov:2.6,demo:3.6},strengths:["SCADA/ICS focus — critical infrastructure security","Important and underexplored domain"],weaknesses:["Video feed completely off throughout","Only single fragmented sentence captured"]},
+      {e:"singularity",rank:16,name:"RickToday",track:"ROGUE::AGENT",score:3.2,duration:"1.6 min",desc:"Same-day work: 'It only took about four or five hours.' Honest about scope.",scores:{tech:2.5,innov:4.5,demo:1.6},strengths:["Honest about scope — framing as same-day work","Self-aware about presentation order"],weaknesses:["99-second demo extremely short","Video feed completely black throughout"]},
+      {e:"singularity",rank:17,name:"Gabo",track:"ROGUE::AGENT",score:2.7,duration:"7.8 min",desc:"Epistemological approach: 'thinking processes matter a lot' — addressing AI judging biases and evidence.",scores:{tech:2.1,innov:3.5,demo:2.1},strengths:["Addressed epistemological concerns in AI decision-making","Framework thinking with systematic approach"],weaknesses:["OBS logo and muted camera throughout","Transcript nearly incomprehensible with heavy noise"]},
+      {e:"singularity",rank:18,name:"ThirdParty",track:"ROGUE::AGENT",score:1.9,duration:"0.4 min",desc:"Google-inspired third-party dependency security — 'eliminate all external dependency vulnerabilities.'",scores:{tech:1.6,innov:2.1,demo:1.6},strengths:["Clearly articulated supply chain security problem","Problem highly relevant to the track"],weaknesses:["23-second demo — catastrophic presentation failure","Transcript cuts off mid-sentence"]},
+      {e:"singularity",rank:19,name:"Ticket Security Incite",track:"ROGUE::AGENT",score:1.6,duration:"8.9 min",desc:"Human-in-the-loop security approach with sustained 533-second demonstration.",scores:{tech:1.6,innov:1.6,demo:1.1},strengths:["Sustained 533-second demonstration showing persistence","Focus on human-in-the-loop security"],weaknesses:["Placeholder screen with no visual feed throughout","Transcript heavily fragmented and incomprehensible"]},
+      {e:"singularity",rank:20,name:"TeamPie",track:"SHADOW::VECTOR",score:1.5,duration:"4.6 min",desc:"Only SHADOW::VECTOR team. Three pillars: global reach, secure data, and seamless integration.",scores:{tech:1.6,innov:1.6,demo:1.1},strengths:["Only team in SHADOW::VECTOR track","Structured visual presentation with three pillars"],weaknesses:["Unclear audio throughout","Abstract shapes observers struggled to interpret"]},
+      {e:"singularity",rank:21,name:"MagicThing",track:"ROGUE::AGENT",score:1.4,duration:"3.4 min",desc:"Automated source code security scanning with continuous checking and deeper analysis.",scores:{tech:1.6,innov:1.1,demo:1.1},strengths:["Continuous checking of source code","Workflow automation with validation"],weaknesses:["Blank frame with OBS logo throughout","Transcript catastrophically corrupted"]},
+      {e:"singularity",rank:22,name:"Rick",track:"ROGUE::AGENT",score:1.4,duration:"1.3 min",desc:"Mentioned 'algorithms and IDs' — minimal demo with static placeholder graphic.",scores:{tech:1.6,innov:1.1,demo:1.1},strengths:["Mentioned algorithms and IDs"],weaknesses:["80-second demo extremely short","Transcript nearly empty","Static placeholder with no technical content"]},
+      {e:"singularity",rank:23,name:"Test",track:"ROGUE::AGENT",score:1.4,duration:"0.2 min",desc:"'This is a test. This is a test of me demoing.' Shortest demo at 11 seconds.",scores:{tech:1.4,innov:1.1,demo:1.4},strengths:["Self-aware about test status"],weaknesses:["11-second demo — shortest in event","Explicitly a test, not a real submission"]},
+      {e:"singularity",rank:24,name:"ThirdParty-shapor",track:"ROGUE::AGENT",score:null,duration:"5.4 min",desc:"Most detailed architecture: npm proxy with PostgreSQL, internet scraping worker, three-stage analysis with AI diffs.",scores:{tech:null,innov:null,demo:null},strengths:["Most detailed technical architecture of any team","npm proxy with PostgreSQL metadata storage","Three-stage analysis with flagging and AI diffs"],weaknesses:["Received 0.0 score despite substantial observable work","Acknowledged incomplete implementation"]},
+      {e:"singularity",rank:25,name:"Lens",track:"ROGUE::AGENT",score:null,duration:"0.2 min",desc:"Attempted screen sharing of web-based HTML demo. Zoom UI capture failed.",scores:{tech:null,innov:null,demo:null},strengths:["Attempted to show web interface"],weaknesses:["11-second demo tied for shortest","Demo never actually started","Zoom screen capture failed"]},
+      // PRIME 2025 (YouTube videos)
+      {e:"prime",rank:1,name:"Source Code Review Agent",track:"ROGUE::AGENT",score:7.0,duration:"6:46",desc:"Flask + Bandit + OpenAI integration for automated code analysis with security headers.",scores:{tech:7.0,innov:7.0,demo:7.0},yt:"CgnDgSnO_Lo",strengths:["Integrates Flask, Bandit, and OpenAI for code analysis","Flask-Talisman for security headers"],weaknesses:["Bandit output shows file skipped due to syntax error"]},
+      {e:"prime",rank:2,name:"AI Vulnerability Triage",track:"SENTINEL::MESH",score:8.0,duration:"3:02",desc:"Terraform config analysis identifying vulnerabilities with detailed remediation steps.",scores:{tech:8.0,innov:7.0,demo:7.0},yt:"Hyu6Rln21K0",strengths:["Analyzed Terraform configurations for vulnerabilities","Detailed numbered remediation steps"],weaknesses:["Limited scope to Terraform only"]},
+      {e:"prime",rank:3,name:"Private Computer Use",track:"SHADOW::VECTOR",score:8.0,duration:"6:02",desc:"Intercepting agent actions and redacting PII in real-time during form filling.",scores:{tech:8.0,innov:8.0,demo:7.0},yt:"AANOeo56KPc",strengths:["Real-time PII redaction during agent form filling","Agent correctly navigates and identifies fields"],weaknesses:["Some edge cases in redaction coverage"]},
+      {e:"prime",rank:4,name:"Fake Content Generation",track:"ROGUE::AGENT",score:7.0,duration:"4:40",desc:"Generating structured academic papers and embedded media for content authenticity testing.",scores:{tech:7.0,innov:7.0,demo:7.0},yt:"o48IxJOeMfQ",strengths:["Generated structured academic paper with all sections","Successfully embedded YouTube links and read aloud"],weaknesses:["Limited sophistication in generation"]},
+      {e:"prime",rank:5,name:"Nebula Investigations",track:"SENTINEL::MESH",score:8.0,duration:"8:30",desc:"PDF processing with image extraction, chart detection, and Neo4j graph database queries.",scores:{tech:8.0,innov:8.0,demo:7.0},yt:"5Inctca6grA",strengths:["PDF to Neo4j graph pipeline","Image extraction and chart detection"],weaknesses:["Complex pipeline with potential failure points"]},
+      {e:"prime",rank:6,name:"Walmart 2",track:"ROGUE::AGENT",score:7.0,duration:"4:38",desc:"Terraform code generation for AWS infrastructure — VPC, subnets, EC2 for domain controllers.",scores:{tech:7.0,innov:6.0,demo:7.0},yt:"gQNG_zq2dNc",strengths:["Successfully generated Terraform for AWS infrastructure","Resolved duplicate provider configuration error"],weaknesses:["Infrastructure generation is well-trodden territory"]},
+      {e:"prime",rank:7,name:"NextGen SAST",track:"SENTINEL::MESH",score:7.0,duration:"12:59",desc:"Semgrep + custom LLM + web interface analyzing Google Gruyere for privilege escalation.",scores:{tech:7.0,innov:7.0,demo:7.0},yt:"myiMib1VE1Q",strengths:["Integrated Semgrep, custom LLM, and web interface","Identified privilege escalation vulnerability"],weaknesses:["Some integration gaps between components"]},
+      {e:"prime",rank:8,name:"Privacy Impact Analyzer",track:"SHADOW::VECTOR",score:7.0,duration:"5:15",desc:"Document conversion and privacy analysis across .docx, .pdf, .doc with MD5 hashing.",scores:{tech:7.0,innov:6.0,demo:7.0},yt:"Zv6mtk94l7s",strengths:["Multi-format document handling","MD5 hashing for unique filenames"],weaknesses:["Error handling could be more robust"]},
+      {e:"prime",rank:9,name:"Nebula Fog Subprime",track:"ROGUE::AGENT",score:8.0,duration:"3:58",desc:"Offensive and defensive: AI-generated phishing content, fake login pages, and AI video analysis.",scores:{tech:8.0,innov:8.0,demo:8.0},yt:"Z0rYTioqRyY",strengths:["Both offensive and defensive components","Well-crafted phishing email and fake login page"],weaknesses:["Defensive detection could be more sophisticated"]},
+      {e:"prime",rank:10,name:"Plan AI",track:"ROGUE::AGENT",score:8.0,duration:"6:17",desc:"Multi-worker architecture for parallel processing of research tasks with dispatcher dashboard.",scores:{tech:8.0,innov:7.0,demo:7.0},yt:"CmGBcdWvZTQ",strengths:["Complex multi-worker architecture","PlanAI Dispatcher Dashboard for monitoring"],weaknesses:["Complexity may impact reliability"]},
+      {e:"prime",rank:11,name:"Advanced Security Tool",track:"SENTINEL::MESH",score:8.0,duration:"12:39",desc:"MCP servers querying repositories, automated report generation with AWS Bedrock/Claude 3.5 Sonnet.",scores:{tech:8.0,innov:7.0,demo:7.0},yt:"KH41wLOgKq8",strengths:["Functional MCP servers for repository analysis","Automated JSON and markdown report generation"],weaknesses:["Multiple integration points to maintain"]},
+      {e:"prime",rank:12,name:"Web App Security Testing",track:"SENTINEL::MESH",score:6.0,duration:"5:05",desc:"AI-driven browser automation with StateGraph workflow for automated security testing.",scores:{tech:6.0,innov:6.0,demo:6.0},yt:"kt2-ZxYKRDM",strengths:["AI-driven browser automation","Modular StateGraph workflow design"],weaknesses:["Indicators of incomplete implementation"]},
+      {e:"prime",rank:13,name:"LAMP Monitoring Platform",track:"SENTINEL::MESH",score:6.0,duration:"7:21",desc:"AgentOps integration with vulnerability detection — found hardcoded 'super_secret_admin_key_123'.",scores:{tech:6.0,innov:6.0,demo:6.0},yt:"VVrWaBagg4c",strengths:["AgentOps library integration","Found hardcoded credentials in scan"],weaknesses:["Significant limitations in scope"]},
+      {e:"prime",rank:14,name:"AI Cloud Security Analysis",track:"SENTINEL::MESH",score:7.0,duration:"3:08",desc:"Async Python with AWS CLI — EC2 security groups, Security Hub, port scanning, ECS enumeration.",scores:{tech:7.0,innov:6.0,demo:7.0},yt:"VbUOfuFj84c",strengths:["Multiple investigation types with async Python","Structured JSON output with proper error handling"],weaknesses:["Limited to AWS-specific analysis"]},
+      {e:"prime",rank:15,name:"Revenge AI",track:"ROGUE::AGENT",score:6.0,duration:"4:15",desc:"PE file analysis: metadata extraction, entropy scores, process debugging, assembly view.",scores:{tech:6.0,innov:6.0,demo:6.0},yt:"x24iFJy8zVk",strengths:["PE metadata extraction with entropy scores","Assembly view conversion from hex"],weaknesses:["Several indicators of incomplete features"]}
+    ];
+
+    function trackClass(t) {
+      if (t.includes('ROGUE')) return 'track-rogue';
+      if (t.includes('SENTINEL')) return 'track-sentinel';
+      if (t.includes('ZERO')) return 'track-zero';
+      if (t.includes('SHADOW')) return 'track-shadow';
+      return '';
+    }
+    function rankClass(r, evt) {
+      if (evt === 'prime') return '';
+      if (r === 1) return 'gold';
+      if (r === 2) return 'silver';
+      if (r === 3) return 'bronze';
+      return '';
+    }
+    function renderCard(t) {
+      const scoreDisplay = t.score !== null ? t.score.toFixed(1) : 'N/A';
+      const scoreClass = t.score !== null ? '' : ' na';
+      const eventLabel = t.e === 'prime' ? 'PRIME 2025' : 'SINGULARITY 2026';
+      const hasVideo = !!t.yt;
+
+      let detailScores = '';
+      if (t.scores.tech !== null) {
+        detailScores = `<div class="detail-section"><div class="detail-label">SCORE BREAKDOWN</div><div class="detail-scores">
+          <div class="detail-score-item"><div class="detail-score-name">Technical</div><div class="detail-score-val">${t.scores.tech}</div><div class="detail-score-bar"><div class="detail-score-fill" style="width:${t.scores.tech*10}%"></div></div></div>
+          <div class="detail-score-item"><div class="detail-score-name">Innovation</div><div class="detail-score-val">${t.scores.innov}</div><div class="detail-score-bar"><div class="detail-score-fill" style="width:${t.scores.innov*10}%"></div></div></div>
+          <div class="detail-score-item"><div class="detail-score-name">Demo</div><div class="detail-score-val">${t.scores.demo}</div><div class="detail-score-bar"><div class="detail-score-fill" style="width:${t.scores.demo*10}%"></div></div></div>
+        </div></div>`;
+      }
+
+      let strengthsHtml = t.strengths.map(s => `<li>${s}</li>`).join('');
+      let weaknessesHtml = t.weaknesses.map(w => `<li>${w}</li>`).join('');
+
+      let videoHtml = '';
+      if (hasVideo) {
+        videoHtml = `<div class="card-video"><div class="video-embed"><iframe src="https://www.youtube.com/embed/${t.yt}" title="${t.name} demo" allowfullscreen loading="lazy"></iframe></div></div>`;
+      }
+
+      return `<div class="demo-card" data-event="${t.e}">
+        <div class="card-top">
+          <div class="card-rank ${rankClass(t.rank, t.e)}">${String(t.rank).padStart(2,'0')}</div>
+          <div class="card-info">
+            <div class="card-name" title="${t.name}">${t.name}</div>
+            <div class="card-meta">
+              <span class="card-track ${trackClass(t.track)}">${t.track}</span>
+              <span class="card-duration"><i class="far fa-clock"></i> ${t.duration}</span>
+              <span class="card-event">${eventLabel}</span>
+            </div>
+          </div>
+          <div class="card-score${scoreClass}">${scoreDisplay}</div>
+        </div>
+        <div class="card-body"><p class="card-desc">${t.desc}</p></div>
+        ${hasVideo ? videoHtml : ''}
+        <div class="card-expand" onclick="this.closest('.demo-card').classList.toggle('expanded')">
+          <span>DETAILS</span> <i class="fas fa-chevron-down"></i>
+        </div>
+        <div class="card-details">
+          ${detailScores}
+          <div class="detail-section"><div class="detail-label">STRENGTHS</div><div class="detail-text"><ul>${strengthsHtml}</ul></div></div>
+          <div class="detail-section"><div class="detail-label">WEAKNESSES</div><div class="detail-text"><ul>${weaknessesHtml}</ul></div></div>
+        </div>
+      </div>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = TEAMS.map(renderCard).join('');
+
+      // Filter buttons
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          document.querySelectorAll('.demo-card').forEach(card => {
+            if (filter === 'all' || card.dataset.event === filter) {
+              card.classList.remove('hidden');
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0)';
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        });
+      });
+
+      // GSAP animations
+      if (typeof gsap !== 'undefined') {
+        gsap.to('.page-header', { opacity: 1, y: 0, duration: 1, ease: 'power3.out' });
+        gsap.to('.filter-bar', { opacity: 1, y: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' });
+        gsap.utils.toArray('.demo-card').forEach((card, i) => {
+          gsap.to(card, {
+            scrollTrigger: { trigger: card, start: 'top 90%' },
+            opacity: 1, y: 0, duration: 0.6, delay: (i % 3) * 0.1, ease: 'power3.out'
+          });
+        });
+      }
+    });
+
+    // Cursor system
+    (function() {
+      if (window.matchMedia('(max-width: 768px)').matches) return;
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorRing = document.querySelector('.cursor-ring');
+      if (!cursorDot || !cursorRing) return;
+      let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, ringX = 0, ringY = 0;
+      document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+      const animate = () => {
+        dotX += (mouseX - dotX) * 0.5; dotY += (mouseY - dotY) * 0.5;
+        ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+        cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px';
+        cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+        requestAnimationFrame(animate);
+      };
+      animate();
+      document.querySelectorAll('a, button, .card-expand').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+      });
+    })();
+
+    // Particles (2D fallback only for simplicity)
+    (function() {
+      if (window.matchMedia('(max-width: 768px)').matches) return;
+      const canvas = document.getElementById('particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d'); let particles = [];
+      const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+      resize(); window.addEventListener('resize', resize);
+      class P { constructor(){this.reset()} reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-0.5)*0.5;this.vy=(Math.random()-0.5)*0.5;this.size=Math.random()*2+1;this.alpha=Math.random()*0.5+0.1} update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height)this.reset()} draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,159,${this.alpha})`;ctx.fill()} }
+      for(let i=0;i<50;i++) particles.push(new P());
+      const anim = () => {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{p.update();p.draw()});
+        for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++){
+          const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+          if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,255,159,${0.1*(1-d/120)})`;ctx.stroke()}
+        }
+        requestAnimationFrame(anim);
+      };
+      anim();
+    })();
+    </script>
+<script defer src="/analytics.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3dca859b2622453e93f3f92fc322cb93"}'></script>
+</body>
+</html>
