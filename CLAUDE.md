@@ -43,6 +43,9 @@ nebulafog-web/
 ├── register.html        # Registration form with validation
 ├── partners.html        # Sponsors/partners page
 ├── code-of-conduct.html # Code of conduct
+├── blog/                # "Field Notes" — long-form write-ups
+│   ├── index.html       # Post listing
+│   └── *.html           # One file per post
 ├── content/             # Markdown content files (reference only)
 ├── images/              # Image assets
 ├── docs/planning/       # Planning documents
@@ -62,6 +65,8 @@ nebulafog-web/
 | `register.html` | Form validation, animated inputs | GSAP |
 | `partners.html` | Partner grid, CTA section | GSAP |
 | `code-of-conduct.html` | Numbered sections, collapsible content | GSAP |
+| `blog/index.html` | Field Notes post listing | None (CSS-only) |
+| `blog/*.html` | Long-form article pages | None (CSS-only) |
 
 ### Homepage Sections (index.html)
 
@@ -246,6 +251,27 @@ Project cards in Mission Debrief are around line 1730-1755:
 ```
 
 ## Common Tasks
+
+### Adding a Blog Post
+
+Posts live in `blog/` as standalone HTML — one file per post, no build step.
+
+1. Copy `blog/how-we-built-arbiter.html` as a template
+2. Update `<title>`, meta description, OG/Twitter tags, `<link rel="canonical">`,
+   and both JSON-LD blocks (`BlogPosting` + `BreadcrumbList`)
+3. Replace the content inside `<div class="article-body">` — the page-specific
+   `<style>` block already covers `h2`/`h3`/`p`/`ul`/`ol`/`pre`/`code`/`a`
+4. Add a cover image under `images/blog/` (self-hosted — the CSP is `img-src 'self' data:`,
+   so external images will be blocked)
+5. Add a `.post-card` entry to `blog/index.html`, newest first
+6. Add both URLs to `sitemap.xml`
+
+Blog pages use **root-relative** asset paths (`/styles/common.css`, `/favicon.svg`)
+because they sit one directory down. They deliberately do not load GSAP — the reveal
+animations are CSS keyframes so content stays visible if the CDN fails.
+
+If a post is also published elsewhere (dev.to, the arbiter repo), point that copy's
+`canonical_url` at the nebulafog.ai URL so the two don't compete in search.
 
 ### Adding a New Page
 1. Copy an existing page as template (e.g., `partners.html`)
