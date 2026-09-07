@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Field Notes | NEBULA:FOG AI x Security Hackathon</title>
+    <meta name="description" content="Engineering write-ups from NEBULA:FOG — what we build for the hackathon, what breaks on stage, and what we learn at the intersection of AI and security.">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self' https://us.i.posthog.com https://cloudflareinsights.com;">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Field Notes | NEBULA:FOG AI x Security Hackathon">
+    <meta property="og:description" content="Engineering write-ups from NEBULA:FOG — what we build, what breaks on stage, and what we learn.">
+    <meta property="og:image" content="https://nebulafog.ai/images/og-image.png">
+    <meta property="og:url" content="https://nebulafog.ai/blog/">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://nebulafog.ai/blog/">
+    <meta name="theme-color" content="#00ff9f">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <script src="/posthog-init.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="/styles/common.css">
+    <style>
+    .container { max-width: 860px; }
+
+    /* Reveal without a GSAP dependency: common.css ships .page-header at opacity 0 */
+    .page-header { animation: header-reveal 0.8s var(--ease-out-expo) forwards; }
+    @keyframes header-reveal { to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+        .page-header { animation: none; opacity: 1; transform: none; }
+    }
+    .page-header { margin-bottom: 3.5rem; }
+    .page-tag { margin-bottom: 2rem; }
+    .page-title { font-size: clamp(2rem, 6vw, 4rem); margin-bottom: 1.5rem; }
+    .page-subtitle { font-size: 1rem; color: var(--color-text-muted); max-width: 620px; margin: 0 auto; line-height: 1.8; }
+
+    .post-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+    .post-card {
+        display: block;
+        position: relative;
+        border: 1px solid var(--color-text-dim);
+        background: var(--color-bg-elevated);
+        padding: 2rem;
+        transition: border-color 0.4s var(--ease-out-expo), transform 0.4s var(--ease-out-expo);
+    }
+    .post-card:hover { border-color: rgba(0, 255, 159, 0.45); transform: translateY(-3px); }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-text-dim);
+        margin-bottom: 1rem;
+    }
+    .post-meta time { color: var(--color-text-muted); }
+    .post-topic {
+        color: var(--color-primary);
+        border: 1px solid rgba(0, 255, 159, 0.3);
+        padding: 0.2rem 0.6rem;
+    }
+
+    .post-card-title {
+        font-family: var(--font-display);
+        font-size: clamp(1.25rem, 3.5vw, 1.75rem);
+        font-weight: 700;
+        line-height: 1.25;
+        color: var(--color-text);
+        margin-bottom: 0.9rem;
+    }
+    .post-card:hover .post-card-title { color: var(--color-primary); }
+
+    .post-excerpt { color: var(--color-text-muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.25rem; }
+
+    .post-more {
+        font-size: 0.75rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .post-card:hover .post-more i { transform: translateX(4px); }
+    .post-more i { transition: transform 0.3s var(--ease-out-expo); }
+
+    .blog-note {
+        margin-top: 3.5rem;
+        border: 1px dashed var(--color-text-dim);
+        padding: 1.5rem 2rem;
+        text-align: center;
+        color: var(--color-text-dim);
+        font-size: 0.8rem;
+        letter-spacing: 0.06em;
+    }
+
+    @media (max-width: 768px) {
+        .post-card { padding: 1.5rem; }
+    }
+    </style>
+</head>
+<body>
+    <div class="cursor cursor-dot"></div>
+    <div class="cursor cursor-ring"></div>
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <canvas class="particles-canvas" id="particles" aria-hidden="true"></canvas>
+
+    <nav class="hud-nav" role="navigation" aria-label="System Interface">
+        <div class="hud-status">
+            <div class="status-dot"></div>
+            <span>SYS_CONNECTED</span>
+            <span style="margin-left: 10px; opacity: 0.7;">ARCHIVE_VIEW</span>
+        </div>
+        <ul class="hud-links">
+            <li><a href="/index.html" class="hud-link">HOME</a></li>
+            <li><a href="/about.html" class="hud-link">MISSION</a></li>
+            <li><a href="/challenges.html" class="hud-link">CHALLENGES</a></li>
+            <li><a href="/schedule.html" class="hud-link">SCHEDULE</a></li>
+            <li><a href="/results.html" class="hud-link">RESULTS</a></li>
+            <li><a href="/gallery.html" class="hud-link">GALLERY</a></li>
+            <li><a href="/blog/" class="hud-link active" data-text="FIELD NOTES">FIELD NOTES</a></li>
+            <li><a href="/partners.html" class="hud-link">PARTNERS</a></li>
+        </ul>
+    </nav>
+
+    <main class="main">
+        <div class="container">
+            <header class="page-header">
+                <span class="page-tag">DECLASSIFIED // ENGINEERING LOG</span>
+                <h1 class="page-title">FIELD NOTES</h1>
+                <p class="page-subtitle">
+                    Write-ups from the people building NEBULA:FOG. What we shipped, what broke on
+                    stage, and what the failure logs taught us about AI and security.
+                </p>
+            </header>
+
+            <div class="post-list">
+                <a class="post-card" href="/blog/how-we-built-arbiter.html">
+                    <div class="post-meta">
+                        <span class="post-topic">AI JUDGING</span>
+                        <time datetime="2026-09-07">2026.09.07</time>
+                        <span>10 MIN READ</span>
+                    </div>
+                    <h2 class="post-card-title">We Built an AI Judge for a Live Hackathon — Then Red-Teamed It</h2>
+                    <p class="post-excerpt">
+                        Arbiter watched 25 live demos at NEBULA:FOG:SINGULARITY, scored them with a
+                        three-model ensemble, delivered British-accented commentary to the room, and
+                        caught prompt injection attempts on stage. Here is the architecture, the five
+                        things that broke mid-event, and what we would do differently.
+                    </p>
+                    <span class="post-more">READ THE WRITE-UP <i class="fas fa-arrow-right"></i></span>
+                </a>
+            </div>
+
+            <div class="blog-note">
+                MORE ENTRIES DECLASSIFIED AS THEY CLEAR REVIEW
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-logo">NEBULA:FOG:PROTOCOL</div>
+            <p class="footer-text">AI x Security</p>
+            <nav class="footer-links">
+                <a href="/about.html">MISSION</a>
+                <a href="/challenges.html">CHALLENGES</a>
+                <a href="/schedule.html">SCHEDULE</a>
+                <a href="/results.html">RESULTS</a>
+                <a href="/gallery.html">GALLERY</a>
+                <a href="/blog/">FIELD NOTES</a>
+                <a href="/partners.html">PARTNERS</a>
+            </nav>
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/nebulafog/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="https://x.com/NebulaFogSF" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://bsky.app/profile/nebulafogsf.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="Bluesky"><svg class="bluesky-icon" viewBox="0 0 568 501" xmlns="http://www.w3.org/2000/svg"><path d="M123.121 33.664C188.241 82.553 258.281 181.68 284 234.873c25.719-53.192 95.759-152.32 160.879-201.21C491.866-1.611 568-28.906 568 57.947c0 17.346-9.945 145.713-15.778 166.555-20.275 72.453-94.155 90.933-159.875 79.748C507.222 323.8 536.444 388.56 473.333 453.32c-119.86 122.992-172.272-30.859-185.702-70.281-2.462-7.227-3.614-10.608-3.631-7.733-.017-2.875-1.169.506-3.631 7.733-13.43 39.422-65.842 193.273-185.702 70.281-63.111-64.76-33.889-129.52 80.986-149.071-65.72 11.185-139.6-7.295-159.875-79.748C9.945 203.659 0 75.291 0 57.946 0-28.906 76.135-1.612 123.121 33.664Z"/></svg></a>
+                <a href="https://www.youtube.com/@NEBULAFOG" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="footer-copyright">&copy; 2026 NEBULA:FOG:PROTOCOL. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+        <ul class="mobile-nav-links">
+            <li><a href="/index.html"><i class="fas fa-home"></i><span>HOME</span></a></li>
+            <li><a href="/challenges.html"><i class="fas fa-trophy"></i><span>CHALLENGES</span></a></li>
+            <li><a href="/results.html"><i class="fas fa-trophy"></i><span>RESULTS</span></a></li>
+            <li><a href="/gallery.html"><i class="fas fa-images"></i><span>GALLERY</span></a></li>
+            <li><a href="/blog/" class="active"><i class="fas fa-file-lines"></i><span>NOTES</span></a></li>
+        </ul>
+    </nav>
+
+    <script>
+    // Cursor system
+    (function() {
+      if (window.matchMedia('(max-width: 768px)').matches) return;
+      const cursorDot = document.querySelector('.cursor-dot');
+      const cursorRing = document.querySelector('.cursor-ring');
+      if (!cursorDot || !cursorRing) return;
+      let mouseX = 0, mouseY = 0, dotX = 0, dotY = 0, ringX = 0, ringY = 0;
+      document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+      const animate = () => {
+        dotX += (mouseX - dotX) * 0.5; dotY += (mouseY - dotY) * 0.5;
+        ringX += (mouseX - ringX) * 0.15; ringY += (mouseY - ringY) * 0.15;
+        cursorDot.style.left = dotX + 'px'; cursorDot.style.top = dotY + 'px';
+        cursorRing.style.left = ringX + 'px'; cursorRing.style.top = ringY + 'px';
+        requestAnimationFrame(animate);
+      };
+      animate();
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
+      });
+    })();
+
+    // Particles (2D)
+    (function() {
+      if (window.matchMedia('(max-width: 768px)').matches) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const canvas = document.getElementById('particles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d'); let particles = [];
+      const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+      resize(); window.addEventListener('resize', resize);
+      class P { constructor(){this.reset()} reset(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.vx=(Math.random()-0.5)*0.5;this.vy=(Math.random()-0.5)*0.5;this.size=Math.random()*2+1;this.alpha=Math.random()*0.5+0.1} update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>canvas.width||this.y<0||this.y>canvas.height)this.reset()} draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fillStyle=`rgba(0,255,159,${this.alpha})`;ctx.fill()} }
+      for(let i=0;i<50;i++) particles.push(new P());
+      const anim = () => {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p=>{p.update();p.draw()});
+        for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++){
+          const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+          if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,255,159,${0.1*(1-d/120)})`;ctx.stroke()}
+        }
+        requestAnimationFrame(anim);
+      };
+      anim();
+    })();
+    </script>
+<script defer src="/analytics.js"></script>
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "3dca859b2622453e93f3f92fc322cb93"}'></script>
+</body>
+</html>
